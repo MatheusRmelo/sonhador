@@ -11,9 +11,8 @@ Widget WriterAppBar({@required BuildContext pageContext}) {
         builder: (BuildContext context) {
           return AlertDialog(
             scrollable: true,
-            title: Text('Edição do título'),
             content: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4),
               child: Form(
                 child: Column(
                   children: [
