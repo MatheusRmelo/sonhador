@@ -9,6 +9,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   int _currentIndex = 0;
+  TextStyle smallStyleLight =
+      TextStyle(fontFamily: 'Fredoka One', fontSize: 12, color: Colors.white);
+
   final List<Widget> _children = [
     PlaceholderWidget(Colors.white),
     PlaceholderWidget(Colors.deepOrange),
@@ -19,12 +22,44 @@ class _HomePage extends State<HomePage> {
 
   void onTabTapped(int index) {
     if (index == 2) {
-      Navigator.pushNamed(context, '/writer');
+      //Navigator.pushNamed(context, '/writer');
+      createNewText(context);
     } else {
       setState(() {
         _currentIndex = index;
       });
     }
+  }
+
+  void createNewText(BuildContext pageContext) {
+    showDialog(
+        context: pageContext,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              scrollable: true,
+              content: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Column(children: [
+                    Container(
+                        width: 200,
+                        child: RaisedButton(
+                            color: Color(0xFF9B9987),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/writer');
+                            },
+                            child: Text(
+                              'Nova história',
+                              style: smallStyleLight,
+                            ))),
+                    Container(
+                        width: 200,
+                        child: RaisedButton(
+                            color: Color(0xFF483D3F),
+                            onPressed: () {},
+                            child: Text('Continuar história',
+                                style: smallStyleLight))),
+                  ])));
+        });
   }
 
   @override
