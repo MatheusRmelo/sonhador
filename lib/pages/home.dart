@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/writerdata.dart';
 import 'placeholder.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,8 +48,17 @@ class _HomePage extends State<HomePage> {
                         width: 200,
                         child: RaisedButton(
                             color: Color(0xFF9B9987),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/writer');
+                            onPressed: () async {
+                              Map result =
+                                  await Provider.of<WriterData>(context)
+                                      .saveText('Sem título', ['']);
+                              if (result['error'] != '') {
+                                print(result['error']);
+                              } else {
+                                print(result['data']);
+                                Navigator.pushNamed(context, '/writer',
+                                    arguments: {"textId": result['data']});
+                              }
                             },
                             child: Text(
                               'Nova história',

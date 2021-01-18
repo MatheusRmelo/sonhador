@@ -6,12 +6,15 @@ class WriterData with ChangeNotifier {
   List texts = [];
   var db = FirebaseFirestore.instance;
 
-  void saveText(String title, List pages) {
-    db.collection('texts').add({"title": title, "pages": pages});
+  Future<Map> saveText(String title, List pages) async {
+    var result = await db
+        .collection('texts')
+        .add({"title": title, "pages": pages}).then((value) => value);
+    return {'error': '', "data": result.id};
   }
 
-  void updatePages(List pages) {
-    db.collection('texts').doc('eHMTUteW9XItOr1vnHRl').update({"pages": pages});
+  void updatePages(List pages, @required String textId) {
+    db.collection('texts').doc(textId).update({"pages": pages});
   }
 
   void setTitle(String newTitle) {

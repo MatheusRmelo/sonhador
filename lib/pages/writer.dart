@@ -17,6 +17,9 @@ class _WriterPage extends State<WriterPage> {
   int currentPage = 0;
   TextEditingController _controller = TextEditingController(text: '');
   TextStyle smallStyle = TextStyle(fontFamily: 'Fredoka One', fontSize: 12);
+  TextStyle smallStyleLight =
+      TextStyle(fontFamily: 'Fredoka One', fontSize: 12, color: Colors.white);
+
   String newTitle = '';
   String status = '';
   Timer _timer;
@@ -27,21 +30,23 @@ class _WriterPage extends State<WriterPage> {
     });
   }
 
-  void updateText() async {
-    await Provider.of<WriterData>(context).updatePages(pages);
+  void updateText(String textId) async {
+    await Provider.of<WriterData>(context).updatePages(pages, textId);
     setState(() {
       status = 'Salvo';
     });
   }
 
-  void changeTextAction(String text) {
+  void changeTextAction(String text, String textId) {
     setState(() {
       pages[currentPage] = text;
       status = 'Salvando...';
       if (_timer.isActive) {
         _timer.cancel();
       }
-      _timer = Timer(Duration(seconds: 1), updateText);
+      _timer = Timer(Duration(seconds: 1), () {
+        updateText(textId);
+      });
     });
   }
 
@@ -117,10 +122,13 @@ class _WriterPage extends State<WriterPage> {
     setState(() {
       _timer = Timer(Duration(seconds: 1), () {});
     });
+    //Provider.of<WriterData>(context).saveText('Sem título', pages);
   }
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
+    String textId = routeData['textId'];
     double heightDevice = MediaQuery.of(context).size.height;
     String title = Provider.of<WriterData>(context).title;
 
@@ -160,7 +168,7 @@ class _WriterPage extends State<WriterPage> {
                               keyboardType: TextInputType.multiline,
                               maxLines: null,
                               onChanged: (text) {
-                                changeTextAction(text);
+                                changeTextAction(text, textId);
                               },
                               decoration: InputDecoration(
                                 hintText: 'Começe a escrever',
@@ -174,12 +182,13 @@ class _WriterPage extends State<WriterPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               RaisedButton(
+                                color: Color(0xFF483D3F),
                                 onPressed: () {
                                   saveText(title);
                                 },
                                 child: Text(
                                   'Avançar',
-                                  style: smallStyle,
+                                  style: smallStyleLight,
                                 ),
                               )
                             ],
