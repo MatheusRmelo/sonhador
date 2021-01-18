@@ -28,7 +28,6 @@ class _WriterPage extends State<WriterPage> {
   }
 
   void updateText() async {
-    _timer.cancel();
     await Provider.of<WriterData>(context).updatePages(pages);
     setState(() {
       status = 'Salvo';
@@ -36,10 +35,13 @@ class _WriterPage extends State<WriterPage> {
   }
 
   void changeTextAction(String text) {
-    _timer = Timer(Duration(seconds: 2), updateText);
     setState(() {
       pages[currentPage] = text;
       status = 'Salvando...';
+      if (_timer.isActive) {
+        _timer.cancel();
+      }
+      _timer = Timer(Duration(seconds: 1), updateText);
     });
   }
 
@@ -108,6 +110,13 @@ class _WriterPage extends State<WriterPage> {
             ],
           );
         });
+  }
+
+  void initState() {
+    super.initState();
+    setState(() {
+      _timer = Timer(Duration(seconds: 1), () {});
+    });
   }
 
   @override
