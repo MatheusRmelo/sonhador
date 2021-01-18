@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,8 @@ class _WriterPage extends State<WriterPage> {
   TextEditingController _controller = TextEditingController(text: '');
   TextStyle smallStyle = TextStyle(fontFamily: 'Fredoka One', fontSize: 12);
   String newTitle = '';
+  String status = '';
+  Timer _timer;
 
   void changeAlignment(@required String newAligment) {
     setState(() {
@@ -23,9 +27,19 @@ class _WriterPage extends State<WriterPage> {
     });
   }
 
+  void updateText() async {
+    _timer.cancel();
+    await Provider.of<WriterData>(context).updatePages(pages);
+    setState(() {
+      status = 'Salvo';
+    });
+  }
+
   void changeTextAction(String text) {
+    _timer = Timer(Duration(seconds: 2), updateText);
     setState(() {
       pages[currentPage] = text;
+      status = 'Salvando...';
     });
   }
 
@@ -106,7 +120,7 @@ class _WriterPage extends State<WriterPage> {
               backgroundColor: Color(0xFF9B9987),
               appBar: WriterAppBar(
                   pageContext: context,
-                  title: title,
+                  title: status != '' ? '$title - $status' : title,
                   onChangeTitle: () {
                     changeTitle(context, title);
                   }),
@@ -148,14 +162,8 @@ class _WriterPage extends State<WriterPage> {
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.check),
-                                  Text('Rascunho salvo')
-                                ],
-                              ),
                               RaisedButton(
                                 onPressed: () {
                                   saveText(title);

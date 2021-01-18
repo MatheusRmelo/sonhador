@@ -10,6 +10,10 @@ class WriterData with ChangeNotifier {
     db.collection('texts').add({"title": title, "pages": pages});
   }
 
+  void updatePages(List pages) {
+    db.collection('texts').doc('eHMTUteW9XItOr1vnHRl').update({"pages": pages});
+  }
+
   void setTitle(String newTitle) {
     title = newTitle;
     notifyListeners();
