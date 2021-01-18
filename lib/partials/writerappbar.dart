@@ -1,45 +1,16 @@
 import 'package:flutter/material.dart';
 
-Widget WriterAppBar({@required BuildContext pageContext}) {
+Widget WriterAppBar(
+    {@required BuildContext pageContext,
+    String title = 'Sem título',
+    Function onChangeTitle}) {
   void backAction() {
     Navigator.pop(pageContext);
   }
 
-  void editTitleAction() {
-    showDialog(
-        context: pageContext,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            scrollable: true,
-            content: Padding(
-              padding: const EdgeInsets.all(4),
-              child: Form(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Título',
-                        icon: Icon(Icons.book),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            actions: [
-              RaisedButton(
-                  child: Text("Atualizar"),
-                  onPressed: () {
-                    // your code
-                  })
-            ],
-          );
-        });
-  }
-
   return AppBar(
     elevation: 0,
-    backgroundColor: Color(0xFFc4c4c4),
+    backgroundColor: Color(0xFF9B9987),
     leading: IconButton(
       icon: Icon(Icons.close),
       onPressed: backAction,
@@ -47,10 +18,12 @@ Widget WriterAppBar({@required BuildContext pageContext}) {
     actions: [
       IconButton(
         icon: Icon(Icons.edit),
-        onPressed: editTitleAction,
+        onPressed: () {
+          onChangeTitle();
+        },
       )
     ],
-    title: Text('Writer 2 bar'),
+    title: Text(title),
     centerTitle: true,
   );
 }

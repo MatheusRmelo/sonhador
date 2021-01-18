@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,13 +8,17 @@ import './models/writerdata.dart';
 import 'pages/home.dart';
 import 'pages/writer.dart';
 
-void main() => runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AppData()),
-        ChangeNotifierProvider(create: (context) => WriterData())
-      ],
-      child: App(),
-    ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => AppData()),
+      ChangeNotifierProvider(create: (context) => WriterData())
+    ],
+    child: App(),
+  ));
+}
 
 class App extends StatelessWidget {
   @override

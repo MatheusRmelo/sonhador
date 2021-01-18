@@ -38,8 +38,8 @@ class _HomePage extends State<HomePage> {
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFFc4c4c4),
-        selectedItemColor: Colors.grey.withOpacity(.60),
+        backgroundColor: Color(0xFF9B9987),
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         selectedFontSize: 12,
         unselectedFontSize: 12,
@@ -50,7 +50,7 @@ class _HomePage extends State<HomePage> {
           BottomNavigationBarItem(
               activeIcon: Icon(
                 Icons.home,
-                color: Colors.grey.withOpacity(.60),
+                color: Colors.white,
               ),
               icon: Icon(
                 Icons.home,
@@ -60,7 +60,7 @@ class _HomePage extends State<HomePage> {
           BottomNavigationBarItem(
               activeIcon: Icon(
                 Icons.search,
-                color: Colors.grey.withOpacity(.60),
+                color: Colors.white,
               ),
               icon: Icon(
                 Icons.search,
@@ -81,9 +81,9 @@ class _HomePage extends State<HomePage> {
               ),
               icon: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(8),
                     color: Color(0xFFe4e4e4)),
-                width: 48,
+                width: 32,
                 height: 32,
                 child: Icon(
                   Icons.add,
@@ -94,14 +94,14 @@ class _HomePage extends State<HomePage> {
           BottomNavigationBarItem(
               activeIcon: Icon(
                 Icons.library_books,
-                color: Colors.grey.withOpacity(.60),
+                color: Colors.white,
               ),
               icon: Icon(Icons.library_books, color: Colors.black),
               label: 'Biblioteca'),
           BottomNavigationBarItem(
             activeIcon: Icon(
               Icons.person,
-              color: Colors.grey.withOpacity(.60),
+              color: Colors.white,
             ),
             icon: Icon(Icons.person, color: Colors.black),
             label: 'Perfil',
