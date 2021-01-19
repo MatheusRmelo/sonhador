@@ -186,7 +186,6 @@ class _WriterPage extends State<WriterPage> {
                             height: heightDevice * 0.7,
                             child: TextFormField(
                               style: TextStyle(fontFamily: 'EBGaramond'),
-                              autofocus: true,
                               controller: _controller,
                               textAlignVertical: TextAlignVertical.top,
                               textAlign: alignment == 'center'

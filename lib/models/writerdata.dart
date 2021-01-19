@@ -13,6 +13,22 @@ class WriterData with ChangeNotifier {
     return {'error': '', "data": result.id};
   }
 
+  Future<Map> getMyTexts({String userId, bool published = false}) async {
+    List<Map> texts = [];
+    QuerySnapshot result = await db
+        .collection('texts')
+        .where('userId', isEqualTo: userId)
+        .limit(10)
+        .get();
+
+    result.docs.forEach((element) {
+      if (element.data()['published'] == published) {
+        texts.add({"text": element.data(), "id": element.id});
+      }
+    });
+    return {'error': '', "data": texts};
+  }
+
   void updatePages(List pages, @required String textId) {
     db.collection('texts').doc(textId).update({"pages": pages});
   }

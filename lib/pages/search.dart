@@ -11,14 +11,44 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPage extends State<SearchPage> {
-  List list = ['e', ',1', 'w'];
+  List<Map> texts = [
+    {
+      "id": '',
+      "text": {"title": ''}
+    }
+  ];
+  String error = '';
+  bool loading = false;
 
-  void doSearch(pageContext, text) async {
+  void doSearch(text) async {
     // List newList = await Provider.of<AppData>(pageContext).searchCity(text);
 
     // setState(() {
     //   list = newList;
     // });
+  }
+  void getTexts() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      loading = true;
+    });
+
+    Map result = await Provider.of<WriterData>(context)
+        .getMyTexts(userId: 'matheusRmelo');
+    setState(() {
+      if (result['error'] != '') {
+        error = result['error'];
+      } else {
+        texts = result['data'];
+      }
+      loading = false;
+    });
+  }
+
+  void initState() {
+    super.initState();
+
+    getTexts();
   }
 
   @override
@@ -45,7 +75,7 @@ class _SearchPage extends State<SearchPage> {
                         size: 32,
                       )),
                   onChanged: (text) {
-                    doSearch(context, text);
+                    doSearch(text);
                   },
                 ),
               ),
@@ -53,10 +83,10 @@ class _SearchPage extends State<SearchPage> {
                   child: GridView.count(
                 crossAxisCount: 3,
                 children: List.generate(
-                    list.length,
+                    texts.length,
                     (index) => TextBox(
-                          textId: '0gpwENULwWV85HN4yhdt',
-                          title: 'list[index]',
+                          textId: texts[index]['id'],
+                          title: texts[index]['text']['title'],
                           onTap: (textId) {
                             Navigator.pushNamed(context, '/writer',
                                 arguments: {"textId": textId});
