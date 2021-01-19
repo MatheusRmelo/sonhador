@@ -67,7 +67,9 @@ class _HomePage extends State<HomePage> {
                         width: 200,
                         child: RaisedButton(
                             color: Color(0xFF483D3F),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/search');
+                            },
                             child: Text('Continuar história',
                                 style: smallStyleLight))),
                   ])));

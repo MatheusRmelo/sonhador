@@ -14,7 +14,7 @@ class WriterPage extends StatefulWidget {
 class _WriterPage extends State<WriterPage> {
   bool loading = false;
   String alignment = 'left';
-  List<String> pages = [''];
+  List<dynamic> pages = [''];
   int currentPage = 0;
   TextEditingController _controller = TextEditingController(text: '');
   TextStyle smallStyle = TextStyle(fontFamily: 'Fredoka One', fontSize: 12);
@@ -49,6 +49,7 @@ class _WriterPage extends State<WriterPage> {
       setState(() {
         if (textData['data']['pages'][0] != '') {
           pages = textData['data']['pages'];
+          _controller.text = pages[currentPage];
         } else {
           pages = [''];
         }

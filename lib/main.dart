@@ -7,6 +7,7 @@ import './models/writerdata.dart';
 
 import 'pages/home.dart';
 import 'pages/writer.dart';
+import 'pages/search.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ class App extends StatelessWidget {
     return MaterialApp(initialRoute: '/home', routes: {
       '/home': (context) => HomePage(),
       '/writer': (context) => WriterPage(),
+      '/search': (context) => SearchPage(),
     });
   }
 }
