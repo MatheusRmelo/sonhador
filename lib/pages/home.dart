@@ -55,7 +55,6 @@ class _HomePage extends State<HomePage> {
                               if (result['error'] != '') {
                                 print(result['error']);
                               } else {
-                                print(result['data']);
                                 Navigator.pushNamed(context, '/writer',
                                     arguments: {"textId": result['data']});
                               }

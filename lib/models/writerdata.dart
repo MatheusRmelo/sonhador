@@ -17,8 +17,18 @@ class WriterData with ChangeNotifier {
     db.collection('texts').doc(textId).update({"pages": pages});
   }
 
-  void setTitle(String newTitle) {
+  Future<Map> getText(@required String textId) async {
+    DocumentSnapshot result = await db.collection('texts').doc(textId).get();
+
+    return {"error": '', "data": result.data()};
+  }
+
+  void setTitle({String newTitle, bool update = false, String textId = ''}) {
     title = newTitle;
+    if (update) {
+      db.collection('texts').doc(textId).update({"title": newTitle});
+    }
+
     notifyListeners();
   }
 }

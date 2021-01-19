@@ -12,6 +12,7 @@ class WriterPage extends StatefulWidget {
 }
 
 class _WriterPage extends State<WriterPage> {
+  bool loading = false;
   String alignment = 'left';
   List<String> pages = [''];
   int currentPage = 0;
@@ -24,10 +25,38 @@ class _WriterPage extends State<WriterPage> {
   String status = '';
   Timer _timer;
 
+  String textId = '';
+
   void changeAlignment(@required String newAligment) {
     setState(() {
       alignment = newAligment;
     });
+  }
+
+  void getText() async {
+    await Future.delayed(Duration(seconds: 1));
+    Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
+    setState(() {
+      loading = true;
+      textId = routeData['textId'];
+    });
+
+    Map<dynamic, dynamic> textData =
+        await Provider.of<WriterData>(context).getText(textId);
+    if (textData['error'] != '') {
+      print(textData['error']);
+    } else {
+      setState(() {
+        if (textData['data']['pages'][0] != '') {
+          pages = textData['data']['pages'];
+        } else {
+          pages = [''];
+        }
+        loading = false;
+      });
+      Provider.of<WriterData>(context)
+          .setTitle(newTitle: textData['data']['title']);
+    }
   }
 
   void updateText(String textId) async {
@@ -106,7 +135,8 @@ class _WriterPage extends State<WriterPage> {
               RaisedButton(
                   child: Text("Atualizar"),
                   onPressed: () async {
-                    await Provider.of<WriterData>(context).setTitle(newTitle);
+                    await Provider.of<WriterData>(context).setTitle(
+                        newTitle: newTitle, update: true, textId: textId);
                     setState(() {
                       newTitle = '';
                     });
@@ -122,13 +152,12 @@ class _WriterPage extends State<WriterPage> {
     setState(() {
       _timer = Timer(Duration(seconds: 1), () {});
     });
+    getText();
     //Provider.of<WriterData>(context).saveText('Sem título', pages);
   }
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
-    String textId = routeData['textId'];
     double heightDevice = MediaQuery.of(context).size.height;
     String title = Provider.of<WriterData>(context).title;
 
