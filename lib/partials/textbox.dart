@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 
 class TextBox extends StatelessWidget {
-  TextBox({@required this.textId, @required this.title, this.onTap});
+  TextBox(
+      {@required this.textId,
+      @required this.title,
+      this.onTap,
+      this.credit = false,
+      this.social,
+      this.width = 90,
+      this.height = 100});
 
   final String textId;
   final String title;
   final Function onTap;
+  final bool credit;
+  final String social;
+  final double width;
+  final double height;
+
+  TextStyle smallText = TextStyle(
+      color: Color(0xFF969191), fontSize: 8, fontFamily: 'Fredoka One');
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +32,8 @@ class TextBox extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              width: 90,
-              height: 100,
+              width: width,
+              height: height,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: Color(0xFF483D3F),
@@ -46,15 +60,41 @@ class TextBox extends StatelessWidget {
             ),
             Positioned(
               left: 8,
-              right: 0,
+              right: 8,
               bottom: 16,
-              child: Text(
-                title,
-                style: TextStyle(
-                    color: Color(0xFF969191),
-                    fontSize: 8,
-                    fontFamily: 'Fredoka One'),
-              ),
+              child: credit
+                  ? Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.face,
+                              size: 16,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 8),
+                              child: Text(
+                                social,
+                                style: smallText,
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.face, size: 16),
+                            Container(
+                              margin: EdgeInsets.only(left: 8),
+                              child: Text(
+                                social,
+                                style: smallText,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    )
+                  : Text(title, style: smallText),
             )
           ],
         ),

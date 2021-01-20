@@ -58,6 +58,7 @@ class _SearchPage extends State<SearchPage> {
                     borderRadius: BorderRadius.circular(8)),
                 margin: EdgeInsets.all(16),
                 child: TextFormField(
+                  style: TextStyle(fontFamily: 'Fredoka One', fontSize: 12),
                   decoration: InputDecoration(
                       hintText: 'Digite o nome do seu texto',
                       border: OutlineInputBorder(

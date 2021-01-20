@@ -8,6 +8,7 @@ import './models/writerdata.dart';
 import 'pages/home.dart';
 import 'pages/writer.dart';
 import 'pages/search.dart';
+import 'pages/publish.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,7 @@ class App extends StatelessWidget {
       '/home': (context) => HomePage(),
       '/writer': (context) => WriterPage(),
       '/search': (context) => SearchPage(),
+      '/publish': (context) => PublishPage(),
     });
   }
 }
