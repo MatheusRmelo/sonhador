@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../models/writerdata.dart';
 
 import '../partials/customappbar.dart';
@@ -11,36 +13,26 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPage extends State<SearchPage> {
-  List<Map> texts = [
-    {
-      "id": '',
-      "text": {"title": ''}
-    }
-  ];
+  List<Map> texts = [];
   String error = '';
   bool loading = false;
 
   void doSearch(text) async {
-    // List newList = await Provider.of<AppData>(pageContext).searchCity(text);
+    List newTexts = await Provider.of<WriterData>(context).searchText(text);
 
-    // setState(() {
-    //   list = newList;
-    // });
+    setState(() {
+      texts = newTexts;
+    });
   }
+
   void getTexts() async {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       loading = true;
     });
 
-    Map result = await Provider.of<WriterData>(context)
-        .getMyTexts(userId: 'matheusRmelo');
+    await Provider.of<WriterData>(context).getMyTexts(userId: 'matheusRmelo');
     setState(() {
-      if (result['error'] != '') {
-        error = result['error'];
-      } else {
-        texts = result['data'];
-      }
       loading = false;
     });
   }
@@ -85,8 +77,12 @@ class _SearchPage extends State<SearchPage> {
                 children: List.generate(
                     texts.length,
                     (index) => TextBox(
-                          textId: texts[index]['id'],
-                          title: texts[index]['text']['title'],
+                          textId: texts[index]['id'] != null
+                              ? texts[index]['id']
+                              : '',
+                          title: texts[index]['text']['title'] != null
+                              ? texts[index]['text']['title']
+                              : '',
                           onTap: (textId) {
                             Navigator.pushNamed(context, '/writer',
                                 arguments: {"textId": textId});

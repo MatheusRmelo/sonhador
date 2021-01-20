@@ -13,20 +13,33 @@ class WriterData with ChangeNotifier {
     return {'error': '', "data": result.id};
   }
 
-  Future<Map> getMyTexts({String userId, bool published = false}) async {
+  List<Map> searchText(textSearch) {
+    List<Map> result = [];
+
+    textSearch = textSearch.trim().toLowerCase();
+    if (textSearch == '') {
+      return result;
+    }
+
+    for (var text in texts) {
+      if (text['text']['title'].toLowerCase().contains(textSearch)) {
+        result.add(text);
+      }
+    }
+    return result;
+  }
+
+  void getMyTexts({String userId, bool published = false}) async {
     List<Map> texts = [];
-    QuerySnapshot result = await db
-        .collection('texts')
-        .where('userId', isEqualTo: userId)
-        .limit(10)
-        .get();
+    QuerySnapshot result =
+        await db.collection('texts').where('userId', isEqualTo: userId).get();
 
     result.docs.forEach((element) {
       if (element.data()['published'] == published) {
         texts.add({"text": element.data(), "id": element.id});
       }
     });
-    return {'error': '', "data": texts};
+    setTexts(newTexts: texts);
   }
 
   void updatePages(List pages, @required String textId) {
@@ -37,6 +50,11 @@ class WriterData with ChangeNotifier {
     DocumentSnapshot result = await db.collection('texts').doc(textId).get();
 
     return {"error": '', "data": result.data()};
+  }
+
+  void setTexts({List<Map> newTexts}) {
+    texts = newTexts;
+    notifyListeners();
   }
 
   void setTitle({String newTitle, bool update = false, String textId = ''}) {
