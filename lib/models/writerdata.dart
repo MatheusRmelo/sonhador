@@ -5,11 +5,16 @@ class WriterData with ChangeNotifier {
   String title = 'Teste título';
   List texts = [];
   var db = FirebaseFirestore.instance;
+  String userId = 'matheusRmelo';
 
   Future<Map> saveText(String title, List pages) async {
-    var result = await db
-        .collection('texts')
-        .add({"title": title, "pages": pages}).then((value) => value);
+    var result = await db.collection('texts').add({
+      "title": title,
+      "pages": pages,
+      "published": false,
+      "ads": false,
+      "userId": userId
+    }).then((value) => value);
     return {'error': '', "data": result.id};
   }
 
@@ -29,7 +34,7 @@ class WriterData with ChangeNotifier {
     return result;
   }
 
-  void getMyTexts({String userId, bool published = false}) async {
+  void getMyTexts({bool published = false}) async {
     List<Map> texts = [];
     QuerySnapshot result =
         await db.collection('texts').where('userId', isEqualTo: userId).get();

@@ -31,7 +31,7 @@ class _SearchPage extends State<SearchPage> {
       loading = true;
     });
 
-    await Provider.of<WriterData>(context).getMyTexts(userId: 'matheusRmelo');
+    await Provider.of<WriterData>(context).getMyTexts();
     setState(() {
       loading = false;
     });
