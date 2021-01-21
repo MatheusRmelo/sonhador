@@ -7,11 +7,19 @@ class WriterData with ChangeNotifier {
   var db = FirebaseFirestore.instance;
   String userId = 'matheusRmelo';
 
+  void publishText(String textId, bool ads, bool adult) async {
+    await db
+        .collection('texts')
+        .doc(textId)
+        .update({"published": true, "adult": adult, "ads": ads});
+  }
+
   Future<Map> saveText(String title, List pages) async {
     var result = await db.collection('texts').add({
       "title": title,
       "pages": pages,
       "published": false,
+      "adult": false,
       "ads": false,
       "userId": userId
     }).then((value) => value);

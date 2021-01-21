@@ -11,14 +11,27 @@ class PublishPage extends StatefulWidget {
 }
 
 class _PublishPage extends State<PublishPage> {
-  bool _isChecked18 = false;
   bool _isCheckedAds = true;
+  bool _isChecked18 = false;
+  bool loading = false;
+
+  void publishText(String textId) async {
+    await Provider.of<WriterData>(context)
+        .publishText(textId, _isCheckedAds, _isChecked18);
+
+    Navigator.pushNamed(context, '/home');
+  }
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     double heightDevice = MediaQuery.of(context).size.height;
     TextStyle smallText =
         TextStyle(fontFamily: 'Fredoka One', fontSize: 16, color: Colors.black);
+    String textId = routeData['textId'];
+    String userId = Provider.of<WriterData>(context).userId;
+    String title = Provider.of<WriterData>(context).title;
+
     return Consumer<WriterData>(
         builder: (ctx, writerdata, child) => Scaffold(
               backgroundColor: Color(0xFF9B9987),
@@ -28,12 +41,12 @@ class _PublishPage extends State<PublishPage> {
                 child: Column(
                   children: [
                     TextBox(
-                      textId: '0gpwENULwWV85HN4yhdt',
-                      title: 'Sonhador',
+                      textId: textId,
+                      title: title,
                       height: 135,
                       width: 120,
                       credit: true,
-                      social: 'matheusRmelo',
+                      social: userId,
                     ),
                     Container(
                       height: heightDevice * 0.3,
@@ -68,7 +81,7 @@ class _PublishPage extends State<PublishPage> {
                       child: RaisedButton(
                           color: Colors.white,
                           onPressed: () {
-                            Navigator.pushNamed(context, '/search');
+                            publishText(textId);
                           },
                           child: Text('PUBLICAR',
                               style: TextStyle(

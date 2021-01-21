@@ -213,7 +213,8 @@ class _WriterPage extends State<WriterPage> {
                               RaisedButton(
                                 color: Color(0xFF483D3F),
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/publish');
+                                  Navigator.pushNamed(context, '/publish',
+                                      arguments: {"textId": textId});
                                 },
                                 child: Text(
                                   'Avançar',
