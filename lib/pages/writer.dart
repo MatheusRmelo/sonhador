@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../partials/writerappbar.dart';
+import '../partials/loadingappbar.dart';
+import '../partials/loading.dart';
+
 import '../models/writerdata.dart';
 
 class WriterPage extends StatefulWidget {
@@ -27,7 +31,7 @@ class _WriterPage extends State<WriterPage> {
 
   String textId = '';
 
-  void changeAlignment(@required String newAligment) {
+  void changeAlignment(String newAligment) {
     setState(() {
       alignment = newAligment;
     });
@@ -152,148 +156,154 @@ class _WriterPage extends State<WriterPage> {
     super.initState();
     setState(() {
       _timer = Timer(Duration(seconds: 1), () {});
+      loading = true;
     });
     getText();
-    //Provider.of<WriterData>(context).saveText('Sem título', pages);
   }
 
   @override
   Widget build(BuildContext context) {
     double heightDevice = MediaQuery.of(context).size.height;
+
     String title = Provider.of<WriterData>(context).title;
 
     return Consumer<WriterData>(
         builder: (ctx, writerdata, child) => Scaffold(
               backgroundColor: Color(0xFF9B9987),
-              appBar: WriterAppBar(
-                  pageContext: context,
-                  title: status != '' ? '$title - $status' : title,
-                  onChangeTitle: () {
-                    changeTitle(context, title);
-                  }),
-              body: Stack(
-                children: [
-                  Positioned(
-                      left: 56,
-                      right: 56,
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 16),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8)),
-                            height: heightDevice * 0.7,
-                            child: TextFormField(
-                              style: TextStyle(fontFamily: 'EBGaramond'),
-                              controller: _controller,
-                              textAlignVertical: TextAlignVertical.top,
-                              textAlign: alignment == 'center'
-                                  ? TextAlign.center
-                                  : alignment == 'left'
-                                      ? TextAlign.start
-                                      : TextAlign.end,
-                              expands: true,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              onChanged: (text) {
-                                changeTextAction(text, textId);
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Começe a escrever',
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              RaisedButton(
-                                color: Color(0xFF483D3F),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/publish',
-                                      arguments: {"textId": textId});
-                                },
-                                child: Text(
-                                  'Avançar',
-                                  style: smallStyleLight,
+              appBar: loading
+                  ? LoadingAppBar(pageContext: context)
+                  : WriterAppBar(
+                      pageContext: context,
+                      title: status != '' ? '$title - $status' : title,
+                      onChangeTitle: () {
+                        changeTitle(context, title);
+                      }),
+              body: loading
+                  ? Loading(status: 'Carregando...')
+                  : Stack(
+                      children: [
+                        Positioned(
+                            left: 56,
+                            right: 56,
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 16),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  height: heightDevice * 0.7,
+                                  child: TextFormField(
+                                    style: TextStyle(fontFamily: 'EBGaramond'),
+                                    controller: _controller,
+                                    textAlignVertical: TextAlignVertical.top,
+                                    textAlign: alignment == 'center'
+                                        ? TextAlign.center
+                                        : alignment == 'left'
+                                            ? TextAlign.start
+                                            : TextAlign.end,
+                                    expands: true,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                    onChanged: (text) {
+                                      changeTextAction(text, textId);
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: 'Começe a escrever',
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                    ),
+                                  ),
                                 ),
-                              )
-                            ],
-                          )
-                        ],
-                      )),
-                  Positioned(
-                      left: 0,
-                      top: 64,
-                      child: Column(
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(
-                              Icons.keyboard_arrow_left,
-                              size: 40,
-                            ),
-                            onPressed: prevPage,
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(Icons.format_align_left,
-                                size: 32,
-                                color: alignment == 'left'
-                                    ? Colors.white
-                                    : Colors.black),
-                            onPressed: () {
-                              changeAlignment('left');
-                            },
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(Icons.format_align_center,
-                                size: 32,
-                                color: alignment == 'center'
-                                    ? Colors.white
-                                    : Colors.black),
-                            onPressed: () {
-                              changeAlignment('center');
-                            },
-                          ),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(Icons.format_align_right,
-                                size: 32,
-                                color: alignment == 'right'
-                                    ? Colors.white
-                                    : Colors.black),
-                            onPressed: () {
-                              changeAlignment('right');
-                            },
-                          ),
-                        ],
-                      )),
-                  Positioned(
-                      right: 0,
-                      top: 64,
-                      child: Column(
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(
-                              Icons.keyboard_arrow_right,
-                              size: 40,
-                            ),
-                            onPressed: nextPage,
-                          ),
-                          Text(
-                            '${currentPage + 1}/${pages.length}',
-                            style: smallStyle,
-                          )
-                        ],
-                      )),
-                ],
-              ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    RaisedButton(
+                                      color: Color(0xFF483D3F),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/publish',
+                                            arguments: {"textId": textId});
+                                      },
+                                      child: Text(
+                                        'Avançar',
+                                        style: smallStyleLight,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            )),
+                        Positioned(
+                            left: 0,
+                            top: 64,
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_left,
+                                    size: 40,
+                                  ),
+                                  onPressed: prevPage,
+                                ),
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.format_align_left,
+                                      size: 32,
+                                      color: alignment == 'left'
+                                          ? Colors.white
+                                          : Colors.black),
+                                  onPressed: () {
+                                    changeAlignment('left');
+                                  },
+                                ),
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.format_align_center,
+                                      size: 32,
+                                      color: alignment == 'center'
+                                          ? Colors.white
+                                          : Colors.black),
+                                  onPressed: () {
+                                    changeAlignment('center');
+                                  },
+                                ),
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.format_align_right,
+                                      size: 32,
+                                      color: alignment == 'right'
+                                          ? Colors.white
+                                          : Colors.black),
+                                  onPressed: () {
+                                    changeAlignment('right');
+                                  },
+                                ),
+                              ],
+                            )),
+                        Positioned(
+                            right: 0,
+                            top: 64,
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_right,
+                                    size: 40,
+                                  ),
+                                  onPressed: nextPage,
+                                ),
+                                Text(
+                                  '${currentPage + 1}/${pages.length}',
+                                  style: smallStyle,
+                                )
+                              ],
+                            )),
+                      ],
+                    ),
             ));
   }
 }
