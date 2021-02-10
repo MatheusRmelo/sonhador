@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget LoadingAppBar({
-  @required BuildContext pageContext,
-}) {
+Widget LoadingAppBar(
+    {@required BuildContext pageContext, @required Color color}) {
   return AppBar(
     elevation: 0,
     leading: Container(),
-    backgroundColor: Color(0xFF9B9987),
+    backgroundColor: color,
     title: Container(),
     centerTitle: true,
   );

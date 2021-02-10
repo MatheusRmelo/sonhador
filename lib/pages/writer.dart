@@ -1,14 +1,5 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../partials/writerappbar.dart';
-import '../partials/loadingappbar.dart';
-import '../partials/loading.dart';
-
-import '../models/writerdata.dart';
+//import 'package:flutter/cupertino.dart';
+part of '../main.dart';
 
 class WriterPage extends StatefulWidget {
   @override
@@ -17,24 +8,31 @@ class WriterPage extends StatefulWidget {
 
 class _WriterPage extends State<WriterPage> {
   bool loading = false;
-  String alignment = 'left';
-  List<dynamic> pages = [''];
   int currentPage = 0;
   TextEditingController _controller = TextEditingController(text: '');
-  TextStyle smallStyle = TextStyle(fontFamily: 'Fredoka One', fontSize: 12);
-  TextStyle smallStyleLight =
-      TextStyle(fontFamily: 'Fredoka One', fontSize: 12, color: Colors.white);
-
   String newTitle = '';
   String status = '';
   Timer _timer;
 
   String textId = '';
 
-  void changeAlignment(String newAligment) {
+  void changeAlignment(String newAligment) async {
+    writer.text.setAlignment(newAligment);
     setState(() {
-      alignment = newAligment;
+      status = 'Salvando...';
     });
+    var result = await writer.saveAlignment(textId);
+
+    if (result['data'] == 'success') {
+      setState(() {
+        status = 'Salvo';
+      });
+    } else {
+      print(result['error']);
+      setState(() {
+        status = 'Falha ao salvar';
+      });
+    }
   }
 
   void getText() async {
@@ -45,35 +43,35 @@ class _WriterPage extends State<WriterPage> {
       textId = routeData['textId'];
     });
 
-    Map<dynamic, dynamic> textData =
-        await Provider.of<WriterData>(context).getText(textId);
-    if (textData['error'] != '') {
-      print(textData['error']);
+    Map<dynamic, dynamic> result = await writer.getTextById(textId);
+    if (result['error'] != '') {
+      print(result['error']);
     } else {
       setState(() {
-        if (textData['data']['pages'][0] != '') {
-          pages = textData['data']['pages'];
-          _controller.text = pages[currentPage];
-        } else {
-          pages = [''];
-        }
-        loading = false;
+        _controller.text = writer.text.getPages()[currentPage];
       });
-      Provider.of<WriterData>(context)
-          .setTitle(newTitle: textData['data']['title']);
     }
-  }
-
-  void updateText(String textId) async {
-    await Provider.of<WriterData>(context).updatePages(pages, textId);
     setState(() {
-      status = 'Salvo';
+      loading = false;
     });
   }
 
+  void updateText(String textId) async {
+    var result = await writer.updatePages(textId);
+    if (result['data'] == 'success') {
+      setState(() {
+        status = 'Salvo';
+      });
+    } else {
+      setState(() {
+        status = 'Falha ao salvar';
+      });
+    }
+  }
+
   void changeTextAction(String text, String textId) {
+    writer.text.setPage(text, currentPage);
     setState(() {
-      pages[currentPage] = text;
       status = 'Salvando...';
       if (_timer.isActive) {
         _timer.cancel();
@@ -88,24 +86,24 @@ class _WriterPage extends State<WriterPage> {
     setState(() {
       if (currentPage != 0) {
         currentPage--;
-        pages.remove('');
       }
+      _controller.text = writer.text.getPage(currentPage);
     });
-    _controller.text = pages[currentPage];
+    writer.text.cleanUpPages();
   }
 
   void nextPage() {
+    if (writer.text.getPages().length <= currentPage + 1) {
+      writer.text.newPage();
+    }
     setState(() {
-      if (pages.length <= currentPage + 1) {
-        pages.add('');
-      }
       currentPage++;
+      _controller.text = writer.text.getPage(currentPage);
     });
-    _controller.text = pages[currentPage];
   }
 
   void saveText(String title) async {
-    await Provider.of<WriterData>(context).saveText(title, pages);
+    //await Provider.of<WriterData>(context).saveText(title, pages);
   }
 
   void changeTitle(BuildContext pageContext, String title) {
@@ -127,9 +125,7 @@ class _WriterPage extends State<WriterPage> {
                         icon: Icon(Icons.book),
                       ),
                       onChanged: (title) {
-                        setState(() {
-                          newTitle = title;
-                        });
+                        writer.text.setTitle(title);
                       },
                     ),
                   ],
@@ -140,11 +136,19 @@ class _WriterPage extends State<WriterPage> {
               RaisedButton(
                   child: Text("Atualizar"),
                   onPressed: () async {
-                    await Provider.of<WriterData>(context).setTitle(
-                        newTitle: newTitle, update: true, textId: textId);
                     setState(() {
-                      newTitle = '';
+                      status = 'Salvando...';
                     });
+                    var result = await writer.updateTitle(textId);
+                    if (result['data'] == 'success') {
+                      setState(() {
+                        status = 'Salvo';
+                      });
+                    } else {
+                      setState(() {
+                        status = 'Falha ao salvar';
+                      });
+                    }
                     Navigator.of(context).pop();
                   })
             ],
@@ -165,145 +169,147 @@ class _WriterPage extends State<WriterPage> {
   Widget build(BuildContext context) {
     double heightDevice = MediaQuery.of(context).size.height;
 
-    String title = Provider.of<WriterData>(context).title;
+    String title = writer.text.getTitle();
+    String alignment = writer.text.getAlignment();
 
-    return Consumer<WriterData>(
-        builder: (ctx, writerdata, child) => Scaffold(
-              backgroundColor: Color(0xFF9B9987),
-              appBar: loading
-                  ? LoadingAppBar(pageContext: context)
-                  : WriterAppBar(
-                      pageContext: context,
-                      title: status != '' ? '$title - $status' : title,
-                      onChangeTitle: () {
-                        changeTitle(context, title);
-                      }),
-              body: loading
-                  ? Loading(status: 'Carregando...')
-                  : Stack(
+    return Scaffold(
+      backgroundColor: Color(0xFF9B9987),
+      appBar: loading
+          ? LoadingAppBar(pageContext: context, color: Color(0xFF9B9987))
+          : WriterAppBar(
+              pageContext: context,
+              title: status != '' ? '$title - $status' : title,
+              onChangeTitle: () {
+                changeTitle(context, title);
+              }),
+      body: loading
+          ? Loading(status: 'Carregando...')
+          : Stack(
+              children: [
+                Positioned(
+                    left: 56,
+                    right: 56,
+                    child: Column(
                       children: [
-                        Positioned(
-                            left: 56,
-                            right: 56,
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 16),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  height: heightDevice * 0.7,
-                                  child: TextFormField(
-                                    style: TextStyle(fontFamily: 'EBGaramond'),
-                                    controller: _controller,
-                                    textAlignVertical: TextAlignVertical.top,
-                                    textAlign: alignment == 'center'
-                                        ? TextAlign.center
-                                        : alignment == 'left'
-                                            ? TextAlign.start
-                                            : TextAlign.end,
-                                    expands: true,
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: null,
-                                    onChanged: (text) {
-                                      changeTextAction(text, textId);
-                                    },
-                                    decoration: InputDecoration(
-                                      hintText: 'Começe a escrever',
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    RaisedButton(
-                                      color: Color(0xFF483D3F),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/publish',
-                                            arguments: {"textId": textId});
-                                      },
-                                      child: Text(
-                                        'Avançar',
-                                        style: smallStyleLight,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            )),
-                        Positioned(
-                            left: 0,
-                            top: 64,
-                            child: Column(
-                              children: [
-                                IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_left,
-                                    size: 40,
-                                  ),
-                                  onPressed: prevPage,
-                                ),
-                                IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.format_align_left,
-                                      size: 32,
-                                      color: alignment == 'left'
-                                          ? Colors.white
-                                          : Colors.black),
-                                  onPressed: () {
-                                    changeAlignment('left');
-                                  },
-                                ),
-                                IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.format_align_center,
-                                      size: 32,
-                                      color: alignment == 'center'
-                                          ? Colors.white
-                                          : Colors.black),
-                                  onPressed: () {
-                                    changeAlignment('center');
-                                  },
-                                ),
-                                IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.format_align_right,
-                                      size: 32,
-                                      color: alignment == 'right'
-                                          ? Colors.white
-                                          : Colors.black),
-                                  onPressed: () {
-                                    changeAlignment('right');
-                                  },
-                                ),
-                              ],
-                            )),
-                        Positioned(
-                            right: 0,
-                            top: 64,
-                            child: Column(
-                              children: [
-                                IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    size: 40,
-                                  ),
-                                  onPressed: nextPage,
-                                ),
-                                Text(
-                                  '${currentPage + 1}/${pages.length}',
-                                  style: smallStyle,
-                                )
-                              ],
-                            )),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8)),
+                          height: heightDevice * 0.7,
+                          child: TextFormField(
+                            style: TextStyle(fontFamily: 'EBGaramond'),
+                            controller: _controller,
+                            textAlignVertical: TextAlignVertical.top,
+                            textAlign: alignment == 'center'
+                                ? TextAlign.center
+                                : alignment == 'left'
+                                    ? TextAlign.start
+                                    : TextAlign.end,
+                            expands: true,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            onChanged: (text) {
+                              changeTextAction(text, textId);
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Começe a escrever',
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              color: Color(0xFF483D3F),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/hashtag',
+                                    arguments: {"textId": textId});
+                              },
+                              child: Text(
+                                'Avançar',
+                                style: smallStyleLight,
+                              ),
+                            )
+                          ],
+                        )
                       ],
-                    ),
-            ));
+                    )),
+                Positioned(
+                    left: 0,
+                    top: 64,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            Icons.keyboard_arrow_left,
+                            size: 40,
+                          ),
+                          onPressed: prevPage,
+                        ),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.format_align_left,
+                              size: 32,
+                              color: alignment == 'left'
+                                  ? Colors.white
+                                  : Colors.black),
+                          onPressed: () {
+                            changeAlignment('left');
+                          },
+                        ),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.format_align_center,
+                              size: 32,
+                              color: alignment == 'center'
+                                  ? Colors.white
+                                  : Colors.black),
+                          onPressed: () {
+                            changeAlignment('center');
+                          },
+                        ),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.format_align_right,
+                              size: 32,
+                              color: alignment == 'right'
+                                  ? Colors.white
+                                  : Colors.black),
+                          onPressed: () {
+                            changeAlignment('right');
+                          },
+                        ),
+                      ],
+                    )),
+                Positioned(
+                    right: 0,
+                    top: 64,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 40,
+                          ),
+                          onPressed: nextPage,
+                        ),
+                        Text(
+                          '${currentPage + 1}/${writer.text.getPages().length}',
+                          style: smallStyle,
+                        )
+                      ],
+                    )),
+              ],
+            ),
+    );
   }
 }

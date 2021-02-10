@@ -1,11 +1,4 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../models/writerdata.dart';
-
-import '../partials/customappbar.dart';
-import '../partials/textbox.dart';
+part of '../main.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -17,9 +10,8 @@ class _SearchPage extends State<SearchPage> {
   String error = '';
   bool loading = false;
 
-  void doSearch(text) async {
-    List newTexts = await Provider.of<WriterData>(context).searchText(text);
-
+  void doSearch(text) {
+    List newTexts = writer.searchText(text);
     setState(() {
       texts = newTexts;
     });
@@ -30,8 +22,8 @@ class _SearchPage extends State<SearchPage> {
     setState(() {
       loading = true;
     });
-
-    await Provider.of<WriterData>(context).getMyTexts();
+    await writer.getMyTexts('matheusRmelo');
+    //await Provider.of<WriterData>(context).getMyTexts();
     setState(() {
       loading = false;
     });
@@ -45,53 +37,50 @@ class _SearchPage extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WriterData>(
-      builder: (ctx, writerdata, child) => Scaffold(
-          appBar: CustomAppBar(
-              pageContext: context, title: 'Jovem, pesquise seu texto abaixo'),
-          backgroundColor: Color(0xFF9B9987),
-          body: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8)),
-                margin: EdgeInsets.all(16),
-                child: TextFormField(
-                  style: TextStyle(fontFamily: 'Fredoka One', fontSize: 12),
-                  decoration: InputDecoration(
-                      hintText: 'Digite o nome do seu texto',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      suffixIcon: Icon(
-                        Icons.search,
-                        size: 32,
-                      )),
-                  onChanged: (text) {
-                    doSearch(text);
-                  },
-                ),
+    return Scaffold(
+        appBar: CustomAppBar(
+            pageContext: context, title: 'Jovem, pesquise seu texto abaixo'),
+        backgroundColor: Color(0xFF9B9987),
+        body: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(16)),
+              margin: EdgeInsets.all(16),
+              child: TextFormField(
+                style: TextStyle(fontFamily: 'Fredoka One', fontSize: 12),
+                decoration: InputDecoration(
+                    hintText: 'Digite o nome do seu texto',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    suffixIcon: Icon(
+                      Icons.search,
+                      size: 32,
+                    )),
+                onChanged: (text) {
+                  doSearch(text);
+                },
               ),
-              Expanded(
-                  child: GridView.count(
-                crossAxisCount: 3,
-                children: List.generate(
-                    texts.length,
-                    (index) => TextBox(
-                          textId: texts[index]['id'] != null
-                              ? texts[index]['id']
-                              : '',
-                          title: texts[index]['text']['title'] != null
-                              ? texts[index]['text']['title']
-                              : '',
-                          onTap: (textId) {
-                            Navigator.pushNamed(context, '/writer',
-                                arguments: {"textId": textId});
-                          },
-                        )),
-              ))
-            ],
-          )),
-    );
+            ),
+            Expanded(
+                child: GridView.count(
+              crossAxisCount: 3,
+              children: List.generate(
+                  texts.length,
+                  (index) => TextBox(
+                        textId: texts[index]['id'] != null
+                            ? texts[index]['id']
+                            : '',
+                        title: texts[index]['text']['title'] != null
+                            ? texts[index]['text']['title']
+                            : '',
+                        onTap: (textId) {
+                          Navigator.pushNamed(context, '/writer',
+                              arguments: {"textId": textId});
+                        },
+                      )),
+            ))
+          ],
+        ));
   }
 }

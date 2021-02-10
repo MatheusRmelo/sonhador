@@ -1,27 +1,21 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../models/writerdata.dart';
-import 'placeholder.dart';
+part of '../main.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePage createState() => _HomePage();
 }
 
+String userId = '';
+
 class _HomePage extends State<HomePage> {
   int _currentIndex = 0;
-  TextStyle smallStyleLight =
-      TextStyle(fontFamily: 'Fredoka One', fontSize: 12, color: Colors.white);
 
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.white),
+    HomeScreen(),
     PlaceholderWidget(Colors.deepOrange),
     PlaceholderWidget(Colors.green),
-    PlaceholderWidget(Colors.deepOrange),
-    PlaceholderWidget(Colors.deepOrange),
+    userId != '' ? PlaceholderWidget(Colors.deepOrange) : NoUserWidget(),
+    userId != '' ? PlaceholderWidget(Colors.deepOrange) : NoUserWidget(),
   ];
 
   void onTabTapped(int index) {
@@ -35,11 +29,25 @@ class _HomePage extends State<HomePage> {
     }
   }
 
+  void newText() async {
+    Map result = await writer.createText(
+        userId: 'matheusRmelo', newTitle: 'Novo título');
+    if (result['error'] != '') {
+      print(result['error']);
+    } else {
+      Navigator.pushNamed(context, '/writer',
+          arguments: {"textId": result['data']});
+    }
+  }
+
   void createNewText(BuildContext pageContext) {
     showDialog(
         context: pageContext,
         builder: (BuildContext context) {
           return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
               scrollable: true,
               content: Padding(
                   padding: const EdgeInsets.all(4),
@@ -47,18 +55,11 @@ class _HomePage extends State<HomePage> {
                     Container(
                         width: 200,
                         child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
                             color: Color(0xFF9B9987),
-                            onPressed: () async {
-                              Map result =
-                                  await Provider.of<WriterData>(context)
-                                      .saveText('Sem título', ['']);
-                              if (result['error'] != '') {
-                                print(result['error']);
-                              } else {
-                                Navigator.pushNamed(context, '/writer',
-                                    arguments: {"textId": result['data']});
-                              }
-                            },
+                            onPressed: newText,
                             child: Text(
                               'Nova história',
                               style: smallStyleLight,
@@ -66,6 +67,9 @@ class _HomePage extends State<HomePage> {
                     Container(
                         width: 200,
                         child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
                             color: Color(0xFF483D3F),
                             onPressed: () {
                               Navigator.pushNamed(context, '/search');
@@ -79,9 +83,6 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My App'),
-      ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
