@@ -23,9 +23,13 @@ class _HomePage extends State<HomePage> {
       //Navigator.pushNamed(context, '/writer');
       createNewText(context);
     } else {
-      setState(() {
-        _currentIndex = index;
-      });
+      if (index == 4) {
+        Navigator.pushNamed(context, '/swiper');
+      } else {
+        setState(() {
+          _currentIndex = index;
+        });
+      }
     }
   }
 

@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+
 import './stores/writer.dart';
 
-//import '../models/writerdata.dart';
 import 'partials/homeappbar.dart';
 import 'partials/writerappbar.dart';
 import 'partials/loadingappbar.dart';
@@ -14,6 +15,7 @@ import 'partials/textbox.dart';
 
 import './pages/placeholder.dart';
 import './pages/no-user.dart';
+import './pages/swiper.dart';
 
 part 'pages/home.dart';
 part 'pages/home-screen.dart';
@@ -49,6 +51,7 @@ class App extends StatelessWidget {
       '/search': (context) => SearchPage(),
       '/publish': (context) => PublishPage(),
       '/hashtag': (context) => HashTagPage(),
+      '/swiper': (context) => MyHomePage(),
     });
   }
 }

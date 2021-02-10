@@ -110,23 +110,32 @@ class _HomeScreen extends State<HomeScreen> {
                     child: Column(
                       children: [
                         Container(
-                            margin: EdgeInsets.only(bottom: 16),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8)),
                             height: heightDevice * 0.65,
-                            child: Container(
-                              padding: EdgeInsets.all(8),
-                              width: widthDevice * 1,
-                              child: Text(
-                                _controller.text,
-                                style: TextStyle(fontFamily: 'EBGaramond'),
-                                textAlign: alignment == 'center'
-                                    ? TextAlign.center
-                                    : alignment == 'left'
-                                        ? TextAlign.start
-                                        : TextAlign.end,
-                              ),
+                            child: Swiper(
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                    margin: EdgeInsets.only(bottom: 16),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    height: heightDevice * 0.65,
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      width: widthDevice * 1,
+                                      child: Text(
+                                        _controller.text,
+                                        style:
+                                            TextStyle(fontFamily: 'EBGaramond'),
+                                        textAlign: alignment == 'center'
+                                            ? TextAlign.center
+                                            : alignment == 'left'
+                                                ? TextAlign.start
+                                                : TextAlign.end,
+                                      ),
+                                    ));
+                              },
+                              itemCount: 3,
                             )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
