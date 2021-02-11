@@ -56,7 +56,7 @@ class App extends StatelessWidget {
       '/search': (context) => SearchPage(),
       '/publish': (context) => PublishPage(),
       '/hashtag': (context) => HashTagPage(),
-      '/comments': (context) => CommentsPage(),
+      '/comments': (context) => CommentsPage()
     });
   }
 }

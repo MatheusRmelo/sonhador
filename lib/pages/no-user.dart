@@ -7,6 +7,8 @@ class NoUserWidget extends StatelessWidget {
       TextStyle(fontFamily: 'Fredoka One', fontSize: 24, color: Colors.white);
   @override
   Widget build(BuildContext context) {
+    double widthDevice = MediaQuery.of(context).size.width;
+
     return Container(
       color: Color(0xFF483D3F),
       child: Center(
@@ -18,19 +20,29 @@ class NoUserWidget extends StatelessWidget {
               color: Colors.white,
               size: 64,
             ),
-            Text('Crie uma conta', style: h1Light),
+            Text('Se aventure conosco', style: h1Light),
             Container(
-                width: 200,
+                width: widthDevice * 0.6,
                 child: RaisedButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     color: Colors.white,
-                    onPressed: () {},
-                    child: Text(
-                      'Criar conta',
-                      style: smallStyleSecondary,
-                    ))),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/sign-in');
+                    },
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image(
+                              width: 24,
+                              height: 24,
+                              image: AssetImage('assets/google.png')),
+                          Text(
+                            'Entrar com o google',
+                            style: smallStyleSecondary,
+                          ),
+                        ]))),
           ],
         ),
       ),
