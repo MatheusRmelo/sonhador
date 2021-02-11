@@ -27,6 +27,7 @@ dependencies:
   mobx: ^1.2.1+4
   flutter_mobx: ^1.1.0+2
   flutter_swiper: ^1.1.6
+  share: ^0.6.5+4
 
 
 

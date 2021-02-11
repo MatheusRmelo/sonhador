@@ -1,6 +1,6 @@
 class Text {
-  String title, userId, hashtags, alignment;
-  List pages;
+  String title, userId, hashtags, alignment, textId;
+  List pages, likes,comments;
   bool published, ads, adult;
 
   Text(String userId,
@@ -10,7 +10,10 @@ class Text {
       bool ads = true,
       bool adult = false,
       String hashtags = '',
-      String alignment = 'left']) {
+      String alignment = 'left',
+      List likes,
+      String textId = '',
+      List comments]) {
     this.userId = userId;
     this.title = title;
     this.pages = pages == null ? [''] : pages;
@@ -19,6 +22,9 @@ class Text {
     this.adult = adult;
     this.hashtags = hashtags;
     this.alignment = alignment;
+    this.likes = likes == null ? [] : likes;
+    this.textId = textId;
+    this.comments = comments == null ? [] : comments;
   }
 
   Map<String, dynamic> getText() {
@@ -30,6 +36,7 @@ class Text {
       "adult": this.adult,
       "hashtags": this.hashtags,
       "alignment": this.alignment,
+      "likes": this.likes,
       "userId": this.userId
     };
   }
@@ -102,5 +109,52 @@ class Text {
 
   String getAlignment() {
     return this.alignment;
+  }
+
+  /*-----------Text id-----------*/
+  void setTextId(String textId) {
+    this.textId = textId;
+  }
+
+  String getTextId() {
+    return this.textId;
+  }
+
+  /*-----------Actions - Likes-----------*/
+  void setLikes(List likes) {
+    this.likes = likes;
+  }
+
+  void liked(String userId) {
+    if (this.likes.contains(userId)) {
+      this.likes.remove(userId);
+    } else {
+      this.likes.add(userId);
+    }
+  }
+
+  List getLikes() {
+    return this.likes;
+  }
+
+  bool getLike(String userId) {
+    return this.likes.contains(userId);
+  }
+
+  /*-----------Actions - Comments-----------*/
+  void setComments(List comments) {
+    this.comments = comments;
+  }
+
+  void comment(String userId, String comment) {
+    this.comments.add({"userId": userId, "comment": comment});
+  }
+
+  List getComments() {
+    return this.comments;
+  }
+
+  Map getComment(int index) {
+    return this.comments[index];
   }
 }

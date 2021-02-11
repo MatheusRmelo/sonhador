@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 Widget HomeAppBar(
     {@required BuildContext pageContext,
     String title = 'Sem título',
-    Function onChangeTitle}) {
+    int pagesLength = 1,
+    int currentPage = 1}) {
   void backAction() {
     Navigator.pop(pageContext);
   }
@@ -16,7 +17,7 @@ Widget HomeAppBar(
       Center(
         child: Container(
           margin: EdgeInsets.only(right: 18),
-          child: Text('1/1',
+          child: Text('$currentPage/$pagesLength',
               style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Fredoka One',

@@ -8,54 +8,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   bool loading = false;
-  String alignment = 'left';
   int currentPage = 0;
+  int currentText = 0;
+  bool liked = false;
   TextEditingController _controller = TextEditingController(text: '');
+  String userId = 'matheusRmelo';
 
-  String newTitle = '';
-  String status = '';
-  Timer _timer;
-
-  String textId = '';
-
-  void changeAlignment(String newAligment) {
-    setState(() {
-      alignment = newAligment;
-    });
-  }
-
-  void getText() async {
+  void getTexts() async {
     await Future.delayed(Duration(seconds: 1));
-    Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     setState(() {
       loading = true;
-      textId = '8CGNENASV7yJYO1WJFue';
     });
-
-    Map<dynamic, dynamic> result = await writer.getTextById(textId);
-    if (result['error'] != '') {
-      print(result['error']);
-    } else {
-      setState(() {
-        _controller.text = writer.text.getPage(currentPage);
-      });
-    }
+    await home.getTexts();
+    setState(() {
+      _controller.text = home.texts[currentText].getPage(currentPage);
+      liked = home.texts[currentText].getLike(userId);
+    });
     setState(() {
       loading = false;
     });
-  }
-
-  void updateText(String textId) async {
-    var result = await writer.updatePages(textId);
-    if (result['data'] == 'success') {
-      setState(() {
-        status = 'Salvo';
-      });
-    } else {
-      setState(() {
-        status = 'Falha ao salvar';
-      });
-    }
   }
 
   void prevPage() {
@@ -63,26 +34,66 @@ class _HomeScreen extends State<HomeScreen> {
       if (currentPage != 0) {
         currentPage--;
       }
-      _controller.text = writer.text.getPage(currentPage);
+      _controller.text = home.texts[currentText].getPage(currentPage);
     });
   }
 
   void nextPage() {
     setState(() {
-      if ((currentPage + 1) != writer.text.getPages().length) {
+      if ((currentPage + 1) != home.texts[currentText].getPages().length) {
         currentPage++;
-        _controller.text = writer.text.getPage(currentPage);
+        _controller.text = home.texts[currentText].getPage(currentPage);
       }
     });
+  }
+
+  void nextText(int index) {
+    setState(() {
+      if ((index + 1) != home.texts.length) {
+        currentText = index;
+        _controller.text = home.texts[currentText].getPage(currentPage);
+        liked = home.texts[currentText].getLike(userId);
+      } else if ((index + 1) <= home.texts.length) {
+        currentText = index;
+        _controller.text = home.texts[currentText].getPage(currentPage);
+        liked = home.texts[currentText].getLike(userId);
+      }
+    });
+  }
+
+  void likedText() async {
+    var result = await home.liked(
+        home.texts[currentText].getTextId(), userId, currentText);
+    if (result['error'] != '') {
+      print(result['error']);
+    }
+    setState(() {
+      liked = home.texts[currentText].getLike(userId);
+    });
+  }
+
+  void sharedText() {
+    String text = '';
+    text += home.texts[currentText].getTitle() + '\n\n';
+    int page = 0;
+    home.texts[currentText].getPages().forEach((element) {
+      text += (page + 1).toString() +
+          '/' +
+          home.texts[currentText].getPages().length.toString() +
+          '\n\n';
+      text += element + '\n\n\n';
+      page++;
+    });
+    text += 'Autor: ' + userId;
+    Share.share(text);
   }
 
   void initState() {
     super.initState();
     setState(() {
-      _timer = Timer(Duration(seconds: 1), () {});
       loading = true;
     });
-    getText();
+    getTexts();
   }
 
   @override
@@ -90,7 +101,12 @@ class _HomeScreen extends State<HomeScreen> {
     double heightDevice = MediaQuery.of(context).size.height;
     double widthDevice = MediaQuery.of(context).size.width;
 
-    String title = loading ? '' : writer.text.getTitle();
+    String title = loading ? '' : home.texts[currentText].getTitle();
+    String hashtags = loading ? '' : home.texts[currentText].getHashtags();
+    String alignment =
+        loading ? 'left' : home.texts[currentText].getAlignment();
+    String likes =
+        loading ? '0' : home.texts[currentText].getLikes().length.toString();
 
     return Scaffold(
       backgroundColor: Color(0xFF483D3F),
@@ -98,8 +114,9 @@ class _HomeScreen extends State<HomeScreen> {
           ? LoadingAppBar(pageContext: context, color: Color(0xFF483D3F))
           : HomeAppBar(
               pageContext: context,
-              title: status != '' ? '$title - $status' : title,
-            ),
+              title: title,
+              pagesLength: home.texts[currentText].getPages().length,
+              currentPage: currentPage + 1),
       body: loading
           ? Loading(status: 'Carregando...')
           : Stack(
@@ -112,6 +129,7 @@ class _HomeScreen extends State<HomeScreen> {
                         Container(
                             height: heightDevice * 0.65,
                             child: Swiper(
+                              onIndexChanged: (int index) => nextText(index),
                               scrollDirection: Axis.vertical,
                               itemBuilder: (BuildContext context, int index) {
                                 return Container(
@@ -135,13 +153,13 @@ class _HomeScreen extends State<HomeScreen> {
                                       ),
                                     ));
                               },
-                              itemCount: 3,
+                              itemCount: loading ? 1 : home.texts.length,
                             )),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              '#poem',
+                              hashtags,
                               style: smallStyleLight,
                             )
                           ],
@@ -215,33 +233,42 @@ class _HomeScreen extends State<HomeScreen> {
                           padding: EdgeInsets.zero,
                           icon: Icon(Icons.person_add,
                               size: 32, color: Colors.white),
-                          onPressed: () {
-                            changeAlignment('left');
-                          },
+                          onPressed: () {},
                         ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: Icon(Icons.favorite,
-                              size: 32, color: Colors.white),
-                          onPressed: () {
-                            changeAlignment('center');
-                          },
+                        Column(
+                          children: [
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              icon: Icon(
+                                liked ? Icons.favorite : Icons.favorite_border,
+                                size: 32,
+                                color: liked ? Colors.red : Colors.white,
+                              ),
+                              onPressed: likedText,
+                            ),
+                            Text(likes, style: smallStyleLight)
+                          ],
                         ),
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon: Icon(Icons.comment,
                               size: 32, color: Colors.white),
                           onPressed: () {
-                            changeAlignment('right');
+                            Navigator.pushNamed(context, '/comments',
+                                arguments: {"currentText": currentText});
                           },
                         ),
+                        Text(
+                            home.texts[currentText]
+                                .getComments()
+                                .length
+                                .toString(),
+                            style: smallStyleLight),
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon:
                               Icon(Icons.share, size: 32, color: Colors.white),
-                          onPressed: () {
-                            changeAlignment('right');
-                          },
+                          onPressed: sharedText,
                         ),
                       ],
                     )),
