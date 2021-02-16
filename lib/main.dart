@@ -7,6 +7,7 @@ import 'package:share/share.dart';
 
 import './stores/writer.dart';
 import './stores/home.dart';
+import './stores/user.dart';
 
 import 'partials/homeappbar.dart';
 import 'partials/writerappbar.dart';
@@ -17,7 +18,8 @@ import 'partials/textbox.dart';
 import 'partials/commentbox.dart';
 
 import './pages/placeholder.dart';
-import './pages/no-user.dart';
+
+part 'pages/no-user.dart';
 
 part 'pages/home.dart';
 part 'pages/home-screen.dart';
@@ -34,6 +36,7 @@ part 'pages/search.dart';
 
 final writer = Writer();
 final home = Home();
+final user = User();
 
 TextStyle smallText =
     TextStyle(fontFamily: 'Fredoka One', fontSize: 16, color: Colors.black);

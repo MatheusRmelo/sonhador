@@ -39,11 +39,17 @@ mixin _$Writer on _Writer, Store {
     });
   }
 
+  final _$signInWithGoogleAsyncAction = AsyncAction('_Writer.signInWithGoogle');
+
+  @override
+  Future<String> signInWithGoogle() {
+    return _$signInWithGoogleAsyncAction.run(() => super.signInWithGoogle());
+  }
+
   final _$createTextAsyncAction = AsyncAction('_Writer.createText');
 
   @override
-  Future<Map<dynamic, dynamic>> createText(
-      {String userId, String newTitle = 'Sem título'}) {
+  Future createText({String userId, String newTitle = 'Sem título'}) {
     return _$createTextAsyncAction
         .run(() => super.createText(userId: userId, newTitle: newTitle));
   }
