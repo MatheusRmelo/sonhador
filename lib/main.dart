@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:share/share.dart';
+import 'package:sonhador/app/app_module.dart';
 
 import './stores/writer.dart';
 import './stores/home.dart';
@@ -47,7 +49,10 @@ TextStyle smallStyleLight =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(App());
+  //runApp(App());
+  runApp(ModularApp(
+    module: AppModule(),
+  ));
 }
 
 class App extends StatelessWidget {
