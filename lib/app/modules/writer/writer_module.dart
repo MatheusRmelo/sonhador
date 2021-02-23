@@ -16,7 +16,7 @@ class WriterModule extends WidgetModule {
         Bind((i) => WriterController(i.get())),
         Bind((i) => HashTagsController(i.get())),
         Bind((i) => PublishController(i.get())),
-        Bind((i) => SearchController(i.get())),
+        Bind((i) => SearchController(i.get(), i.get())),
         Bind((i) => WriterRepository())
       ];
 

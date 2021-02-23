@@ -3,8 +3,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_page.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
+import 'package:sonhador/app/modules/login/login_module.dart';
 import 'package:sonhador/app/modules/writer/writer_module.dart';
 import 'package:sonhador/main.dart';
+
+import '../../app_controller.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,16 +16,20 @@ class HomePage extends StatefulWidget {
 
 String userId = '';
 
-class _HomePage extends ModularState<HomePage, HomeController> {
+class _HomePage extends State<HomePage> {
+  final homeController = Modular.get<HomeController>();
+
   List widgetOptins = [
     HomeContentPage(),
     WriterModule(),
     WriterModule(),
-    WriterModule(),
+    LoginModule(),
     WriterModule(),
   ];
 
   void createNewText(BuildContext pageContext) {
+    final appController = Modular.get<AppController>();
+
     showDialog(
         context: pageContext,
         builder: (BuildContext context) {
@@ -42,8 +49,13 @@ class _HomePage extends ModularState<HomePage, HomeController> {
                             ),
                             color: Color(0xFF9B9987),
                             onPressed: () {
-                              Modular.to.pushNamed('/writer',
-                                  arguments: {"newText": true});
+                              if (appController.user.value == null) {
+                                Modular.to.pop();
+                                homeController.updateCurrentIndex(3);
+                              } else {
+                                Modular.to.pushNamed('/writer',
+                                    arguments: {"newText": true});
+                              }
                             },
                             child: Text(
                               'Nova história',
@@ -57,7 +69,12 @@ class _HomePage extends ModularState<HomePage, HomeController> {
                             ),
                             color: Color(0xFF483D3F),
                             onPressed: () {
-                              Modular.to.pushNamed('/writer/search');
+                              if (appController.user.value == null) {
+                                Modular.to.pop();
+                                homeController.updateCurrentIndex(3);
+                              } else {
+                                Modular.to.pushNamed('/writer/search');
+                              }
                             },
                             child: Text('Continuar história',
                                 style: smallStyleLight))),
@@ -69,7 +86,7 @@ class _HomePage extends ModularState<HomePage, HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(
-        builder: (_) => widgetOptins.elementAt(controller.currentIndex),
+        builder: (_) => widgetOptins.elementAt(homeController.currentIndex),
       ),
       bottomNavigationBar: _bottomTabNavigator(),
     );
@@ -83,10 +100,10 @@ class _HomePage extends ModularState<HomePage, HomeController> {
                 if (index == 2) {
                   createNewText(context);
                 } else {
-                  controller.updateCurrentIndex(index);
+                  homeController.updateCurrentIndex(index);
                 }
               },
-              currentIndex: controller.currentIndex,
+              currentIndex: homeController.currentIndex,
               type: BottomNavigationBarType.fixed,
               backgroundColor: Color(0xFF9B9987),
               selectedItemColor: Colors.white,

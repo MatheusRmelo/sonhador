@@ -6,14 +6,14 @@ class WriterRepository {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<WriterModel> createNewText(
-      String title, List<String> pages, String alignment) async {
+      String userId, String title, List<String> pages, String alignment) async {
     WriterModel textModel;
 
     DocumentReference result = await db.collection('texts').add({
       "title": title,
       "pages": pages,
       "alignment": alignment,
-      "userId": 'matheusRmelo'
+      "userId": userId
     });
     if (result.id != '') {
       textModel = WriterModel(

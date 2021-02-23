@@ -36,8 +36,10 @@ abstract class _WriterBase with Store {
   _WriterBase(this.repository);
 
   @action
-  void createText() {
-    text = repository.createNewText("Sem título", [''], 'left').asObservable();
+  void createText(String userId) {
+    text = repository
+        .createNewText(userId, "Sem título", [''], 'left')
+        .asObservable();
   }
 
   @action

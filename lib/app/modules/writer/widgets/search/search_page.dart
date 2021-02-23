@@ -61,7 +61,7 @@ class _SearchPage extends State<SearchPage> {
                           size: 32,
                         )),
                     onChanged: (text) {
-                      searchController.searchText('matheusRmelo', text);
+                      searchController.searchText(text);
                     },
                   ),
                 ),

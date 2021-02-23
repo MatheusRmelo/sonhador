@@ -69,11 +69,11 @@ mixin _$SearchController on _SearchControllerBase, Store {
   }
 
   @override
-  void searchText(String userId, String textSearch) {
+  void searchText(String textSearch) {
     final _$actionInfo = _$_SearchControllerBaseActionController.startAction(
         name: '_SearchControllerBase.searchText');
     try {
-      return super.searchText(userId, textSearch);
+      return super.searchText(textSearch);
     } finally {
       _$_SearchControllerBaseActionController.endAction(_$actionInfo);
     }

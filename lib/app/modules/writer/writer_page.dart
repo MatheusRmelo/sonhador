@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
 import 'package:sonhador/main.dart';
 import 'package:sonhador/app/utils/loading.dart';
@@ -15,13 +16,14 @@ class WriterPage extends StatefulWidget {
 
 class _WriterPage extends State<WriterPage> {
   final writerController = Modular.get<WriterController>();
+  final appController = Modular.get<AppController>();
 
   void getText() async {
     await Future.delayed(Duration(seconds: 1));
     Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     bool newText = routeData['newText'];
     if (newText) {
-      writerController.createText();
+      writerController.createText(appController.user.value.userId);
       writerController.loading = false;
     } else {
       String textId = routeData['textId'];
