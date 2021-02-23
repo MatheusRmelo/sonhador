@@ -158,6 +158,17 @@ mixin _$WriterController on _WriterBase, Store {
   }
 
   @override
+  void getText(String textId) {
+    final _$actionInfo =
+        _$_WriterBaseActionController.startAction(name: '_WriterBase.getText');
+    try {
+      return super.getText(textId);
+    } finally {
+      _$_WriterBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void editPage(String page) {
     final _$actionInfo =
         _$_WriterBaseActionController.startAction(name: '_WriterBase.editPage');

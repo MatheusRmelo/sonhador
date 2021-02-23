@@ -41,8 +41,14 @@ abstract class _WriterBase with Store {
   }
 
   @action
+  void getText(String textId) {
+    text = repository.getText(textId).asObservable();
+  }
+
+  @action
   void editPage(String page) {
     text.value.editPage(page, currentPage);
+
     if (_timer.isActive) {
       _timer.cancel();
     }

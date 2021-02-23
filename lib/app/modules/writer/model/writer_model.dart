@@ -1,7 +1,7 @@
 class WriterModel {
   final String id;
   String title;
-  final List<String> pages;
+  final List pages;
   String alignment;
 
   WriterModel({this.id, this.title, this.pages, this.alignment});

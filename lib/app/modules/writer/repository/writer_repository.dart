@@ -22,7 +22,21 @@ class WriterRepository {
     return textModel;
   }
 
-  Future<bool> editPages(String id, List<String> pages) async {
+  Future<WriterModel> getText(String id) async {
+    WriterModel textModel;
+    DocumentSnapshot result = await db.collection('texts').doc(id).get();
+    if (result.id != '') {
+      var data = result.data();
+      textModel = WriterModel(
+          id: result.id,
+          title: data['title'],
+          pages: data['pages'],
+          alignment: data['alignment']);
+    }
+    return textModel;
+  }
+
+  Future<bool> editPages(String id, List pages) async {
     bool result = await db
         .collection('texts')
         .doc(id)
@@ -53,6 +67,20 @@ class WriterRepository {
         .catchError((err) => false);
 
     return result;
+  }
+
+  Future<String> getHashtags(String id) async {
+    DocumentSnapshot result = await db.collection('texts').doc(id).get();
+    String tags = "";
+    if (result.id != '') {
+      var data = result.data();
+      if (data['hashtags'] != null) {
+        for (var tag in data['hashtags']) {
+          tags += '#' + tag;
+        }
+      }
+    }
+    return tags;
   }
 
   Future<bool> saveHashtags(String id, List<String> hashtags) async {

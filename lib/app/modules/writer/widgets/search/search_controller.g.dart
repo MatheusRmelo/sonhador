@@ -39,6 +39,21 @@ mixin _$SearchController on _SearchControllerBase, Store {
     });
   }
 
+  final _$_timerAtom = Atom(name: '_SearchControllerBase._timer');
+
+  @override
+  Timer get _timer {
+    _$_timerAtom.reportRead();
+    return super._timer;
+  }
+
+  @override
+  set _timer(Timer value) {
+    _$_timerAtom.reportWrite(value, super._timer, () {
+      super._timer = value;
+    });
+  }
+
   final _$_SearchControllerBaseActionController =
       ActionController(name: '_SearchControllerBase');
 

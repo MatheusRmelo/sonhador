@@ -80,7 +80,10 @@ class _SearchPage extends State<SearchPage> {
                                   title: texts[index].title,
                                   onTap: (textId) {
                                     Navigator.pushNamed(context, '/writer',
-                                        arguments: {"textId": textId});
+                                        arguments: {
+                                          "newText": false,
+                                          "textId": textId
+                                        });
                                   },
                                 )),
                       ))

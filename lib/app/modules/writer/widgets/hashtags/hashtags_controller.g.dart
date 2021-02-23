@@ -40,6 +40,29 @@ mixin _$HashTagsController on _HashTagsControllerBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_HashTagsControllerBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
+  final _$getHashtagsAsyncAction =
+      AsyncAction('_HashTagsControllerBase.getHashtags');
+
+  @override
+  Future<String> getHashtags(String id) {
+    return _$getHashtagsAsyncAction.run(() => super.getHashtags(id));
+  }
+
   final _$_HashTagsControllerBaseActionController =
       ActionController(name: '_HashTagsControllerBase');
 
@@ -58,7 +81,8 @@ mixin _$HashTagsController on _HashTagsControllerBase, Store {
   String toString() {
     return '''
 textController: ${textController},
-tags: ${tags}
+tags: ${tags},
+loading: ${loading}
     ''';
   }
 }

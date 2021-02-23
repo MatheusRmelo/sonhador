@@ -13,8 +13,19 @@ abstract class _HashTagsControllerBase with Store {
   TextEditingController textController = TextEditingController(text: '');
   @observable
   String tags;
+  @observable
+  bool loading = true;
 
   _HashTagsControllerBase(this.repository);
+
+  @action
+  Future<String> getHashtags(String id) async {
+    this.loading = true;
+    tags = await repository.getHashtags(id);
+    textController.text = tags;
+    this.loading = false;
+    return tags;
+  }
 
   @action
   void saveHashtags(String id) {

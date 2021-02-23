@@ -23,6 +23,10 @@ class _WriterPage extends State<WriterPage> {
     if (newText) {
       writerController.createText();
       writerController.loading = false;
+    } else {
+      String textId = routeData['textId'];
+      writerController.getText(textId);
+      writerController.loading = false;
     }
   }
 
@@ -115,6 +119,9 @@ class _WriterPage extends State<WriterPage> {
 
       double heightDevice = MediaQuery.of(context).size.height;
       WriterModel text = writerController.text.value;
+
+      writerController.textController.text =
+          text.pages[writerController.currentPage];
       return Scaffold(
           backgroundColor: Color(0xFF9B9987),
           appBar: WriterAppBar(
