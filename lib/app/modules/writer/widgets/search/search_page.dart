@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/writer/widgets/search/search_controller.dart';
+import 'package:sonhador/app/utils/loading_container.dart';
 import '../../../../utils/loading.dart';
 import '../../../../utils/customappbar.dart';
 import '../../../../utils/textbox.dart';
@@ -22,11 +23,7 @@ class _SearchPage extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        if (searchController.textsList.value == null ||
-            searchController.texts == null) {
-          return Loading(status: 'Carregando...');
-        }
-        if (searchController.textsList.error != null) {
+        if (searchController.texts.error != null) {
           return Center(
             child: Column(
               children: [
@@ -40,7 +37,7 @@ class _SearchPage extends State<SearchPage> {
           );
         }
 
-        var texts = searchController.texts;
+        var texts = searchController.texts.value;
         return Scaffold(
             appBar: CustomAppBar(
                 pageContext: context,
@@ -64,24 +61,29 @@ class _SearchPage extends State<SearchPage> {
                           size: 32,
                         )),
                     onChanged: (text) {
-                      //searchController.searchText(text);
+                      searchController.searchText('matheusRmelo', text);
                     },
                   ),
                 ),
-                Expanded(
-                    child: GridView.count(
-                  crossAxisCount: 3,
-                  children: List.generate(
-                      texts.length,
-                      (index) => TextBox(
-                            textId: texts[index].id,
-                            title: texts[index].title,
-                            onTap: (textId) {
-                              Navigator.pushNamed(context, '/writer',
-                                  arguments: {"textId": textId});
-                            },
-                          )),
-                ))
+                searchController.texts.value == null
+                    ? LoadingContainer(
+                        status: 'Carregando...',
+                        expanded: true,
+                      )
+                    : Expanded(
+                        child: GridView.count(
+                        crossAxisCount: 3,
+                        children: List.generate(
+                            texts.length,
+                            (index) => TextBox(
+                                  textId: texts[index].id,
+                                  title: texts[index].title,
+                                  onTap: (textId) {
+                                    Navigator.pushNamed(context, '/writer',
+                                        arguments: {"textId": textId});
+                                  },
+                                )),
+                      ))
               ],
             ));
       },

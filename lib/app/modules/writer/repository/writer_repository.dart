@@ -94,4 +94,21 @@ class WriterRepository {
 
     return list;
   }
+
+  Future<List<TextModel>> searchTexts(String userId, String textSearch) async {
+    List<TextModel> list = [];
+
+    QuerySnapshot result =
+        await db.collection('texts').where('userId', isEqualTo: userId).get();
+
+    result.docs.forEach((element) {
+      var data = element.data();
+      if (data['title'].toLowerCase().contains(textSearch)) {
+        TextModel text = TextModel(data['title'], element.id);
+        list.add(text);
+      }
+    });
+
+    return list;
+  }
 }

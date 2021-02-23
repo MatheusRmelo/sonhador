@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 import 'package:sonhador/app/modules/writer/repository/writer_repository.dart';
 import '../../model/text_model.dart';
@@ -9,9 +11,11 @@ abstract class _SearchControllerBase with Store {
   final WriterRepository repository;
 
   @observable
-  ObservableFuture<List<TextModel>> textsList;
+  ObservableFuture<List<TextModel>> texts;
   @observable
-  List<TextModel> texts;
+  ObservableFuture<List<TextModel>> textsOld;
+  @observable
+  Timer _timer = Timer(Duration(seconds: 1), () {});
 
   _SearchControllerBase(this.repository) {
     fetchTexts('matheusRmelo');
@@ -19,23 +23,17 @@ abstract class _SearchControllerBase with Store {
 
   @action
   void fetchTexts(String userId) {
-    textsList = repository.getAllTexts(userId).asObservable();
-    texts = textsList.value;
+    texts = repository.getAllTexts(userId).asObservable();
   }
 
   @action
-  void searchText(String textSearch) {
+  void searchText(String userId, String textSearch) {
     textSearch = textSearch.trim().toLowerCase();
-    // List<TextModel> results = [];
-    // if (textSearch == '') {
-    //   texts = textsList.value;
-    // } else {
-    //   for (var text in texts) {
-    //     if (text.title.toLowerCase().contains(textSearch)) {
-    //       results.add(text);
-    //     }
-    //   }
-    //   texts = results;
-    // }
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
+    _timer = Timer(Duration(seconds: 1), () {
+      texts = repository.searchTexts(userId, textSearch).asObservable();
+    });
   }
 }
