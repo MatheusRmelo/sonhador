@@ -23,7 +23,7 @@ class _WriterPage extends State<WriterPage> {
     Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     bool newText = routeData['newText'];
     if (newText) {
-      writerController.createText(appController.user.value.userId);
+      writerController.createText(appController.user.value.userName);
       writerController.loading = false;
     } else {
       String textId = routeData['textId'];

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:sonhador/partials/loadingappbar.dart';
 
 class Loading extends StatelessWidget {
-  Loading({@required this.status});
+  Loading({@required this.status, this.color});
 
   final String status;
+  Color color;
 
   TextStyle smallText =
       TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Fredoka One');
@@ -13,8 +13,10 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LoadingAppBar(pageContext: context, color: Color(0xFF9B9987)),
-      backgroundColor: Color(0xFF9B9987),
+      appBar: LoadingAppBar(
+          pageContext: context,
+          color: color != null ? color : Color(0xFF9B9987)),
+      backgroundColor: color != null ? color : Color(0xFF9B9987),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

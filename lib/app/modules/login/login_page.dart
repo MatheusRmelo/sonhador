@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
+import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/loading.dart';
 
 class LoginPage extends StatelessWidget {
@@ -63,6 +64,12 @@ class LoginPage extends StatelessWidget {
 
     return Observer(builder: (_) {
       if (appController.user.value == null) {
+        return Loading(
+          status: 'Carregando...',
+          color: secondary_color,
+        );
+      }
+      if (appController.user.value.userId == '') {
         return Container(
           color: Color(0xFF483D3F),
           child: Center(

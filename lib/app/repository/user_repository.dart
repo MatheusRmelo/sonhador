@@ -2,11 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sonhador/app/model/user_model.dart';
+import 'package:sonhador/app/services/user_services.dart';
 
 class UserRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  final UserService service;
+
+  UserRepository(this.service);
 
   Future<UserModel> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
@@ -27,21 +31,23 @@ class UserRepository {
 
       final User currentUser = _auth.currentUser;
       assert(user.uid == currentUser.uid);
-      UserModel userModel = UserModel(user.uid, user.displayName);
-      createUser(user.uid, user.displayName);
+      String userName = await createUser(user.uid, user.displayName);
+      UserModel userModel = UserModel(user.uid, user.displayName, userName);
+      service.saveUser(userModel);
       return userModel;
     }
 
     return null;
   }
 
-  void createUser(String userId, String displayName) async {
+  Future<String> createUser(String userId, String displayName) async {
     var verifyExist = await db.collection('users').doc(userId).get();
+    String userName;
     if (!verifyExist.exists) {
       String name = displayName.split(" ")[0];
       int iName = displayName.split(" ").length;
       String lastName = displayName.split(" ")[iName - 1];
-      String userName = (name + lastName).toLowerCase();
+      userName = (name + lastName).toLowerCase();
 
       var qtdUsers = await db
           .collection('users')
@@ -51,12 +57,20 @@ class UserRepository {
         userName += qtdUsers.size.toString();
       }
       await db.collection('users').doc(userId).set({"user_name": userName});
+    } else {
+      userName = verifyExist.data()['user_name'];
     }
+
+    print(userName);
+
+    return userName;
   }
 
-  void signOutGoogle() async {
+  Future<UserModel> signOutGoogle() async {
     await googleSignIn.signOut();
 
-    print("User Signed Out");
+    UserModel user = await service.clearUser();
+
+    return user;
   }
 }

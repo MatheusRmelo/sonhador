@@ -49,7 +49,7 @@ class _HomePage extends State<HomePage> {
                             ),
                             color: Color(0xFF9B9987),
                             onPressed: () {
-                              if (appController.user.value == null) {
+                              if (appController.user.value.userId == '') {
                                 Modular.to.pop();
                                 homeController.updateCurrentIndex(3);
                               } else {
@@ -69,7 +69,7 @@ class _HomePage extends State<HomePage> {
                             ),
                             color: Color(0xFF483D3F),
                             onPressed: () {
-                              if (appController.user.value == null) {
+                              if (appController.user.value.userId == '') {
                                 Modular.to.pop();
                                 homeController.updateCurrentIndex(3);
                               } else {

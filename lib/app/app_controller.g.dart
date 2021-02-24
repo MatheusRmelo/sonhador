@@ -28,6 +28,17 @@ mixin _$AppController on _AppControllerBase, Store {
       ActionController(name: '_AppControllerBase');
 
   @override
+  void verifyLogin() {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.verifyLogin');
+    try {
+      return super.verifyLogin();
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void loginGmail() {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction(
         name: '_AppControllerBase.loginGmail');
