@@ -18,6 +18,11 @@ class _HomeContentPage extends State<HomeContentPage> {
   final homeController = Modular.get<HomeContentController>();
 
   void prevPage() {
+    if (homeController.currentPage != 0) {
+      homeController.currentPage--;
+    }
+    homeController.textController.text = homeController.texts
+        .value[homeController.currentText].pages[homeController.currentPage];
     // setState(() {
     //   if (currentPage != 0) {
     //     currentPage--;
@@ -27,19 +32,12 @@ class _HomeContentPage extends State<HomeContentPage> {
   }
 
   void nextPage() {
-    if ((homeController.currentPage + 1) != homeController.texts.value.length) {
+    if ((homeController.currentPage + 1) !=
+        homeController.texts.value[homeController.currentText].pages.length) {
       homeController.currentPage++;
-      homeController.textController.text = homeController
-          .texts.value[homeController.currentText]
-          .getPage(homeController.currentPage);
+      homeController.textController.text = homeController.texts
+          .value[homeController.currentText].pages[homeController.currentPage];
     }
-
-    // setState(() {
-    //   if ((currentPage + 1) != home.texts[currentText].getPages().length) {
-    //     currentPage++;
-    //     _controller.text = home.texts[currentText].getPage(currentPage);
-    //   }
-    // });
   }
 
   void nextText(int index) {
