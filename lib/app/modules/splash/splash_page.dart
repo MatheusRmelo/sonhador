@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
+import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/loading.dart';
 
 class SplashPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
               padding: EdgeInsets.all(50),
               width: double.infinity,
               height: double.infinity,
-              color: Colors.white,
+              color: secondary_color,
               child: Image.asset(
                 'assets/logo.png',
               )),

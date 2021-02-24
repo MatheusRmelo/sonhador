@@ -17,6 +17,7 @@ class WriterPage extends StatefulWidget {
 class _WriterPage extends State<WriterPage> {
   final writerController = Modular.get<WriterController>();
   final appController = Modular.get<AppController>();
+  //TextEditingController _textController = TextEditingController(text: '');
 
   void getText() async {
     await Future.delayed(Duration(seconds: 1));
@@ -45,11 +46,13 @@ class _WriterPage extends State<WriterPage> {
   void prevPage() {
     writerController.status = 'Salvando...';
     writerController.prevPage();
+    //_textController.text =writerController.text.value.pages[writerController.currentPage];
   }
 
   void nextPage() {
     writerController.status = 'Salvando...';
     writerController.nextPage();
+    //_textController.text =writerController.text.value.pages[writerController.currentPage];
   }
 
   void initState() {
@@ -121,9 +124,11 @@ class _WriterPage extends State<WriterPage> {
 
       double heightDevice = MediaQuery.of(context).size.height;
       WriterModel text = writerController.text.value;
-
-      writerController.textController.text =
-          text.pages[writerController.currentPage];
+      if (writerController.textController.text == '') {
+        writerController.textController.text =
+            writerController.text.value.pages[writerController.currentPage];
+      }
+      //_textController.text = text.pages[writerController.currentPage];
       return Scaffold(
           backgroundColor: Color(0xFF9B9987),
           appBar: WriterAppBar(
@@ -148,6 +153,7 @@ class _WriterPage extends State<WriterPage> {
                             borderRadius: BorderRadius.circular(8)),
                         height: heightDevice * 0.7,
                         child: TextFormField(
+                          autofocus: true,
                           style: TextStyle(fontFamily: 'EBGaramond'),
                           controller: writerController.textController,
                           textAlignVertical: TextAlignVertical.top,

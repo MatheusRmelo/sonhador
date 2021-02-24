@@ -27,6 +27,13 @@ class _HomeContentPage extends State<HomeContentPage> {
   }
 
   void nextPage() {
+    if ((homeController.currentPage + 1) != homeController.texts.value.length) {
+      homeController.currentPage++;
+      homeController.textController.text = homeController
+          .texts.value[homeController.currentText]
+          .getPage(homeController.currentPage);
+    }
+
     // setState(() {
     //   if ((currentPage + 1) != home.texts[currentText].getPages().length) {
     //     currentPage++;
@@ -99,7 +106,7 @@ class _HomeContentPage extends State<HomeContentPage> {
         appBar: HomeAppBar(
             pageContext: context,
             title: text.title,
-            pagesLength: 1,
+            pagesLength: text.pages.length,
             currentPage: homeController.currentPage + 1),
         body: Stack(
           children: [
@@ -109,7 +116,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                 child: Column(
                   children: [
                     Container(
-                        height: heightDevice * 0.65,
+                        height: heightDevice * 0.70,
                         child: Swiper(
                           onIndexChanged: (int index) => nextText(index),
                           scrollDirection: Axis.vertical,

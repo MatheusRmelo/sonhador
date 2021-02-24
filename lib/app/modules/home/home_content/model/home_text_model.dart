@@ -17,4 +17,8 @@ class HomeTextModel {
       this.comments,
       this.hashtags,
       this.userName});
+
+  String getPage(int index) {
+    return this.pages[index];
+  }
 }

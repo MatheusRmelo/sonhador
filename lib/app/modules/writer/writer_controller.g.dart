@@ -39,36 +39,6 @@ mixin _$WriterController on _WriterBase, Store {
     });
   }
 
-  final _$messageAtom = Atom(name: '_WriterBase.message');
-
-  @override
-  String get message {
-    _$messageAtom.reportRead();
-    return super.message;
-  }
-
-  @override
-  set message(String value) {
-    _$messageAtom.reportWrite(value, super.message, () {
-      super.message = value;
-    });
-  }
-
-  final _$statusAtom = Atom(name: '_WriterBase.status');
-
-  @override
-  String get status {
-    _$statusAtom.reportRead();
-    return super.status;
-  }
-
-  @override
-  set status(String value) {
-    _$statusAtom.reportWrite(value, super.status, () {
-      super.status = value;
-    });
-  }
-
   final _$currentPageAtom = Atom(name: '_WriterBase.currentPage');
 
   @override
@@ -81,21 +51,6 @@ mixin _$WriterController on _WriterBase, Store {
   set currentPage(int value) {
     _$currentPageAtom.reportWrite(value, super.currentPage, () {
       super.currentPage = value;
-    });
-  }
-
-  final _$textControllerAtom = Atom(name: '_WriterBase.textController');
-
-  @override
-  TextEditingController get textController {
-    _$textControllerAtom.reportRead();
-    return super.textController;
-  }
-
-  @override
-  set textController(TextEditingController value) {
-    _$textControllerAtom.reportWrite(value, super.textController, () {
-      super.textController = value;
     });
   }
 
@@ -141,6 +96,36 @@ mixin _$WriterController on _WriterBase, Store {
   set _timer(Timer value) {
     _$_timerAtom.reportWrite(value, super._timer, () {
       super._timer = value;
+    });
+  }
+
+  final _$statusAtom = Atom(name: '_WriterBase.status');
+
+  @override
+  String get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(String value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
+  final _$textControllerAtom = Atom(name: '_WriterBase.textController');
+
+  @override
+  TextEditingController get textController {
+    _$textControllerAtom.reportRead();
+    return super.textController;
+  }
+
+  @override
+  set textController(TextEditingController value) {
+    _$textControllerAtom.reportWrite(value, super.textController, () {
+      super.textController = value;
     });
   }
 
@@ -228,12 +213,11 @@ mixin _$WriterController on _WriterBase, Store {
     return '''
 text: ${text},
 tmpTitle: ${tmpTitle},
-message: ${message},
-status: ${status},
 currentPage: ${currentPage},
-textController: ${textController},
 loading: ${loading},
-erro: ${erro}
+erro: ${erro},
+status: ${status},
+textController: ${textController}
     ''';
   }
 }
