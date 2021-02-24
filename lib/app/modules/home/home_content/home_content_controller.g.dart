@@ -9,21 +9,6 @@ part of 'home_content_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeContentController on _HomeContentControllerBase, Store {
-  final _$likedAtom = Atom(name: '_HomeContentControllerBase.liked');
-
-  @override
-  bool get liked {
-    _$likedAtom.reportRead();
-    return super.liked;
-  }
-
-  @override
-  set liked(bool value) {
-    _$likedAtom.reportWrite(value, super.liked, () {
-      super.liked = value;
-    });
-  }
-
   final _$currentPageAtom =
       Atom(name: '_HomeContentControllerBase.currentPage');
 
@@ -102,9 +87,19 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
   }
 
   @override
+  void likedText(String userName) {
+    final _$actionInfo = _$_HomeContentControllerBaseActionController
+        .startAction(name: '_HomeContentControllerBase.likedText');
+    try {
+      return super.likedText(userName);
+    } finally {
+      _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-liked: ${liked},
 currentPage: ${currentPage},
 currentText: ${currentText},
 textController: ${textController},

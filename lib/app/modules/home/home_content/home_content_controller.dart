@@ -11,8 +11,6 @@ abstract class _HomeContentControllerBase with Store {
   final HomeTextRepository repository;
 
   @observable
-  bool liked = false;
-  @observable
   int currentPage = 0;
   @observable
   int currentText = 0;
@@ -28,5 +26,16 @@ abstract class _HomeContentControllerBase with Store {
   @action
   void fetchTexts() {
     texts = repository.getTexts().asObservable();
+  }
+
+  @action
+  void likedText(String userName) {
+    if (texts.value[currentText].likes.contains(userName)) {
+      texts.value[currentText].likes.remove(userName);
+    } else {
+      texts.value[currentText].likes.add(userName);
+    }
+    repository.likedText(texts.value[currentText]);
+    currentText = currentText;
   }
 }

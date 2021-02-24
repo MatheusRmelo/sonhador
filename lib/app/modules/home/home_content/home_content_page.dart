@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:share/share.dart';
+import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
 import 'package:sonhador/app/utils/fonts.dart';
@@ -16,6 +17,7 @@ class HomeContentPage extends StatefulWidget {
 
 class _HomeContentPage extends State<HomeContentPage> {
   final homeController = Modular.get<HomeContentController>();
+  final appController = Modular.get<AppController>();
 
   void prevPage() {
     if (homeController.currentPage != 0) {
@@ -23,12 +25,6 @@ class _HomeContentPage extends State<HomeContentPage> {
     }
     homeController.textController.text = homeController.texts
         .value[homeController.currentText].pages[homeController.currentPage];
-    // setState(() {
-    //   if (currentPage != 0) {
-    //     currentPage--;
-    //   }
-    //   //_controller.text = home.texts[currentText].getPage(currentPage);
-    // });
   }
 
   void nextPage() {
@@ -41,28 +37,18 @@ class _HomeContentPage extends State<HomeContentPage> {
   }
 
   void nextText(int index) {
-    setState(() {
-      // if ((index + 1) != home.texts.length) {
-      //   currentText = index;
-      //   _controller.text = home.texts[currentText].getPage(currentPage);
-      //   liked = home.texts[currentText].getLike(userId);
-      // } else if ((index + 1) <= home.texts.length) {
-      //   currentText = index;
-      //   _controller.text = home.texts[currentText].getPage(currentPage);
-      //   liked = home.texts[currentText].getLike(userId);
-      // }
-    });
+    int currentText = index + 1;
+    int qtdTexts = homeController.texts.value.length;
+
+    if (currentText != qtdTexts || currentText <= qtdTexts) {
+      homeController.currentText = index;
+      homeController.textController.text = homeController.texts
+          .value[homeController.currentText].pages[homeController.currentPage];
+    }
   }
 
-  void likedText() async {
-    // var result = await home.liked(
-    //     home.texts[currentText].getTextId(), userId, currentText);
-    // if (result['error'] != '') {
-    //   print(result['error']);
-    // }
-    // setState(() {
-    //   liked = home.texts[currentText].getLike(userId);
-    // });
+  void likedText() {
+    homeController.likedText(appController.user.value.userName);
   }
 
   void sharedText(HomeTextModel text) {
@@ -99,6 +85,9 @@ class _HomeContentPage extends State<HomeContentPage> {
       text.hashtags.forEach((element) {
         hashtags += '#$element ';
       });
+      bool liked = homeController.texts.value[homeController.currentText].likes
+          .contains(appController.user.value.userName);
+
       return Scaffold(
         backgroundColor: Color(0xFF483D3F),
         appBar: HomeAppBar(
@@ -139,7 +128,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                                   ),
                                 ));
                           },
-                          itemCount: 1,
+                          itemCount: homeController.texts.value.length,
                         )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -226,13 +215,9 @@ class _HomeContentPage extends State<HomeContentPage> {
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon: Icon(
-                            homeController.liked
-                                ? Icons.favorite
-                                : Icons.favorite_border,
+                            liked ? Icons.favorite : Icons.favorite_border,
                             size: 32,
-                            color: homeController.liked
-                                ? Colors.red
-                                : Colors.white,
+                            color: liked ? Colors.red : Colors.white,
                           ),
                           onPressed: likedText,
                         ),

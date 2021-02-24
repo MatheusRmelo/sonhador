@@ -30,4 +30,8 @@ class HomeTextRepository {
 
     return texts;
   }
+
+  void likedText(HomeTextModel text) async {
+    await db.collection('texts').doc(text.id).update({"likes": text.likes});
+  }
 }
