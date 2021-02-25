@@ -34,4 +34,18 @@ class HomeTextRepository {
   void likedText(HomeTextModel text) async {
     await db.collection('texts').doc(text.id).update({"likes": text.likes});
   }
+
+  void saveComment(HomeTextModel text) async {
+    await db
+        .collection('texts')
+        .doc(text.id)
+        .update({"comments": text.comments});
+  }
+
+  void likedComment(HomeTextModel text) async {
+    await db
+        .collection('texts')
+        .doc(text.id)
+        .update({"comments": text.comments});
+  }
 }

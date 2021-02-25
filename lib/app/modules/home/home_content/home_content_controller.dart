@@ -39,4 +39,22 @@ abstract class _HomeContentControllerBase with Store {
     repository.likedText(texts.value[currentText]);
     currentText = currentText;
   }
+
+  @action
+  void saveComment(String userName, String comment) {
+    texts.value[currentText].comments
+        .add({"user_name": userName, "comment": comment, "likes": []});
+    repository.saveComment(texts.value[currentText]);
+  }
+
+  @action
+  void likedComment(String userName, int index) {
+    if (texts.value[currentText].comments[index]['likes'].contains(userName)) {
+      texts.value[currentText].comments[index]['likes'].remove(userName);
+    } else {
+      texts.value[currentText].comments[index]['likes'].add(userName);
+    }
+    repository.likedComment(texts.value[currentText]);
+    currentText = currentText;
+  }
 }

@@ -98,6 +98,17 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
   }
 
   @override
+  void saveComment(String username, String comment) {
+    final _$actionInfo = _$_HomeContentControllerBaseActionController
+        .startAction(name: '_HomeContentControllerBase.saveComment');
+    try {
+      return super.saveComment(username, comment);
+    } finally {
+      _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentPage: ${currentPage},

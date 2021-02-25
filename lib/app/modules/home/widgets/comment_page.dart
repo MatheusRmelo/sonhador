@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_controller.dart';
+import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
 import 'package:sonhador/app/utils/commentbox.dart';
 import 'package:sonhador/app/utils/customappbar.dart';
 
@@ -11,24 +14,20 @@ class CommentPage extends StatefulWidget {
 
 class _CommentPage extends State<CommentPage> {
   final homeContentController = Modular.get<HomeContentController>();
+  final commentController = Modular.get<CommentController>();
+  final appController = Modular.get<AppController>();
 
-  String comment = '';
-  TextEditingController _controller = TextEditingController(text: '');
-  void saveComment(int currentText) async {
-    // if (comment == '') {
-    //   print('Digite um comentário');
-    // } else {
-    //   FocusScope.of(context).unfocus();
-    //   _controller.clear();
+  void saveComment() {
+    homeContentController.saveComment(
+        appController.user.value.userName, commentController.comment);
+    commentController.textController.clear();
+    commentController.comment = '';
+    FocusScope.of(context).unfocus();
+  }
 
-    //   var result = await home.addComment('matheusRmelo', currentText, comment);
-    //   if (result['error'] != '') {
-    //     print(result['error']);
-    //   }
-    //   setState(() {
-    //     comment = '';
-    //   });
-    // }
+  void likedComment(int index) {
+    homeContentController.likedComment(
+        appController.user.value.userName, index);
   }
 
   @override
@@ -36,50 +35,67 @@ class _CommentPage extends State<CommentPage> {
     double widthDevice = MediaQuery.of(context).size.width;
 
     var texts = homeContentController.texts.value;
-    return Scaffold(
-      backgroundColor: Color(0xFF9B9987),
-      appBar: CustomAppBar(pageContext: context, title: 'Comentários'),
-      body: Stack(children: [
-        Container(
-          margin: EdgeInsets.only(bottom: 72),
-          child: ListView.builder(
-            itemCount: texts[homeContentController.currentText].comments.length,
-            itemBuilder: (context, index) => CommentBox(
+    return Observer(builder: (_) {
+      return Scaffold(
+        backgroundColor: Color(0xFF9B9987),
+        appBar: CustomAppBar(pageContext: context, title: 'Comentários'),
+        body: Stack(children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 72),
+            child: ListView.builder(
+              itemCount:
+                  texts[homeContentController.currentText].comments.length,
+              itemBuilder: (context, index) => CommentBox(
                 userId: texts[homeContentController.currentText].comments[index]
                     ['user_name'],
                 comment: texts[homeContentController.currentText]
-                    .comments[index]['comment']),
+                    .comments[index]['comment'],
+                liked: texts[homeContentController.currentText]
+                    .comments[index]['likes']
+                    .contains(appController.user.value.userName),
+                index: index,
+                handleClickLiked: (int index) {
+                  likedComment(index);
+                },
+                commentsNumber: texts[homeContentController.currentText]
+                    .comments[index]['likes']
+                    .length
+                    .toString(),
+              ),
+            ),
           ),
-        ),
-        Positioned(
-            bottom: 0,
-            child: Container(
-                padding: EdgeInsets.all(8),
-                width: widthDevice,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: TextField(
-                    controller: _controller,
-                    onChanged: (text) {
-                      setState(() {
-                        comment = text;
-                      });
-                    },
-                    decoration: InputDecoration(
-                        hintText: 'Digite aqui',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        suffixIcon: TextButton(
-                            child: Icon(
-                              Icons.send,
-                              color: comment == '' ? Colors.grey : Colors.blue,
-                            ),
-                            onPressed: () {})),
-                  ),
-                )))
-      ]),
-    );
+          Positioned(
+              bottom: 0,
+              child: Container(
+                  padding: EdgeInsets.all(8),
+                  width: widthDevice,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: TextField(
+                      controller: commentController.textController,
+                      onChanged: (text) {
+                        commentController.comment = text;
+                      },
+                      decoration: InputDecoration(
+                          hintText: 'Digite aqui',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          suffixIcon: TextButton(
+                              child: Icon(
+                                Icons.send,
+                                color: commentController.comment == ''
+                                    ? Colors.grey
+                                    : Colors.blue,
+                              ),
+                              onPressed: () {
+                                saveComment();
+                              })),
+                    ),
+                  )))
+        ]),
+      );
+    });
   }
 }
