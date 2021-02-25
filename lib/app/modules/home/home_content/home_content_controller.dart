@@ -1,7 +1,8 @@
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
-import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
 import 'package:sonhador/app/modules/home/home_content/repository/home_text_repository.dart';
+
+import 'model/home_text_model.dart';
 part 'home_content_controller.g.dart';
 
 class HomeContentController = _HomeContentControllerBase

@@ -1,5 +1,5 @@
-import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
 
 class HomeTextRepository {
   final FirebaseFirestore db = FirebaseFirestore.instance;

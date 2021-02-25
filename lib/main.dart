@@ -17,7 +17,7 @@ import 'partials/loadingappbar.dart';
 import 'partials/loading.dart';
 import 'partials/customappbar.dart';
 import 'partials/textbox.dart';
-import 'partials/commentbox.dart';
+import 'app/utils/commentbox.dart';
 
 import './pages/placeholder.dart';
 

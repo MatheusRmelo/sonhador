@@ -5,8 +5,7 @@ import 'package:sonhador/app/modules/home/home_content/home_content_page.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/login/login_module.dart';
 import 'package:sonhador/app/modules/writer/writer_module.dart';
-import 'package:sonhador/main.dart';
-
+import 'package:sonhador/app/utils/fonts.dart';
 import '../../app_controller.dart';
 
 class HomePage extends StatefulWidget {
