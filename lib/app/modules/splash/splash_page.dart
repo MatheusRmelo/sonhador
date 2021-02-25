@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
-import 'package:sonhador/app/utils/loading.dart';
+import 'package:sonhador/app/widgets/loading.dart';
 
 class SplashPage extends StatefulWidget {
   @override

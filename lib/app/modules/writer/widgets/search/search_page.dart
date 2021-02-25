@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/writer/widgets/search/search_controller.dart';
-import 'package:sonhador/app/utils/loading_container.dart';
-import '../../../../utils/loading.dart';
-import '../../../../utils/customappbar.dart';
-import '../../../../utils/textbox.dart';
+import 'package:sonhador/app/widgets/loading_container.dart';
+import '../../../../widgets/customappbar.dart';
+import '../../../../widgets/textbox.dart';
 
 class SearchPage extends StatefulWidget {
   @override

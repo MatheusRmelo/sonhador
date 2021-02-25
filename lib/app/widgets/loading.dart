@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sonhador/partials/loadingappbar.dart';
+import 'loadingappbar.dart';
 
 class Loading extends StatelessWidget {
   Loading({@required this.status, this.color});

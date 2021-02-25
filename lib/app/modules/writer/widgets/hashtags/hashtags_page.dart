@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/writer/widgets/hashtags/hashtags_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
-import 'package:sonhador/app/utils/loading_container.dart';
-import 'package:sonhador/partials/customappbar.dart';
+import 'package:sonhador/app/widgets/loading_container.dart';
+import 'package:sonhador/app/widgets/customappbar.dart';
 
 class HashtagPage extends StatefulWidget {
   @override

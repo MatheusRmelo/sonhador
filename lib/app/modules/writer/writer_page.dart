@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
-import 'package:sonhador/main.dart';
-import 'package:sonhador/app/utils/loading.dart';
-import 'package:sonhador/partials/writerappbar.dart';
+import 'package:sonhador/app/utils/fonts.dart';
+import 'package:sonhador/app/widgets/loading.dart';
+import 'package:sonhador/app/widgets/writerappbar.dart';
 
 import 'model/writer_model.dart';
 

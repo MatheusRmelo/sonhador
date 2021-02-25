@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/writer/widgets/publish/publish_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
 import 'package:sonhador/app/utils/fonts.dart';
-import '../../../../utils/customappbar.dart';
-import '../../../../utils/textbox.dart';
+import '../../../../widgets/customappbar.dart';
+import '../../../../widgets/textbox.dart';
 
 class PublishPage extends StatefulWidget {
   @override

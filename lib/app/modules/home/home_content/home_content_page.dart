@@ -5,8 +5,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:share/share.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/utils/fonts.dart';
-import 'package:sonhador/app/utils/loading.dart';
-import 'package:sonhador/partials/homeappbar.dart';
+import 'package:sonhador/app/widgets/loading.dart';
+import 'package:sonhador/app/widgets/homeappbar.dart';
 
 import 'home_content_controller.dart';
 import 'model/home_text_model.dart';
@@ -84,7 +84,9 @@ class _HomeContentPage extends State<HomeContentPage> {
           text.pages[homeController.currentPage];
       String hashtags = '';
       text.hashtags.forEach((element) {
-        hashtags += '#$element ';
+        if (element != '') {
+          hashtags += '#$element ';
+        }
       });
       bool liked = homeController.texts.value[homeController.currentText].likes
           .contains(appController.user.value.userName);

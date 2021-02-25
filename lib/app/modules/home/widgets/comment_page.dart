@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_controller.dart';
 import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
-import 'package:sonhador/app/utils/commentbox.dart';
-import 'package:sonhador/app/utils/customappbar.dart';
+import 'package:sonhador/app/widgets/commentbox.dart';
+import 'package:sonhador/app/widgets/customappbar.dart';
 
 class CommentPage extends StatefulWidget {
   @override
