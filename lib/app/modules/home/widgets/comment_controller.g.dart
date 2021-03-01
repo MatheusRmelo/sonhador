@@ -24,10 +24,27 @@ mixin _$CommentController on _CommentControllerBase, Store {
     });
   }
 
+  final _$textControllerAtom =
+      Atom(name: '_CommentControllerBase.textController');
+
+  @override
+  TextEditingController get textController {
+    _$textControllerAtom.reportRead();
+    return super.textController;
+  }
+
+  @override
+  set textController(TextEditingController value) {
+    _$textControllerAtom.reportWrite(value, super.textController, () {
+      super.textController = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-comment: ${comment}
+comment: ${comment},
+textController: ${textController}
     ''';
   }
 }

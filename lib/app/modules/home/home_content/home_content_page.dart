@@ -49,7 +49,7 @@ class _HomeContentPage extends State<HomeContentPage> {
   }
 
   void likedText() {
-    homeController.likedText(appController.user.value.userName);
+    homeController.likedText(appController.user.value.userId);
   }
 
   void sharedText(HomeTextModel text) {
@@ -89,7 +89,7 @@ class _HomeContentPage extends State<HomeContentPage> {
         }
       });
       bool liked = homeController.texts.value[homeController.currentText].likes
-          .contains(appController.user.value.userName);
+          .contains(appController.user.value.userId);
 
       return Scaffold(
         backgroundColor: Color(0xFF483D3F),

@@ -27,6 +27,12 @@ class UserService {
     await prefs.setString('user_id', user.userId);
   }
 
+  void saveUserName(String userName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('user_name', userName);
+  }
+
   Future<UserModel> clearUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_name', '');

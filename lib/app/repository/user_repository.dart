@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,13 +33,34 @@ class UserRepository {
 
       final User currentUser = _auth.currentUser;
       assert(user.uid == currentUser.uid);
-      String userName = await createUser(user.uid, user.displayName);
-      UserModel userModel = UserModel(user.uid, user.displayName, userName);
+      UserModel userModel;
+      DocumentSnapshot result =
+          await db.collection('users').doc(user.uid).get();
+      if (result.exists) {
+        var data = result.data();
+        userModel =
+            UserModel(result.id, data['display_name'], data['user_name']);
+      } else {
+        String userName = await createUser(user.uid, user.displayName);
+        userModel = UserModel(user.uid, user.displayName, userName);
+      }
+
       service.saveUser(userModel);
       return userModel;
     }
 
     return null;
+  }
+
+  Future<bool> existsUserName(String userName) async {
+    QuerySnapshot result = await db
+        .collection('users')
+        .where('user_name', isEqualTo: userName)
+        .get();
+    if (result.docs.isEmpty) {
+      return false;
+    }
+    return true;
   }
 
   Future<String> createUser(String userId, String displayName) async {
@@ -55,8 +78,16 @@ class UserRepository {
           .get();
       if (qtdUsers.size != 0) {
         userName += qtdUsers.size.toString();
+        bool exist = await existsUserName(userName);
+        while (!exist) {
+          Random random = Random();
+          userName += random.nextInt(100).toString();
+        }
       }
-      await db.collection('users').doc(userId).set({"user_name": userName});
+      await db
+          .collection('users')
+          .doc(userId)
+          .set({"user_name": userName, "display_name": displayName});
     } else {
       userName = verifyExist.data()['user_name'];
     }
@@ -72,5 +103,22 @@ class UserRepository {
     UserModel user = await service.clearUser();
 
     return user;
+  }
+
+  void editUserName(String userId, String userName) async {
+    QuerySnapshot result = await db
+        .collection('users')
+        .where('user_name', isEqualTo: userName)
+        .get();
+    if (result.docs.isEmpty) {
+      await db.collection('users').doc(userId).update({"user_name": userName});
+      service.saveUserName(userName);
+    }
+  }
+
+  Future<String> getUserName(String userId) async {
+    DocumentSnapshot result = await db.collection('users').doc(userId).get();
+
+    return result.data()['user_name'];
   }
 }

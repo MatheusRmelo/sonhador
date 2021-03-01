@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_page.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/login/login_module.dart';
+import 'package:sonhador/app/modules/profile/profile_module.dart';
 import 'package:sonhador/app/modules/writer/writer_module.dart';
 import 'package:sonhador/app/utils/fonts.dart';
 import '../../app_controller.dart';
@@ -23,7 +24,7 @@ class _HomePage extends State<HomePage> {
     WriterModule(),
     WriterModule(),
     LoginModule(),
-    WriterModule(),
+    ProfileModule(),
   ];
 
   void createNewText(BuildContext pageContext) {

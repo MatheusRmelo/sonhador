@@ -19,15 +19,14 @@ class _CommentPage extends State<CommentPage> {
 
   void saveComment() {
     homeContentController.saveComment(
-        appController.user.value.userName, commentController.comment);
+        appController.user.value.userId, commentController.comment);
     commentController.textController.clear();
     commentController.comment = '';
     FocusScope.of(context).unfocus();
   }
 
   void likedComment(int index) {
-    homeContentController.likedComment(
-        appController.user.value.userName, index);
+    homeContentController.likedComment(appController.user.value.userId, index);
   }
 
   @override
@@ -47,12 +46,12 @@ class _CommentPage extends State<CommentPage> {
                   texts[homeContentController.currentText].comments.length,
               itemBuilder: (context, index) => CommentBox(
                 userId: texts[homeContentController.currentText].comments[index]
-                    ['user_name'],
+                    ['user_id'],
                 comment: texts[homeContentController.currentText]
                     .comments[index]['comment'],
                 liked: texts[homeContentController.currentText]
                     .comments[index]['likes']
-                    .contains(appController.user.value.userName),
+                    .contains(appController.user.value.userId),
                 index: index,
                 handleClickLiked: (int index) {
                   likedComment(index);

@@ -30,29 +30,29 @@ abstract class _HomeContentControllerBase with Store {
   }
 
   @action
-  void likedText(String userName) {
-    if (texts.value[currentText].likes.contains(userName)) {
-      texts.value[currentText].likes.remove(userName);
+  void likedText(String userId) {
+    if (texts.value[currentText].likes.contains(userId)) {
+      texts.value[currentText].likes.remove(userId);
     } else {
-      texts.value[currentText].likes.add(userName);
+      texts.value[currentText].likes.add(userId);
     }
     repository.likedText(texts.value[currentText]);
     currentText = currentText;
   }
 
   @action
-  void saveComment(String userName, String comment) {
+  void saveComment(String userId, String comment) {
     texts.value[currentText].comments
-        .add({"user_name": userName, "comment": comment, "likes": []});
+        .add({"user_id": userId, "comment": comment, "likes": []});
     repository.saveComment(texts.value[currentText]);
   }
 
   @action
-  void likedComment(String userName, int index) {
-    if (texts.value[currentText].comments[index]['likes'].contains(userName)) {
-      texts.value[currentText].comments[index]['likes'].remove(userName);
+  void likedComment(String userId, int index) {
+    if (texts.value[currentText].comments[index]['likes'].contains(userId)) {
+      texts.value[currentText].comments[index]['likes'].remove(userId);
     } else {
-      texts.value[currentText].comments[index]['likes'].add(userName);
+      texts.value[currentText].comments[index]['likes'].add(userId);
     }
     repository.likedComment(texts.value[currentText]);
     currentText = currentText;

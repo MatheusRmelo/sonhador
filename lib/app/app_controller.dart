@@ -32,4 +32,9 @@ abstract class _AppControllerBase with Store {
     user = repository.signOutGoogle().asObservable();
     //loginGmail();
   }
+
+  @action
+  void setUserName(String userName) {
+    repository.editUserName(user.value.userId, userName);
+  }
 }

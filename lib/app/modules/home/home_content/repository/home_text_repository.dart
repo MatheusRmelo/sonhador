@@ -15,7 +15,15 @@ class HomeTextRepository {
 
     result.docs.forEach((element) async {
       var data = element.data();
-
+      List comments = data['comments'];
+      comments.forEach((element) async {
+        DocumentSnapshot results =
+            await db.collection('users').doc(element['user_id']).get();
+        if (results.exists) {
+          element['user_id'] = results.data()['user_name'];
+        }
+      });
+      print(comments);
       HomeTextModel text = HomeTextModel(
           id: element.id,
           alignment: data['alignment'],

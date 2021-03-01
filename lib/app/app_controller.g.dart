@@ -61,6 +61,17 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
+  void setUserName(String userName) {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.setUserName');
+    try {
+      return super.setUserName(userName);
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 user: ${user}

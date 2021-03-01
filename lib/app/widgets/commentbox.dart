@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sonhador/app/repository/user_repository.dart';
 import 'package:sonhador/app/utils/fonts.dart';
 
 class CommentBox extends StatelessWidget {
@@ -8,7 +9,8 @@ class CommentBox extends StatelessWidget {
       @required this.liked,
       @required this.handleClickLiked,
       @required this.index,
-      @required this.commentsNumber});
+      @required this.commentsNumber,
+      this.repository});
 
   final String userId;
   final String comment;
@@ -16,11 +18,12 @@ class CommentBox extends StatelessWidget {
   final Function handleClickLiked;
   final int index;
   final String commentsNumber;
+  final UserRepository repository;
 
   @override
   Widget build(BuildContext context) {
     double widthDevice = MediaQuery.of(context).size.width;
-
+    //String userName = repository.getUserName(userId);
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(16)),
