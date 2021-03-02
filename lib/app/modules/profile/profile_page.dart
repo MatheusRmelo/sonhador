@@ -71,6 +71,8 @@ class ProfilePage extends StatelessWidget {
                           children: [
                             Container(
                               width: widthDevice * 0.35,
+                              height: 30,
+                              margin: EdgeInsets.only(top: 1),
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(0),
@@ -87,6 +89,8 @@ class ProfilePage extends StatelessWidget {
                             ),
                             Container(
                               width: widthDevice * 0.1,
+                              height: 30,
+                              margin: EdgeInsets.only(top: 1),
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(0),
@@ -106,6 +110,7 @@ class ProfilePage extends StatelessWidget {
                     )),
                 Divider(
                   color: Colors.black,
+                  height: 1,
                 ),
                 Expanded(
                     child: GridView.count(
