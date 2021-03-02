@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/profile/widgets/edit/edit_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
@@ -16,6 +19,54 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final appController = Modular.get<AppController>();
   final editController = Modular.get<EditController>();
+  final picker = ImagePicker();
+
+  File _image;
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Galeria de fotos'),
+                      onTap: () {
+                        getImage('gallery');
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Tirar nova fota'),
+                    onTap: () {
+                      getImage('camera');
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future getImage(String local) async {
+    final pickedFile = await picker.getImage(
+        source: local == 'camera' ? ImageSource.camera : ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        print(pickedFile.path);
+        _image = File(pickedFile.path);
+        editController.saveImage(_image, appController.user.value.userId);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +87,7 @@ class _EditPageState extends State<EditPage> {
                       children: [
                         ProfileBox(
                           photoURL: 'photoURL',
+                          file: _image,
                         ),
                         Container(
                           width: 150,
@@ -46,8 +98,7 @@ class _EditPageState extends State<EditPage> {
                             ),
                             color: Color(0xFF483D3F),
                             onPressed: () {
-                              // Modular.to.pushNamed('/writer/hashtag',
-                              //     arguments: {"textId": text.id});
+                              _showPicker(context);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,

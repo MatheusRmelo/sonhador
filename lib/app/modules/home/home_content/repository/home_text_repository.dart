@@ -23,7 +23,7 @@ class HomeTextRepository {
           element['user_name'] = results.data()['user_name'];
         }
       });
-      print(comments);
+      //print(comments);
       HomeTextModel text = HomeTextModel(
           id: element.id,
           alignment: data['alignment'],
