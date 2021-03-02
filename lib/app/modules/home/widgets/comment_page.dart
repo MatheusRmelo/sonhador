@@ -18,8 +18,8 @@ class _CommentPage extends State<CommentPage> {
   final appController = Modular.get<AppController>();
 
   void saveComment() {
-    homeContentController.saveComment(
-        appController.user.value.userId, commentController.comment);
+    homeContentController.saveComment(appController.user.value.userId,
+        commentController.comment, appController.user.value.userName);
     commentController.textController.clear();
     commentController.comment = '';
     FocusScope.of(context).unfocus();
@@ -46,7 +46,7 @@ class _CommentPage extends State<CommentPage> {
                   texts[homeContentController.currentText].comments.length,
               itemBuilder: (context, index) => CommentBox(
                 userId: texts[homeContentController.currentText].comments[index]
-                    ['user_id'],
+                    ['user_name'],
                 comment: texts[homeContentController.currentText]
                     .comments[index]['comment'],
                 liked: texts[homeContentController.currentText]

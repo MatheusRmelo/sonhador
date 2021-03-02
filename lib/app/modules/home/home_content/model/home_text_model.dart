@@ -6,7 +6,7 @@ class HomeTextModel {
   final List likes;
   final List comments;
   final List hashtags;
-  final String userName;
+  final String userId;
 
   HomeTextModel(
       {this.id,
@@ -16,5 +16,5 @@ class HomeTextModel {
       this.likes,
       this.comments,
       this.hashtags,
-      this.userName});
+      this.userId});
 }

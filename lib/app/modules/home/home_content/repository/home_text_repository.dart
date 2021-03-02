@@ -20,7 +20,7 @@ class HomeTextRepository {
         DocumentSnapshot results =
             await db.collection('users').doc(element['user_id']).get();
         if (results.exists) {
-          element['user_id'] = results.data()['user_name'];
+          element['user_name'] = results.data()['user_name'];
         }
       });
       print(comments);
@@ -30,9 +30,9 @@ class HomeTextRepository {
           likes: data['likes'],
           pages: data['pages'],
           title: data['title'],
-          comments: data['comments'],
+          comments: comments,
           hashtags: data['hashtags'],
-          userName: data['userId']);
+          userId: data['userId']);
       texts.add(text);
     });
 

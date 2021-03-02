@@ -87,33 +87,33 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
   }
 
   @override
-  void likedText(String userName) {
+  void likedText(String userId) {
     final _$actionInfo = _$_HomeContentControllerBaseActionController
         .startAction(name: '_HomeContentControllerBase.likedText');
     try {
-      return super.likedText(userName);
+      return super.likedText(userId);
     } finally {
       _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void saveComment(String userName, String comment) {
+  void saveComment(String userId, String comment, String userName) {
     final _$actionInfo = _$_HomeContentControllerBaseActionController
         .startAction(name: '_HomeContentControllerBase.saveComment');
     try {
-      return super.saveComment(userName, comment);
+      return super.saveComment(userId, comment, userName);
     } finally {
       _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void likedComment(String userName, int index) {
+  void likedComment(String userId, int index) {
     final _$actionInfo = _$_HomeContentControllerBaseActionController
         .startAction(name: '_HomeContentControllerBase.likedComment');
     try {
-      return super.likedComment(userName, index);
+      return super.likedComment(userId, index);
     } finally {
       _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
     }

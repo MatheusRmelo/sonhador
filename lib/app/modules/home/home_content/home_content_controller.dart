@@ -41,9 +41,13 @@ abstract class _HomeContentControllerBase with Store {
   }
 
   @action
-  void saveComment(String userId, String comment) {
-    texts.value[currentText].comments
-        .add({"user_id": userId, "comment": comment, "likes": []});
+  void saveComment(String userId, String comment, String userName) {
+    texts.value[currentText].comments.add({
+      "user_id": userId,
+      "comment": comment,
+      "likes": [],
+      "user_name": userName
+    });
     repository.saveComment(texts.value[currentText]);
   }
 

@@ -52,7 +52,8 @@ class _HomeContentPage extends State<HomeContentPage> {
     homeController.likedText(appController.user.value.userId);
   }
 
-  void sharedText(HomeTextModel text) {
+  void sharedText(HomeTextModel text) async {
+    String author = await appController.getUserName(text.userId);
     String textShared = '';
     textShared += text.title + '\n\n';
     int page = 0;
@@ -62,7 +63,7 @@ class _HomeContentPage extends State<HomeContentPage> {
       textShared += element + '\n\n\n';
       page++;
     });
-    textShared += 'Autor: ' + text.userName;
+    textShared += 'Autor: ' + author;
     Share.share(textShared);
   }
 

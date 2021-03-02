@@ -37,4 +37,9 @@ abstract class _AppControllerBase with Store {
   void setUserName(String userName) {
     repository.editUserName(user.value.userId, userName);
   }
+
+  @action
+  Future<String> getUserName(String userId) async {
+    return await repository.getUserName(userId);
+  }
 }
