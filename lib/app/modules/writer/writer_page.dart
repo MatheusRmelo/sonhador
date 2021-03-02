@@ -23,8 +23,9 @@ class _WriterPage extends State<WriterPage> {
     await Future.delayed(Duration(seconds: 1));
     Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     bool newText = routeData['newText'];
+    writerController.textController.text = '';
     if (newText) {
-      writerController.createText(appController.user.value.userName);
+      writerController.createText(appController.user.value.userId);
       writerController.loading = false;
     } else {
       String textId = routeData['textId'];
@@ -128,6 +129,7 @@ class _WriterPage extends State<WriterPage> {
         writerController.textController.text =
             writerController.text.value.pages[writerController.currentPage];
       }
+
       //_textController.text = text.pages[writerController.currentPage];
       return Scaffold(
           backgroundColor: Color(0xFF9B9987),

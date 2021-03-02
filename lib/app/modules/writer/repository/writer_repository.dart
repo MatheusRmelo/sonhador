@@ -5,15 +5,15 @@ import '../model/writer_model.dart';
 class WriterRepository {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  Future<WriterModel> createNewText(String userName, String title,
-      List<String> pages, String alignment) async {
+  Future<WriterModel> createNewText(
+      String userId, String title, List<String> pages, String alignment) async {
     WriterModel textModel;
 
     DocumentReference result = await db.collection('texts').add({
       "title": title,
       "pages": pages,
       "alignment": alignment,
-      "user_ame": userName
+      "userId": userId
     });
     if (result.id != '') {
       textModel = WriterModel(

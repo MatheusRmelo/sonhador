@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/writer/widgets/search/search_controller.dart';
 import 'package:sonhador/app/widgets/loading_container.dart';
 import '../../../../widgets/customappbar.dart';
@@ -13,9 +14,10 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPage extends State<SearchPage> {
   final searchController = Modular.get<SearchController>();
+  final appController = Modular.get<AppController>();
 
   void getTexts() async {
-    searchController.fetchTexts('matheusRmelo');
+    searchController.fetchTexts(appController.user.value.userId);
   }
 
   @override
