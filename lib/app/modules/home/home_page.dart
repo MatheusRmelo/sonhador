@@ -93,12 +93,20 @@ class _HomePage extends State<HomePage> {
   }
 
   Widget _bottomTabNavigator() {
+    final appController = Modular.get<AppController>();
+
     return Observer(
         builder: (_) => BottomNavigationBar(
               onTap: (index) {
                 //print(index);
                 if (index == 2) {
                   createNewText(context);
+                } else if (index != 0 && index != 1) {
+                  if (appController.user.value.userId == '') {
+                    homeController.updateCurrentIndex(3);
+                  } else {
+                    homeController.updateCurrentIndex(index);
+                  }
                 } else {
                   homeController.updateCurrentIndex(index);
                 }

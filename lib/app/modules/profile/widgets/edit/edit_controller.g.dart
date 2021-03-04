@@ -42,6 +42,20 @@ mixin _$EditController on _EditControllerBase, Store {
     });
   }
 
+  final _$_EditControllerBaseActionController =
+      ActionController(name: '_EditControllerBase');
+
+  @override
+  void saveImage(File file, String userId) {
+    final _$actionInfo = _$_EditControllerBaseActionController.startAction(
+        name: '_EditControllerBase.saveImage');
+    try {
+      return super.saveImage(file, userId);
+    } finally {
+      _$_EditControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

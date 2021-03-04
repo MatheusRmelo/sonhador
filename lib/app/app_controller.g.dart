@@ -24,6 +24,14 @@ mixin _$AppController on _AppControllerBase, Store {
     });
   }
 
+  final _$getUserNameAsyncAction =
+      AsyncAction('_AppControllerBase.getUserName');
+
+  @override
+  Future<String> getUserName(String userId) {
+    return _$getUserNameAsyncAction.run(() => super.getUserName(userId));
+  }
+
   final _$_AppControllerBaseActionController =
       ActionController(name: '_AppControllerBase');
 

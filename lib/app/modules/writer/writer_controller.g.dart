@@ -132,11 +132,11 @@ mixin _$WriterController on _WriterBase, Store {
   final _$_WriterBaseActionController = ActionController(name: '_WriterBase');
 
   @override
-  void createText(String userName) {
+  void createText(String userId) {
     final _$actionInfo = _$_WriterBaseActionController.startAction(
         name: '_WriterBase.createText');
     try {
-      return super.createText(userName);
+      return super.createText(userId);
     } finally {
       _$_WriterBaseActionController.endAction(_$actionInfo);
     }

@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sonhador/app/app_controller.dart';
+import 'package:sonhador/app/modules/profile/profile_controller.dart';
 import 'package:sonhador/app/modules/profile/widgets/edit/edit_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/fonts.dart';
@@ -19,6 +20,7 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final appController = Modular.get<AppController>();
   final editController = Modular.get<EditController>();
+  final profileController = Modular.get<ProfileController>();
   final picker = ImagePicker();
 
   File _image;
@@ -86,7 +88,7 @@ class _EditPageState extends State<EditPage> {
                     child: Column(
                       children: [
                         ProfileBox(
-                          photoURL: 'photoURL',
+                          photoURL: profileController.photoUrl.value.photoUrl,
                           file: _image,
                         ),
                         Container(
@@ -154,7 +156,7 @@ class _EditPageState extends State<EditPage> {
                   ),
                   onTap: () {
                     Modular.to.pushNamed(
-                        '/home/input/Nome completo/${appController.user.value.displayName}');
+                        '/home/input/Nome completo/${appController.user.value.displayName}/display_name');
                   },
                 ),
               ],
