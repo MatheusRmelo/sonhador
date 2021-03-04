@@ -44,6 +44,14 @@ class UserService {
     await prefs.setString('user_name', userName);
   }
 
+  void newFollow(String otherId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> following = prefs.getStringList('following');
+    following.add(otherId);
+
+    await prefs.setStringList('following', following);
+  }
+
   Future<UserModel> clearUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_name', '');

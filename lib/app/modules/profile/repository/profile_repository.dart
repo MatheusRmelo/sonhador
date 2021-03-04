@@ -15,8 +15,10 @@ class ProfileRepository {
   }
 
   Future<ProfileModel> downloadFile(String userId) async {
-    String downloadUrl =
-        await storage.ref('profiles/$userId.jpg').getDownloadURL();
+    String downloadUrl = await storage
+        .ref('profiles/$userId.jpg')
+        .getDownloadURL()
+        .catchError((err) => '');
 
     ProfileModel profile = ProfileModel(photoUrl: downloadUrl, userId: userId);
 

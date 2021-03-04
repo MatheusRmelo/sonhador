@@ -158,4 +158,20 @@ class UserRepository {
 
     return result.data()['user_name'];
   }
+
+  void newFollow(UserModel currentUser, String otherId) async {
+    await db
+        .collection('users')
+        .doc(currentUser.userId)
+        .update({"following": currentUser.following});
+    var result = await db.collection('users').doc(otherId).get();
+    List newFollowers = result.data()['followers'];
+    newFollowers.add(currentUser.userId);
+    await db
+        .collection('users')
+        .doc(otherId)
+        .update({"followers": newFollowers});
+
+    service.newFollow(otherId);
+  }
 }

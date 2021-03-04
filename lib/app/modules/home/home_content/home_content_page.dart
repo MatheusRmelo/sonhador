@@ -249,7 +249,11 @@ class _HomeContentPage extends State<HomeContentPage> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  onTap: () {},
+                                  onTap: () {
+                                    appController.newFollow(text.userId);
+                                    homeController.currentPage =
+                                        homeController.currentPage;
+                                  },
                                 ))
                       ],
                     ),

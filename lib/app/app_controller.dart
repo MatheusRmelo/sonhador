@@ -48,6 +48,12 @@ abstract class _AppControllerBase with Store {
   }
 
   @action
+  void newFollow(String otherId) {
+    user.value.following.add(otherId);
+    repository.newFollow(user.value, otherId);
+  }
+
+  @action
   Future<String> getUserName(String userId) async {
     return await repository.getUserName(userId);
   }
