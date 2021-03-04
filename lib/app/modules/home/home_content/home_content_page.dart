@@ -100,6 +100,14 @@ class _HomeContentPage extends State<HomeContentPage> {
       bool liked = homeController.texts.value[homeController.currentText].likes
           .contains(appController.user.value.userId);
 
+      bool follow = appController.user.value.following.contains(
+          homeController.texts.value[homeController.currentText].userId);
+
+      if (homeController.texts.value[homeController.currentText].userId ==
+          appController.user.value.userId) {
+        follow = true;
+      }
+
       return Scaffold(
         backgroundColor: Color(0xFF483D3F),
         appBar: HomeAppBar(
@@ -216,10 +224,34 @@ class _HomeContentPage extends State<HomeContentPage> {
                       ),
                       onPressed: nextPage,
                     ),
-                    ProfileBox(
-                      size: 40,
-                      photoURL: text.photoUrl,
-                      color: primary_color,
+                    Stack(
+                      children: [
+                        Positioned(
+                          child: ProfileBox(
+                            size: 40,
+                            photoURL: text.photoUrl,
+                            color: primary_color,
+                          ),
+                        ),
+                        follow
+                            ? Container()
+                            : Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.green[400],
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  onTap: () {},
+                                ))
+                      ],
                     ),
                     Column(
                       children: [
