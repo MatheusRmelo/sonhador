@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomeTextRepository {
   final FirebaseFirestore db = FirebaseFirestore.instance;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
   Future<List<HomeTextModel>> getTexts() async {
     List<HomeTextModel> texts = [];
@@ -13,8 +16,11 @@ class HomeTextRepository {
         .limit(35)
         .get();
 
-    result.docs.forEach((element) async {
+    for (var element in result.docs) {
       var data = element.data();
+
+      String photoUrl =
+          await storage.ref("profiles/${data['userId']}.jpg").getDownloadURL();
       List comments = data['comments'];
       comments.forEach((element) async {
         DocumentSnapshot results =
@@ -32,9 +38,10 @@ class HomeTextRepository {
           title: data['title'],
           comments: comments,
           hashtags: data['hashtags'],
-          userId: data['userId']);
+          userId: data['userId'],
+          photoUrl: photoUrl);
       texts.add(text);
-    });
+    }
 
     return texts;
   }

@@ -4,9 +4,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:share/share.dart';
 import 'package:sonhador/app/app_controller.dart';
+import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 import 'package:sonhador/app/widgets/homeappbar.dart';
+import 'package:sonhador/app/widgets/profilebox.dart';
 
 import 'home_content_controller.dart';
 import 'model/home_text_model.dart';
@@ -79,7 +81,13 @@ class _HomeContentPage extends State<HomeContentPage> {
           color: Color(0xFF483D3F),
         );
       }
-
+      if (homeController.texts.value.length == 0) {
+        print(homeController.currentPage);
+        return Loading(
+          status: 'Carregando...',
+          color: Color(0xFF483D3F),
+        );
+      }
       var text = homeController.texts.value[homeController.currentText];
       homeController.textController.text =
           text.pages[homeController.currentPage];
@@ -208,11 +216,10 @@ class _HomeContentPage extends State<HomeContentPage> {
                       ),
                       onPressed: nextPage,
                     ),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon:
-                          Icon(Icons.person_add, size: 32, color: Colors.white),
-                      onPressed: () {},
+                    ProfileBox(
+                      size: 40,
+                      photoURL: text.photoUrl,
+                      color: primary_color,
                     ),
                     Column(
                       children: [

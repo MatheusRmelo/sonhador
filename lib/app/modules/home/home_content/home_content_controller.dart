@@ -19,6 +19,8 @@ abstract class _HomeContentControllerBase with Store {
   TextEditingController textController = TextEditingController(text: '');
   @observable
   ObservableFuture<List<HomeTextModel>> texts;
+  @observable
+  ObservableFuture<String> photoUrl;
 
   _HomeContentControllerBase(this.repository) {
     fetchTexts();
