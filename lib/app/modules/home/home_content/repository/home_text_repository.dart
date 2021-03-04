@@ -13,9 +13,50 @@ class HomeTextRepository {
     QuerySnapshot result = await db
         .collection('texts')
         .where('published', isEqualTo: true)
-        .limit(35)
+        .limit(3)
         .get();
 
+    for (var element in result.docs) {
+      var data = element.data();
+
+      String photoUrl =
+          await storage.ref("profiles/${data['userId']}.jpg").getDownloadURL();
+      List comments = data['comments'];
+      comments.forEach((element) async {
+        DocumentSnapshot results =
+            await db.collection('users').doc(element['user_id']).get();
+        if (results.exists) {
+          element['user_name'] = results.data()['user_name'];
+        }
+      });
+      //print(comments);
+      HomeTextModel text = HomeTextModel(
+          id: element.id,
+          alignment: data['alignment'],
+          likes: data['likes'],
+          pages: data['pages'],
+          title: data['title'],
+          comments: comments,
+          hashtags: data['hashtags'],
+          userId: data['userId'],
+          photoUrl: photoUrl);
+      texts.add(text);
+    }
+
+    return texts;
+  }
+
+  Future<List<HomeTextModel>> getMoreTexts(String lastId) async {
+    List<HomeTextModel> texts = [];
+
+    DocumentSnapshot last = await db.collection('texts').doc(lastId).get();
+    QuerySnapshot result = await db
+        .collection('texts')
+        .where('published', isEqualTo: true)
+        .startAfterDocument(last)
+        .limit(35)
+        .get();
+    //print(last.id);
     for (var element in result.docs) {
       var data = element.data();
 

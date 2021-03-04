@@ -21,6 +21,8 @@ abstract class _HomeContentControllerBase with Store {
   ObservableFuture<List<HomeTextModel>> texts;
   @observable
   ObservableFuture<String> photoUrl;
+  @observable
+  ObservableFuture<List<HomeTextModel>> nextTexts;
 
   _HomeContentControllerBase(this.repository) {
     fetchTexts();
@@ -29,6 +31,23 @@ abstract class _HomeContentControllerBase with Store {
   @action
   void fetchTexts() {
     texts = repository.getTexts().asObservable();
+  }
+
+  @action
+  void fetchMoreTexts(String lastId) {
+    nextTexts = repository.getMoreTexts(lastId).asObservable();
+  }
+
+  @action
+  void getMoreTexts() {
+    if (nextTexts != null && nextTexts.value != null) {
+      for (HomeTextModel text in nextTexts.value) {
+        texts.value.add(text);
+      }
+      // print(currentText);
+      currentPage = 0;
+      nextTexts = null;
+    }
   }
 
   @action

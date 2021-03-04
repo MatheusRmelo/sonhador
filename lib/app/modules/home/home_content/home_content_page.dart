@@ -40,13 +40,19 @@ class _HomeContentPage extends State<HomeContentPage> {
   }
 
   void nextText(int index) {
-    int currentText = index + 1;
+    int currentText = index;
     int qtdTexts = homeController.texts.value.length;
 
+    if (index + 2 == homeController.texts.value.length) {
+      homeController.fetchMoreTexts(
+          homeController.texts.value[homeController.texts.value.length - 1].id);
+    }
     if (currentText != qtdTexts || currentText <= qtdTexts) {
+      //print(index);
+      homeController.getMoreTexts();
       homeController.currentText = index;
-      homeController.textController.text = homeController.texts
-          .value[homeController.currentText].pages[homeController.currentPage];
+      homeController.textController.text = homeController
+          .texts.value[currentText].pages[homeController.currentPage];
     }
   }
 
@@ -82,12 +88,13 @@ class _HomeContentPage extends State<HomeContentPage> {
         );
       }
       if (homeController.texts.value.length == 0) {
-        print(homeController.currentPage);
+        //print(homeController.currentPage);
         return Loading(
           status: 'Carregando...',
           color: Color(0xFF483D3F),
         );
       }
+
       var text = homeController.texts.value[homeController.currentText];
       homeController.textController.text =
           text.pages[homeController.currentPage];
@@ -107,7 +114,6 @@ class _HomeContentPage extends State<HomeContentPage> {
           appController.user.value.userId) {
         follow = true;
       }
-
       return Scaffold(
         backgroundColor: Color(0xFF483D3F),
         appBar: HomeAppBar(

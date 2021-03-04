@@ -72,6 +72,36 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
     });
   }
 
+  final _$photoUrlAtom = Atom(name: '_HomeContentControllerBase.photoUrl');
+
+  @override
+  ObservableFuture<String> get photoUrl {
+    _$photoUrlAtom.reportRead();
+    return super.photoUrl;
+  }
+
+  @override
+  set photoUrl(ObservableFuture<String> value) {
+    _$photoUrlAtom.reportWrite(value, super.photoUrl, () {
+      super.photoUrl = value;
+    });
+  }
+
+  final _$nextTextsAtom = Atom(name: '_HomeContentControllerBase.nextTexts');
+
+  @override
+  ObservableFuture<List<HomeTextModel>> get nextTexts {
+    _$nextTextsAtom.reportRead();
+    return super.nextTexts;
+  }
+
+  @override
+  set nextTexts(ObservableFuture<List<HomeTextModel>> value) {
+    _$nextTextsAtom.reportWrite(value, super.nextTexts, () {
+      super.nextTexts = value;
+    });
+  }
+
   final _$_HomeContentControllerBaseActionController =
       ActionController(name: '_HomeContentControllerBase');
 
@@ -81,6 +111,28 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
         .startAction(name: '_HomeContentControllerBase.fetchTexts');
     try {
       return super.fetchTexts();
+    } finally {
+      _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void fetchMoreTexts(String lastId) {
+    final _$actionInfo = _$_HomeContentControllerBaseActionController
+        .startAction(name: '_HomeContentControllerBase.fetchMoreTexts');
+    try {
+      return super.fetchMoreTexts(lastId);
+    } finally {
+      _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void getMoreTexts() {
+    final _$actionInfo = _$_HomeContentControllerBaseActionController
+        .startAction(name: '_HomeContentControllerBase.getMoreTexts');
+    try {
+      return super.getMoreTexts();
     } finally {
       _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -125,7 +177,9 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
 currentPage: ${currentPage},
 currentText: ${currentText},
 textController: ${textController},
-texts: ${texts}
+texts: ${texts},
+photoUrl: ${photoUrl},
+nextTexts: ${nextTexts}
     ''';
   }
 }

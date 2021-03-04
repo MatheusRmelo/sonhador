@@ -80,6 +80,28 @@ mixin _$AppController on _AppControllerBase, Store {
   }
 
   @override
+  void setDisplayName(String displayName) {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.setDisplayName');
+    try {
+      return super.setDisplayName(displayName);
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void newFollow(String otherId) {
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
+        name: '_AppControllerBase.newFollow');
+    try {
+      return super.newFollow(otherId);
+    } finally {
+      _$_AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 user: ${user}
