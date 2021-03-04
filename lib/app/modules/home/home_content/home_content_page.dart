@@ -42,8 +42,7 @@ class _HomeContentPage extends State<HomeContentPage> {
   void nextText(int index) {
     int currentText = index;
     int qtdTexts = homeController.texts.value.length;
-
-    if (index + 2 == homeController.texts.value.length) {
+    if (index + 3 == homeController.texts.value.length) {
       homeController.fetchMoreTexts(
           homeController.texts.value[homeController.texts.value.length - 1].id);
     }

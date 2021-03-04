@@ -13,7 +13,7 @@ class HomeTextRepository {
     QuerySnapshot result = await db
         .collection('texts')
         .where('published', isEqualTo: true)
-        .limit(3)
+        .limit(10)
         .get();
 
     for (var element in result.docs) {
@@ -54,7 +54,7 @@ class HomeTextRepository {
         .collection('texts')
         .where('published', isEqualTo: true)
         .startAfterDocument(last)
-        .limit(35)
+        .limit(10)
         .get();
     //print(last.id);
     for (var element in result.docs) {
