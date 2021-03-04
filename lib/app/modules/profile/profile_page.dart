@@ -79,7 +79,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               margin: EdgeInsets.only(left: 24, right: 24),
                               child: Column(
                                 children: [
-                                  Text('3265', style: smallText),
+                                  Text(
+                                      appController.user.value.following.length
+                                          .toString(),
+                                      style: smallText),
                                   Text('Seguindo', style: smallStyle)
                                 ],
                               ),
@@ -88,7 +91,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               margin: EdgeInsets.only(left: 24, right: 24),
                               child: Column(
                                 children: [
-                                  Text('2321', style: smallText),
+                                  Text(
+                                      appController.user.value.followers.length
+                                          .toString(),
+                                      style: smallText),
                                   Text('Seguidores', style: smallStyle)
                                 ],
                               ),

@@ -38,11 +38,20 @@ class UserRepository {
           await db.collection('users').doc(user.uid).get();
       if (result.exists) {
         var data = result.data();
-        userModel =
-            UserModel(result.id, data['display_name'], data['user_name']);
+        userModel = UserModel(
+            userId: result.id,
+            displayName: data['display_name'],
+            userName: data['user_name'],
+            followers: data['followers'],
+            following: data['following']);
       } else {
         String userName = await createUser(user.uid, user.displayName);
-        userModel = UserModel(user.uid, user.displayName, userName);
+        userModel = UserModel(
+            userId: user.uid,
+            displayName: user.displayName,
+            userName: userName,
+            followers: [],
+            following: []);
       }
 
       service.saveUser(userModel);
@@ -84,10 +93,12 @@ class UserRepository {
           userName += random.nextInt(100).toString();
         }
       }
-      await db
-          .collection('users')
-          .doc(userId)
-          .set({"user_name": userName, "display_name": displayName});
+      await db.collection('users').doc(userId).set({
+        "user_name": userName,
+        "display_name": displayName,
+        "followers": [],
+        "following": []
+      });
     } else {
       userName = verifyExist.data()['user_name'];
     }
@@ -107,7 +118,12 @@ class UserRepository {
 
   Future<UserModel> editUserName(
       String userId, String userName, UserModel currentUser) async {
-    UserModel newUser = UserModel(userId, currentUser.displayName, userName);
+    UserModel newUser = UserModel(
+        userId: userId,
+        displayName: currentUser.displayName,
+        userName: userName,
+        followers: currentUser.followers,
+        following: currentUser.following);
     QuerySnapshot result = await db
         .collection('users')
         .where('user_name', isEqualTo: userName)
@@ -122,7 +138,12 @@ class UserRepository {
 
   Future<UserModel> editDisplayName(
       String userId, String displayName, UserModel currentUser) async {
-    UserModel newUser = UserModel(userId, currentUser.displayName, displayName);
+    UserModel newUser = UserModel(
+        userId: userId,
+        displayName: displayName,
+        userName: currentUser.userName,
+        followers: currentUser.followers,
+        following: currentUser.following);
     await db
         .collection('users')
         .doc(userId)

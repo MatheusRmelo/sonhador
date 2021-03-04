@@ -7,14 +7,23 @@ class UserService {
     String userName = prefs.getString('user_name');
     String displayName = prefs.getString('display_name');
     String userId = prefs.getString('user_id');
+    List<String> followers = prefs.getStringList('followers');
+    List<String> following = prefs.getStringList('following');
 
     if (userId == null) {
       userId = '';
       userName = '';
       displayName = '';
+      following = [];
+      followers = [];
     }
 
-    UserModel user = UserModel(userId, displayName, userName);
+    UserModel user = UserModel(
+        userId: userId,
+        displayName: displayName,
+        userName: userName,
+        followers: followers,
+        following: following);
 
     return user;
   }
@@ -25,6 +34,8 @@ class UserService {
     await prefs.setString('user_name', user.userName);
     await prefs.setString('display_name', user.displayName);
     await prefs.setString('user_id', user.userId);
+    await prefs.setStringList('followers', user.followers);
+    await prefs.setStringList('following', user.following);
   }
 
   void saveUserName(String userName) async {
@@ -38,8 +49,15 @@ class UserService {
     await prefs.setString('user_name', '');
     await prefs.setString('display_name', '');
     await prefs.setString('user_id', '');
+    await prefs.setStringList('followers', []);
+    await prefs.setStringList('following', []);
 
-    UserModel user = UserModel('', '', '');
+    UserModel user = UserModel(
+        userId: '',
+        displayName: '',
+        userName: '',
+        followers: [],
+        following: []);
 
     return user;
   }
