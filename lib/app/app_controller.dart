@@ -49,8 +49,13 @@ abstract class _AppControllerBase with Store {
 
   @action
   void newFollow(String otherId) {
-    user.value.following.add(otherId);
-    repository.newFollow(user.value, otherId);
+    if (user.value.following.contains(otherId)) {
+      user.value.following.remove(otherId);
+      repository.newFollow(user.value, otherId);
+    } else {
+      user.value.following.add(otherId);
+      repository.newFollow(user.value, otherId);
+    }
   }
 
   @action

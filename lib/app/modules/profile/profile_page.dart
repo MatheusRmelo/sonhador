@@ -22,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void getPhoto() async {
     await Future.delayed(Duration(seconds: 1));
+    //searchController.fetchTexts(appController.user.value.userId);
     profileController.getPhoto(appController.user.value.userId);
     profileController.loading = false;
   }

@@ -16,7 +16,7 @@ class _SearchPage extends State<SearchPage> {
   final searchController = Modular.get<SearchController>();
   final appController = Modular.get<AppController>();
 
-  void getTexts() async {
+  void getTexts() {
     searchController.fetchTexts(appController.user.value.userId);
   }
 

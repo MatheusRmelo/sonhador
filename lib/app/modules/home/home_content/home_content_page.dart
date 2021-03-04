@@ -108,7 +108,6 @@ class _HomeContentPage extends State<HomeContentPage> {
 
       bool follow = appController.user.value.following.contains(
           homeController.texts.value[homeController.currentText].userId);
-
       if (homeController.texts.value[homeController.currentText].userId ==
           appController.user.value.userId) {
         follow = true;
@@ -232,10 +231,16 @@ class _HomeContentPage extends State<HomeContentPage> {
                     Stack(
                       children: [
                         Positioned(
-                          child: ProfileBox(
-                            size: 40,
-                            photoURL: text.photoUrl,
-                            color: primary_color,
+                          child: GestureDetector(
+                            child: ProfileBox(
+                              size: 40,
+                              photoURL: text.photoUrl,
+                              color: primary_color,
+                            ),
+                            onTap: () {
+                              Modular.to.pushNamed('/home/profile',
+                                  arguments: {"userId": text.userId});
+                            },
                           ),
                         ),
                         follow

@@ -47,7 +47,11 @@ class UserService {
   void newFollow(String otherId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> following = prefs.getStringList('following');
-    following.add(otherId);
+    if (following.contains(otherId)) {
+      following.remove(otherId);
+    } else {
+      following.add(otherId);
+    }
 
     await prefs.setStringList('following', following);
   }

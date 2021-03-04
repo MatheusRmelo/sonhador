@@ -166,12 +166,31 @@ class UserRepository {
         .update({"following": currentUser.following});
     var result = await db.collection('users').doc(otherId).get();
     List newFollowers = result.data()['followers'];
-    newFollowers.add(currentUser.userId);
+    if (newFollowers.contains(currentUser.userId)) {
+      newFollowers.remove(currentUser.userId);
+    } else {
+      newFollowers.add(currentUser.userId);
+    }
+
     await db
         .collection('users')
         .doc(otherId)
         .update({"followers": newFollowers});
-
     service.newFollow(otherId);
+  }
+
+  Future<UserModel> getUser(String userId) async {
+    DocumentSnapshot result = await db.collection('users').doc(userId).get();
+
+    var data = result.data();
+
+    UserModel user = UserModel(
+        userId: result.id,
+        displayName: data['display_name'],
+        userName: data['user_name'],
+        followers: data['followers'],
+        following: data['following']);
+
+    return user;
   }
 }

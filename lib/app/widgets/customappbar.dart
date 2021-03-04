@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget CustomAppBar({BuildContext pageContext, String title = ''}) {
+Widget CustomAppBar(
+    {BuildContext pageContext, String title = '', Color color}) {
   return AppBar(
     brightness: Brightness.dark,
-    backgroundColor: Color(0xFF9B9987),
+    backgroundColor: color == null ? Color(0xFF9B9987) : color,
     elevation: 0,
     centerTitle: false,
     title: Text(
