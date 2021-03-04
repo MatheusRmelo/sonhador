@@ -105,15 +105,31 @@ class UserRepository {
     return user;
   }
 
-  void editUserName(String userId, String userName) async {
+  Future<UserModel> editUserName(
+      String userId, String userName, UserModel currentUser) async {
+    UserModel newUser = UserModel(userId, currentUser.displayName, userName);
     QuerySnapshot result = await db
         .collection('users')
         .where('user_name', isEqualTo: userName)
         .get();
     if (result.docs.isEmpty) {
       await db.collection('users').doc(userId).update({"user_name": userName});
-      service.saveUserName(userName);
+      service.saveUser(newUser);
     }
+
+    return newUser;
+  }
+
+  Future<UserModel> editDisplayName(
+      String userId, String displayName, UserModel currentUser) async {
+    UserModel newUser = UserModel(userId, currentUser.displayName, displayName);
+    await db
+        .collection('users')
+        .doc(userId)
+        .update({"display_name": displayName});
+    service.saveUser(newUser);
+
+    return newUser;
   }
 
   Future<String> getUserName(String userId) async {

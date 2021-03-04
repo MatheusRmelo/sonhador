@@ -20,7 +20,6 @@ class ProfileRepository {
 
     ProfileModel profile = ProfileModel(photoUrl: downloadUrl, userId: userId);
 
-    print(downloadUrl);
     return profile;
   }
 }

@@ -35,7 +35,16 @@ abstract class _AppControllerBase with Store {
 
   @action
   void setUserName(String userName) {
-    repository.editUserName(user.value.userId, userName);
+    user = repository
+        .editUserName(user.value.userId, userName, user.value)
+        .asObservable();
+  }
+
+  @action
+  void setDisplayName(String displayName) {
+    user = repository
+        .editDisplayName(user.value.userId, displayName, user.value)
+        .asObservable();
   }
 
   @action
