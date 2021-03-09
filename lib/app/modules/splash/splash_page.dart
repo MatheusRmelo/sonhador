@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void homePage() {
     Timer(Duration(microseconds: 1), () {
-      Modular.to.pushNamed('/home');
+      Modular.to.pushReplacementNamed('/home');
     });
   }
 
