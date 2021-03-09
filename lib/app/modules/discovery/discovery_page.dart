@@ -26,6 +26,9 @@ class _DiscoveryPage extends State<DiscoveryPage> {
 
   @override
   Widget build(BuildContext context) {
+    double widthDevice = MediaQuery.of(context).size.width;
+    //double heightDevice = MediaQuery.of(context).size.height;
+
     return Observer(
       builder: (_) {
         if (discoveryController.texts.error != null ||
@@ -59,24 +62,32 @@ class _DiscoveryPage extends State<DiscoveryPage> {
             backgroundColor: secondary_color,
             body: Column(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16)),
-                  margin: EdgeInsets.all(16),
-                  child: TextFormField(
-                    style: TextStyle(fontFamily: 'Fredoka One', fontSize: 12),
-                    decoration: InputDecoration(
-                        hintText: 'Pesquise um usuário ou texto aqui',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        suffixIcon: Icon(
+                GestureDetector(
+                  onTap: () {
+                    Modular.to.pushNamed('/home/search');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 16, right: 16),
+                    width: widthDevice,
+                    height: 40,
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16)),
+                    margin: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Digite aqui...',
+                          style: smallStyleGray,
+                        ),
+                        Icon(
                           Icons.search,
-                          size: 32,
-                        )),
-                    onChanged: (text) {
-                      //discoveryController.searchText(text);
-                    },
+                          color: Colors.grey[400],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -102,11 +113,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                               title: texts[index].title,
                               points: texts[index].points.toString(),
                               onTap: (textId) {
-                                Navigator.pushNamed(context, '/writer',
-                                    arguments: {
-                                      "newText": false,
-                                      "textId": textId
-                                    });
+                                Modular.to.pushNamed('/home/text',
+                                    arguments: {"textId": textId});
                               },
                             ),
                           ),
@@ -132,16 +140,13 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             itemBuilder: (context, index) => UserBox(
                               margin: EdgeInsets.only(right: 16, top: 16),
                               color: primary_color,
-                              textId: users[index].userId,
-                              title: users[index].userName,
+                              userId: users[index].userId,
+                              userName: users[index].userName,
                               points: users[index].points.toString(),
                               photo: users[index].photo,
-                              onTap: (textId) {
-                                Navigator.pushNamed(context, '/writer',
-                                    arguments: {
-                                      "newText": false,
-                                      "textId": textId
-                                    });
+                              onTap: (userId) {
+                                Modular.to.pushNamed('/home/profile',
+                                    arguments: {"userId": userId});
                               },
                             ),
                           ),

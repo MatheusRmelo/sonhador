@@ -4,29 +4,27 @@ import 'package:sonhador/app/widgets/profilebox.dart';
 
 class UserBox extends StatelessWidget {
   UserBox(
-      {@required this.textId,
-      @required this.title,
+      {@required this.userId,
+      @required this.userName,
       this.onTap,
-      this.credit = false,
-      this.social,
       this.width = 80,
       this.height = 80,
       this.color,
       this.margin,
       this.points,
-      this.photo});
+      this.photo,
+      this.showName = false});
 
-  final String textId;
-  final String title;
+  final String userId;
+  final String userName;
   final Function onTap;
-  final bool credit;
-  final String social;
   final double width;
   final double height;
   final Color color;
   final EdgeInsets margin;
   final String points;
   final String photo;
+  final bool showName;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,7 @@ class UserBox extends StatelessWidget {
       margin: margin == null ? EdgeInsets.all(16) : margin,
       child: GestureDetector(
         onTap: () {
-          onTap(textId);
+          onTap(userId);
         },
         child: Stack(
           children: [
@@ -57,48 +55,23 @@ class UserBox extends StatelessWidget {
                   ]),
               child: ProfileBox(
                 photoURL: photo,
-                color: primary_color,
+                color: showName ? secondary_color : primary_color,
               ),
             ),
-            Positioned(
-              left: 8,
-              right: 8,
-              bottom: 32,
-              child: credit
-                  ? Column(
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.face,
-                              size: 16,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 8),
-                              child: Text(
-                                social,
-                                style: smallText,
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.face, size: 16),
-                            Container(
-                              margin: EdgeInsets.only(left: 8),
-                              child: Text(
-                                social,
-                                style: smallText,
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    )
-                  : Text(points == null ? '' : points + ' pontos',
-                      style: footerText),
-            )
+            showName
+                ? Positioned(
+                    left: 8,
+                    right: 8,
+                    bottom: 0,
+                    child: Text(userName, style: footerText),
+                  )
+                : Positioned(
+                    left: 8,
+                    right: 8,
+                    bottom: 32,
+                    child: Text(points == null ? '' : points + ' pontos',
+                        style: footerText),
+                  )
           ],
         ),
       ),
