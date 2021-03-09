@@ -80,11 +80,11 @@ mixin _$HomeProfileController on _HomeProfileControllerBase, Store {
   }
 
   @override
-  void follow() {
+  void newFollow(String userId) {
     final _$actionInfo = _$_HomeProfileControllerBaseActionController
-        .startAction(name: '_HomeProfileControllerBase.follow');
+        .startAction(name: '_HomeProfileControllerBase.newFollow');
     try {
-      return super.follow();
+      return super.newFollow(userId);
     } finally {
       _$_HomeProfileControllerBaseActionController.endAction(_$actionInfo);
     }

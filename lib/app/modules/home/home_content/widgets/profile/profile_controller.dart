@@ -31,7 +31,15 @@ abstract class _HomeProfileControllerBase with Store {
   }
 
   @action
-  void follow() {}
+  void newFollow(String userId) {
+    if (user.value.followers.contains(userId)) {
+      user.value.followers.remove(userId);
+    } else {
+      user.value.followers.add(userId);
+    }
+    loading = false;
+  }
+
   @action
   void unfollow() {}
 }

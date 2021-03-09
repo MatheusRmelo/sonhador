@@ -63,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         var texts = searchController.texts.value;
         UserModel user = profileController.user.value;
-        bool follow = user.followers.contains(appController.user.value.userId);
+        bool follow = appController.user.value.following.contains(user.userId);
         return Scaffold(
           appBar: CustomAppBar(
               title: user.displayName,
@@ -129,7 +129,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   color: secondary_color,
                                   onPressed: () {
                                     appController.newFollow(user.userId);
-                                    profileController.loading = false;
+                                    profileController.newFollow(
+                                        appController.user.value.userId);
                                   },
                                   child: Text(
                                     follow ? 'Deixar de seguir' : 'Seguir',
