@@ -71,6 +71,21 @@ mixin _$DiscoveryTextController on _DiscoveryTextControllerBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_DiscoveryTextControllerBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$_DiscoveryTextControllerBaseActionController =
       ActionController(name: '_DiscoveryTextControllerBase');
 
@@ -124,7 +139,8 @@ mixin _$DiscoveryTextController on _DiscoveryTextControllerBase, Store {
 currentPage: ${currentPage},
 textController: ${textController},
 text: ${text},
-photoUrl: ${photoUrl}
+photoUrl: ${photoUrl},
+loading: ${loading}
     ''';
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_controller.dart';
+import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
 import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
 import 'package:sonhador/app/widgets/commentbox.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
@@ -33,7 +34,10 @@ class _CommentPage extends State<CommentPage> {
   Widget build(BuildContext context) {
     double widthDevice = MediaQuery.of(context).size.width;
 
-    var texts = homeContentController.texts.value;
+    //var texts = homeContentController.texts.value;
+    Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
+    HomeTextModel text = routeData['text'];
+
     return Observer(builder: (_) {
       return Scaffold(
         backgroundColor: Color(0xFF9B9987),
@@ -42,24 +46,17 @@ class _CommentPage extends State<CommentPage> {
           Container(
             margin: EdgeInsets.only(bottom: 72),
             child: ListView.builder(
-              itemCount:
-                  texts[homeContentController.currentText].comments.length,
+              itemCount: text.comments.length,
               itemBuilder: (context, index) => CommentBox(
-                userId: texts[homeContentController.currentText].comments[index]
-                    ['user_name'],
-                comment: texts[homeContentController.currentText]
-                    .comments[index]['comment'],
-                liked: texts[homeContentController.currentText]
-                    .comments[index]['likes']
+                userId: text.comments[index]['user_name'],
+                comment: text.comments[index]['comment'],
+                liked: text.comments[index]['likes']
                     .contains(appController.user.value.userId),
                 index: index,
                 handleClickLiked: (int index) {
                   likedComment(index);
                 },
-                commentsNumber: texts[homeContentController.currentText]
-                    .comments[index]['likes']
-                    .length
-                    .toString(),
+                commentsNumber: text.comments[index]['likes'].length.toString(),
               ),
             ),
           ),

@@ -63,11 +63,12 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
     Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     String textId = routeData['textId'];
     discoveryController.fetchText(textId);
+    discoveryController.loading = false;
   }
 
   void initState() {
     super.initState();
-    //writerController.loading = true;
+    discoveryController.loading = true;
     getText();
   }
 
@@ -79,6 +80,12 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
     return Observer(builder: (_) {
       if (discoveryController.text == null ||
           discoveryController.text.value == null) {
+        return Loading(
+          status: 'Carregando...',
+          color: Color(0xFF483D3F),
+        );
+      }
+      if (discoveryController.loading) {
         return Loading(
           status: 'Carregando...',
           color: Color(0xFF483D3F),
@@ -268,7 +275,9 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.comment, size: 32, color: Colors.white),
                       onPressed: () {
-                        Modular.to.pushNamed('/home/comment');
+                        Modular.to.pushNamed('/home/comment', arguments: {
+                          "text": discoveryController.text.value
+                        });
                       },
                     ),
                     Text(text.comments.length.toString(),

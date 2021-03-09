@@ -286,7 +286,10 @@ class _HomeContentPage extends State<HomeContentPage> {
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.comment, size: 32, color: Colors.white),
                       onPressed: () {
-                        Modular.to.pushNamed('/home/comment');
+                        Modular.to.pushNamed('/home/comment', arguments: {
+                          "text": homeController
+                              .texts.value[homeController.currentText]
+                        });
                       },
                     ),
                     Text(text.comments.length.toString(),

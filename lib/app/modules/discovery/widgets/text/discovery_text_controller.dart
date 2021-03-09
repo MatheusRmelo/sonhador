@@ -19,6 +19,8 @@ abstract class _DiscoveryTextControllerBase with Store {
   ObservableFuture<HomeTextModel> text;
   @observable
   ObservableFuture<String> photoUrl;
+  @observable
+  bool loading = false;
 
   _DiscoveryTextControllerBase(this.repository);
 
