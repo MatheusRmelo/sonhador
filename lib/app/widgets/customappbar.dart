@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 Widget CustomAppBar(
-    {BuildContext pageContext, String title = '', Color color}) {
+    {BuildContext pageContext,
+    String title = '',
+    Color color,
+    Color itemsColor,
+    bool backButton = true}) {
   return AppBar(
     brightness: Brightness.dark,
     backgroundColor: color == null ? Color(0xFF9B9987) : color,
@@ -10,16 +14,20 @@ Widget CustomAppBar(
     title: Text(
       title,
       style: TextStyle(
-          color: Colors.black, fontSize: 16, fontFamily: 'Fredoka One'),
+          color: itemsColor == null ? Colors.black : itemsColor,
+          fontSize: 16,
+          fontFamily: 'Fredoka One'),
     ),
-    leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-          size: 30,
-        ),
-        onPressed: () {
-          Navigator.pop(pageContext);
-        }),
+    leading: backButton
+        ? IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: itemsColor == null ? Colors.black : itemsColor,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pop(pageContext);
+            })
+        : Container(),
   );
 }

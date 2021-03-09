@@ -1,4 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/modules/discovery/discovery_controller.dart';
+import 'package:sonhador/app/modules/discovery/discovery_page.dart';
+import 'package:sonhador/app/modules/discovery/repository/discovery_repository.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
 import 'package:sonhador/app/modules/profile/profile_controller.dart';
@@ -27,6 +30,8 @@ class HomeModule extends ChildModule {
         Bind((i) => InputController()),
         Bind((i) => HomeProfileController(i.get(), i.get())),
         Bind((i) => ProfileRepository()),
+        Bind((i) => DiscoveryController(i.get())),
+        Bind((i) => DiscoveryRepository()),
       ];
 
   @override
@@ -41,6 +46,7 @@ class HomeModule extends ChildModule {
                   value: args.params['value'],
                   action: args.params['action'],
                 )),
+        ModularRouter('/discovery', child: (_, args) => DiscoveryPage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

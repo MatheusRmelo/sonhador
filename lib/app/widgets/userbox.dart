@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:sonhador/app/utils/colors.dart';
+import 'package:sonhador/app/widgets/profilebox.dart';
 
-class TextBox extends StatelessWidget {
-  TextBox(
+class UserBox extends StatelessWidget {
+  UserBox(
       {@required this.textId,
       @required this.title,
       this.onTap,
       this.credit = false,
       this.social,
-      this.width = 90,
-      this.height = 100,
+      this.width = 80,
+      this.height = 80,
       this.color,
       this.margin,
-      this.points});
+      this.points,
+      this.photo});
 
   final String textId;
   final String title;
@@ -23,6 +26,7 @@ class TextBox extends StatelessWidget {
   final Color color;
   final EdgeInsets margin;
   final String points;
+  final String photo;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class TextBox extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(width / 2),
                   color: color == null ? Color(0xFF483D3F) : color,
                   boxShadow: [
                     BoxShadow(
@@ -51,24 +55,15 @@ class TextBox extends StatelessWidget {
                         offset: Offset.fromDirection(1, 10),
                         spreadRadius: 0)
                   ]),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 10,
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: 'Fredoka One'),
+              child: ProfileBox(
+                photoURL: photo,
+                color: primary_color,
               ),
             ),
             Positioned(
               left: 8,
               right: 8,
-              bottom: 16,
+              bottom: 32,
               child: credit
                   ? Column(
                       children: [

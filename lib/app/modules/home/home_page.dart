@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/modules/discovery/discovery_page.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_page.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/login/login_module.dart';
@@ -21,7 +22,7 @@ class _HomePage extends State<HomePage> {
 
   List widgetOptins = [
     HomeContentPage(),
-    WriterModule(),
+    DiscoveryPage(),
     WriterModule(),
     LoginModule(),
     ProfileModule(),
