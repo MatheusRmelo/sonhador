@@ -11,6 +11,9 @@ import 'package:sonhador/app/modules/discovery/widgets/text/discovery_text_page.
 import 'package:sonhador/app/modules/home/home_content/repository/points_repository.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
+import 'package:sonhador/app/modules/notification/notification_controller.dart';
+import 'package:sonhador/app/modules/notification/notification_page.dart';
+import 'package:sonhador/app/modules/notification/repository/notification_repository.dart';
 import 'package:sonhador/app/modules/profile/profile_controller.dart';
 import 'package:sonhador/app/modules/profile/repository/profile_repository.dart';
 import 'package:sonhador/app/modules/profile/widgets/edit/edit_page.dart';
@@ -58,7 +61,6 @@ class HomeModule extends ChildModule {
                   value: args.params['value'],
                   action: args.params['action'],
                 )),
-        ModularRouter('/discovery', child: (_, args) => DiscoveryPage()),
         ModularRouter('/search', child: (_, args) => DiscoverySearchPage()),
         ModularRouter('/text', child: (_, args) => DiscoveryTextPage()),
       ];
