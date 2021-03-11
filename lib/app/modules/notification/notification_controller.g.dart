@@ -13,16 +13,30 @@ mixin _$NotificationController on _NotificationControllerBase, Store {
       Atom(name: '_NotificationControllerBase.notifications');
 
   @override
-  ObservableFuture<NotificationModel> get notifications {
+  ObservableFuture<List<NotificationModel>> get notifications {
     _$notificationsAtom.reportRead();
     return super.notifications;
   }
 
   @override
-  set notifications(ObservableFuture<NotificationModel> value) {
+  set notifications(ObservableFuture<List<NotificationModel>> value) {
     _$notificationsAtom.reportWrite(value, super.notifications, () {
       super.notifications = value;
     });
+  }
+
+  final _$_NotificationControllerBaseActionController =
+      ActionController(name: '_NotificationControllerBase');
+
+  @override
+  void fetchNotifications() {
+    final _$actionInfo = _$_NotificationControllerBaseActionController
+        .startAction(name: '_NotificationControllerBase.fetchNotifications');
+    try {
+      return super.fetchNotifications();
+    } finally {
+      _$_NotificationControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/discovery/discovery_module.dart';
-import 'package:sonhador/app/modules/discovery/discovery_page.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_page.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/login/login_module.dart';
@@ -172,11 +171,11 @@ class _HomePage extends State<HomePage> {
                     label: ''),
                 BottomNavigationBarItem(
                     activeIcon: Icon(
-                      Icons.library_books,
+                      Icons.notifications,
                       color: Colors.white,
                     ),
-                    icon: Icon(Icons.library_books, color: Colors.black),
-                    label: 'Biblioteca'),
+                    icon: Icon(Icons.notifications, color: Colors.black),
+                    label: 'Notificações'),
                 BottomNavigationBarItem(
                   activeIcon: Icon(
                     Icons.person,

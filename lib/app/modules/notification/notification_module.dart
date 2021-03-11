@@ -7,7 +7,7 @@ import 'package:sonhador/app/modules/notification/repository/notification_reposi
 class NotificationModule extends WidgetModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => NotificationController(i.get())),
+        Bind((i) => NotificationController(i.get(), i.get())),
         Bind((i) => NotificationRepository()),
       ];
 
