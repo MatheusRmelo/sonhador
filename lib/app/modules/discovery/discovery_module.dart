@@ -7,6 +7,7 @@ import 'package:sonhador/app/modules/discovery/repository/discovery_search_repos
 import 'package:sonhador/app/modules/discovery/repository/discovery_text_repository.dart';
 import 'package:sonhador/app/modules/discovery/widgets/search/discovery_search_controller.dart';
 import 'package:sonhador/app/modules/discovery/widgets/text/discovery_text_controller.dart';
+import 'package:sonhador/app/modules/home/home_content/repository/points_repository.dart';
 
 class DiscoveryModule extends WidgetModule {
   @override
@@ -15,8 +16,9 @@ class DiscoveryModule extends WidgetModule {
         Bind((i) => DiscoveryRepository()),
         Bind((i) => DiscoverySearchController(i.get())),
         Bind((i) => DiscoverySearchRepository()),
-        Bind((i) => DiscoveryTextController(i.get())),
+        Bind((i) => DiscoveryTextController(i.get(), i.get())),
         Bind((i) => DiscoveryTextRepository()),
+        Bind((i) => PointsRepository()),
       ];
 
   @override

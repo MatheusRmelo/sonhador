@@ -42,12 +42,6 @@ class HomeModule extends ChildModule {
         Bind((i) => InputController()),
         Bind((i) => HomeProfileController(i.get(), i.get())),
         Bind((i) => ProfileRepository()),
-        Bind((i) => DiscoveryController(i.get())),
-        Bind((i) => DiscoveryRepository()),
-        Bind((i) => DiscoverySearchController(i.get())),
-        Bind((i) => DiscoverySearchRepository()),
-        Bind((i) => DiscoveryTextController(i.get())),
-        Bind((i) => DiscoveryTextRepository()),
       ];
 
   @override

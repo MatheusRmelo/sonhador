@@ -33,6 +33,10 @@ class DiscoveryTextRepository {
     await db.collection('texts').doc(text.id).update({"likes": text.likes});
   }
 
+  void sharedText(HomeTextModel text) async {
+    await db.collection('texts').doc(text.id).update({"shared": text.shared});
+  }
+
   void saveComment(HomeTextModel text) async {
     await db
         .collection('texts')

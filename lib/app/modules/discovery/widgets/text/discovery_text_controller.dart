@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:sonhador/app/modules/discovery/repository/discovery_text_repository.dart';
 import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
+import 'package:sonhador/app/modules/home/home_content/repository/points_repository.dart';
 
 part 'discovery_text_controller.g.dart';
 
@@ -10,6 +11,7 @@ class DiscoveryTextController = _DiscoveryTextControllerBase
 
 abstract class _DiscoveryTextControllerBase with Store {
   final DiscoveryTextRepository repository;
+  final PointsRepository pointsRepository;
 
   @observable
   int currentPage = 0;
@@ -22,7 +24,7 @@ abstract class _DiscoveryTextControllerBase with Store {
   @observable
   bool loading = false;
 
-  _DiscoveryTextControllerBase(this.repository);
+  _DiscoveryTextControllerBase(this.repository, this.pointsRepository);
 
   @action
   void fetchText(String textId) {
@@ -33,8 +35,10 @@ abstract class _DiscoveryTextControllerBase with Store {
   void likedText(String userId) {
     if (text.value.likes.contains(userId)) {
       text.value.likes.remove(userId);
+      pointsRepository.score('like', text.value.id, text.value.userId, false);
     } else {
       text.value.likes.add(userId);
+      pointsRepository.score('like', text.value.id, text.value.userId, true);
     }
     repository.likedText(text.value);
     currentPage = currentPage;
@@ -49,6 +53,7 @@ abstract class _DiscoveryTextControllerBase with Store {
       "user_name": userName
     });
     repository.saveComment(text.value);
+    pointsRepository.score('comment', text.value.id, text.value.userId, true);
     currentPage = currentPage;
   }
 
@@ -61,5 +66,15 @@ abstract class _DiscoveryTextControllerBase with Store {
     }
     repository.likedComment(text.value);
     currentPage = currentPage;
+  }
+
+  @action
+  void sharedText(String userId) {
+    if (!text.value.shared.contains(userId)) {
+      text.value.shared.add(userId);
+      pointsRepository.score('share', text.value.id, text.value.userId, true);
+      repository.sharedText(text.value);
+      currentPage = currentPage;
+    }
   }
 }

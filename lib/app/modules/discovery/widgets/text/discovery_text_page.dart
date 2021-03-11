@@ -10,6 +10,7 @@ import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 import 'package:sonhador/app/widgets/homeappbar.dart';
+import 'package:sonhador/app/widgets/loginbottom.dart';
 import 'package:sonhador/app/widgets/profilebox.dart';
 
 class DiscoveryTextPage extends StatefulWidget {
@@ -40,7 +41,11 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
   }
 
   void likedText() {
-    discoveryController.likedText(appController.user.value.userId);
+    if (appController.user.value.userId == '') {
+      showbottomlogin(context);
+    } else {
+      discoveryController.likedText(appController.user.value.userId);
+    }
   }
 
   void sharedText(HomeTextModel text) async {
@@ -55,6 +60,9 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
       page++;
     });
     textShared += 'Autor: ' + author;
+    if (appController.user.value.userId != '') {
+      discoveryController.sharedText(appController.user.value.userId);
+    }
     Share.share(textShared);
   }
 
@@ -80,6 +88,12 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
     return Observer(builder: (_) {
       if (discoveryController.text == null ||
           discoveryController.text.value == null) {
+        return Loading(
+          status: 'Carregando...',
+          color: Color(0xFF483D3F),
+        );
+      }
+      if (appController.user.value == null) {
         return Loading(
           status: 'Carregando...',
           color: Color(0xFF483D3F),
@@ -249,9 +263,13 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                                     ),
                                   ),
                                   onTap: () {
-                                    appController.newFollow(text.userId);
-                                    discoveryController.currentPage =
-                                        discoveryController.currentPage;
+                                    if (appController.user.value.userId == '') {
+                                      showbottomlogin(context);
+                                    } else {
+                                      appController.newFollow(text.userId);
+                                      discoveryController.currentPage =
+                                          discoveryController.currentPage;
+                                    }
                                   },
                                 ))
                       ],

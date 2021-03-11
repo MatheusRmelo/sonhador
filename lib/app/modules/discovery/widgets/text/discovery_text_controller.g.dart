@@ -134,6 +134,17 @@ mixin _$DiscoveryTextController on _DiscoveryTextControllerBase, Store {
   }
 
   @override
+  void sharedText(String userId) {
+    final _$actionInfo = _$_DiscoveryTextControllerBaseActionController
+        .startAction(name: '_DiscoveryTextControllerBase.sharedText');
+    try {
+      return super.sharedText(userId);
+    } finally {
+      _$_DiscoveryTextControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentPage: ${currentPage},
