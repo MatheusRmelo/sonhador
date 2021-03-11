@@ -99,7 +99,7 @@ class WriterRepository {
         .collection('texts')
         .doc(id)
         .update({
-          "ads": ads,
+          //"ads": ads,
           "published": true,
           "adult": adult,
           "comments": [],

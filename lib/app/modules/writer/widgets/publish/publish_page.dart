@@ -42,28 +42,28 @@ class _PublishPage extends State<PublishPage> {
               Container(
                 height: heightDevice * 0.3,
                 child: Column(children: [
-                  // CheckboxListTile(
-                  // checkColor: Colors.white,
-                  // activeColor: Colors.black,
-                  //   title: Text('O texto contém contéudo adulto',
-                  //       style: smallText),
-                  //   value: writer.adult,
-                  //   onChanged: (val) {
-                  //     writer.adult = val;
-                  //   },
-                  // ),
                   CheckboxListTile(
                     checkColor: Colors.white,
                     activeColor: Colors.black,
-                    title: Text(
-                      'Monetizar esse texto',
-                      style: smallText,
-                    ),
-                    value: publishController.ads,
+                    title: Text('O texto contém contéudo adulto',
+                        style: smallText),
+                    value: publishController.adult,
                     onChanged: (val) {
-                      publishController.ads = val;
+                      publishController.adult = val;
                     },
                   ),
+                  // CheckboxListTile(
+                  //   checkColor: Colors.white,
+                  //   activeColor: Colors.black,
+                  //   title: Text(
+                  //     'Monetizar esse texto',
+                  //     style: smallText,
+                  //   ),
+                  //   value: publishController.ads,
+                  //   onChanged: (val) {
+                  //     publishController.ads = val;
+                  //   },
+                  // ),
                 ]),
               ),
               Container(
