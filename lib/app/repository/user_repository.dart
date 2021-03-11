@@ -31,8 +31,8 @@ class UserRepository {
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
 
-      final User currentUser = _auth.currentUser;
-      assert(user.uid == currentUser.uid);
+      // final User currentUser = _auth.currentUser;
+      // assert(user.uid == currentUser.uid);
       UserModel userModel;
       DocumentSnapshot result =
           await db.collection('users').doc(user.uid).get();
@@ -53,7 +53,6 @@ class UserRepository {
             followers: [],
             following: []);
       }
-
       service.saveUser(userModel);
       return userModel;
     }

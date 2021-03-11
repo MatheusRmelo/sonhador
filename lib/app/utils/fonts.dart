@@ -10,3 +10,5 @@ TextStyle smallStyleGray =
     TextStyle(fontFamily: 'Fredoka One', fontSize: 12, color: Colors.grey);
 TextStyle smallStyleLight =
     TextStyle(fontFamily: 'Fredoka One', fontSize: 12, color: Colors.white);
+TextStyle h1Light =
+    TextStyle(fontFamily: 'Fredoka One', fontSize: 24, color: Colors.white);

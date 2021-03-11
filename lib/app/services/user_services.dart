@@ -30,12 +30,19 @@ class UserService {
 
   void saveUser(UserModel user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    List<String> followers = [];
+    List<String> following = [];
+    for (var element in user.followers) {
+      followers.add(element.toString());
+    }
+    for (var element in user.following) {
+      following.add(element.toString());
+    }
     await prefs.setString('user_name', user.userName);
     await prefs.setString('display_name', user.displayName);
     await prefs.setString('user_id', user.userId);
-    await prefs.setStringList('followers', user.followers);
-    await prefs.setStringList('following', user.following);
+    await prefs.setStringList('followers', followers);
+    await prefs.setStringList('following', following);
   }
 
   void saveUserName(String userName) async {

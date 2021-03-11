@@ -8,7 +8,9 @@ import 'package:sonhador/app/modules/login/login_module.dart';
 import 'package:sonhador/app/modules/notification/notification_module.dart';
 import 'package:sonhador/app/modules/profile/profile_module.dart';
 import 'package:sonhador/app/modules/writer/writer_module.dart';
+import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/fonts.dart';
+import 'package:sonhador/app/widgets/loading.dart';
 import '../../app_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -86,6 +88,12 @@ class _HomePage extends State<HomePage> {
     return Scaffold(
       body: Observer(
         builder: (_) {
+          if (appController.user.value == null) {
+            return Loading(
+              status: 'Carregando...',
+              color: secondary_color,
+            );
+          }
           if (homeController.currentIndex == 0 ||
               homeController.currentIndex == 1) {
             return widgetOptins.elementAt(homeController.currentIndex);

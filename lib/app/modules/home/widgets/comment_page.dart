@@ -5,8 +5,11 @@ import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/home_content_controller.dart';
 import 'package:sonhador/app/modules/home/home_content/model/home_text_model.dart';
 import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
+import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/commentbox.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
+import 'package:sonhador/app/widgets/loading.dart';
+import 'package:sonhador/app/widgets/loginbottom.dart';
 
 class CommentPage extends StatefulWidget {
   @override
@@ -39,6 +42,12 @@ class _CommentPage extends State<CommentPage> {
     HomeTextModel text = routeData['text'];
 
     return Observer(builder: (_) {
+      if (appController.user.value == null) {
+        return Loading(
+          status: 'Carregando...',
+          color: secondary_color,
+        );
+      }
       return Scaffold(
         backgroundColor: Color(0xFF9B9987),
         appBar: CustomAppBar(pageContext: context, title: 'Comentários'),
@@ -54,7 +63,11 @@ class _CommentPage extends State<CommentPage> {
                     .contains(appController.user.value.userId),
                 index: index,
                 handleClickLiked: (int index) {
-                  likedComment(index);
+                  if (appController.user.value.userId == '') {
+                    showbottomlogin(context);
+                  } else {
+                    likedComment(index);
+                  }
                 },
                 commentsNumber: text.comments[index]['likes'].length.toString(),
               ),
@@ -86,7 +99,11 @@ class _CommentPage extends State<CommentPage> {
                                     : Colors.blue,
                               ),
                               onPressed: () {
-                                saveComment();
+                                if (appController.user.value.userId == '') {
+                                  showbottomlogin(context);
+                                } else {
+                                  saveComment();
+                                }
                               })),
                     ),
                   )))

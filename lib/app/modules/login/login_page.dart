@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
+import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,8 +11,6 @@ class LoginPage extends StatelessWidget {
 
   TextStyle smallStyleSecondary = TextStyle(
       fontFamily: 'Fredoka One', fontSize: 12, color: Color(0xFF483D3F));
-  TextStyle h1Light =
-      TextStyle(fontFamily: 'Fredoka One', fontSize: 24, color: Colors.white);
 
   Widget _signInButton(context) {
     TextStyle smallStyleSecondary = TextStyle(

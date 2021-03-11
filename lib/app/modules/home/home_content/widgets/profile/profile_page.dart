@@ -9,6 +9,7 @@ import 'package:sonhador/app/modules/writer/widgets/search/search_controller.dar
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
 import 'package:sonhador/app/widgets/loading.dart';
+import 'package:sonhador/app/widgets/loginbottom.dart';
 import '../../../../../widgets/profilebox.dart';
 import '../../../../../widgets/textbox.dart';
 import '../../../../../utils/fonts.dart';
@@ -45,6 +46,9 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (_) {
         double widthDevice = MediaQuery.of(context).size.width;
         double heightDevice = MediaQuery.of(context).size.height;
+        if (appController.user.value == null) {
+          return Loading(status: 'Carregando...');
+        }
         if (profileController.loading) {
           return Loading(status: 'Carregando...');
         }
@@ -128,9 +132,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   color: secondary_color,
                                   onPressed: () {
-                                    appController.newFollow(user.userId);
-                                    profileController.newFollow(
-                                        appController.user.value.userId);
+                                    if (appController.user.value.userId == '') {
+                                      showbottomlogin(context);
+                                    } else {
+                                      appController.newFollow(user.userId);
+                                      profileController.newFollow(
+                                          appController.user.value.userId);
+                                    }
                                   },
                                   child: Text(
                                     follow ? 'Deixar de seguir' : 'Seguir',
