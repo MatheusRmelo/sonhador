@@ -4,7 +4,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/model/user_model.dart';
 import 'package:sonhador/app/modules/home/home_content/widgets/profile/profile_controller.dart';
-import 'package:sonhador/app/modules/profile/profile_controller.dart';
 import 'package:sonhador/app/modules/writer/widgets/search/search_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
@@ -180,11 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               textId: texts[index].id,
                               title: texts[index].title,
                               onTap: (textId) {
-                                Navigator.pushNamed(context, '/writer',
-                                    arguments: {
-                                      "newText": false,
-                                      "textId": textId
-                                    });
+                                Modular.to.pushNamed('/home/text',
+                                    arguments: {"textId": textId});
                               },
                             )),
                   ))
