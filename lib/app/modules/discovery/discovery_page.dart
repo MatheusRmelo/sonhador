@@ -105,21 +105,29 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                         ),
                         Container(
                           height: 150,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: texts.length,
-                            itemBuilder: (context, index) => TextBox(
-                              margin: EdgeInsets.only(right: 16, top: 16),
-                              color: primary_color,
-                              textId: texts[index].id,
-                              title: texts[index].title,
-                              points: texts[index].points.toString(),
-                              onTap: (textId) {
-                                Modular.to.pushNamed('/home/text',
-                                    arguments: {"textId": textId});
-                              },
-                            ),
-                          ),
+                          child: texts.length == 0
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 16),
+                                  child: Text(
+                                    'Nenhum texto ainda, começe a escrever!',
+                                    style: h1Green,
+                                  ),
+                                )
+                              : ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: texts.length,
+                                  itemBuilder: (context, index) => TextBox(
+                                    margin: EdgeInsets.only(right: 16, top: 16),
+                                    color: primary_color,
+                                    textId: texts[index].id,
+                                    title: texts[index].title,
+                                    points: texts[index].points.toString(),
+                                    onTap: (textId) {
+                                      Modular.to.pushNamed('/home/text',
+                                          arguments: {"textId": textId});
+                                    },
+                                  ),
+                                ),
                         )
                       ],
                     )),
@@ -135,24 +143,41 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                           ),
                         ),
                         Container(
-                          height: 150,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: users.length,
-                            itemBuilder: (context, index) => UserBox(
-                              margin: EdgeInsets.only(right: 16, top: 16),
-                              color: primary_color,
-                              userId: users[index].userId,
-                              userName: users[index].userName,
-                              points: users[index].points.toString(),
-                              photo: users[index].photo,
-                              onTap: (userId) {
-                                Modular.to.pushNamed('/home/profile',
-                                    arguments: {"userId": userId});
-                              },
-                            ),
-                          ),
-                        )
+                            height: 150,
+                            child: users.length == 0
+                                ? Container(
+                                    margin: EdgeInsets.only(top: 16),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Ningúem',
+                                          style: h1Green,
+                                        ),
+                                        Icon(
+                                          Icons.sentiment_very_dissatisfied,
+                                          size: 32,
+                                          color: primary_color,
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: users.length,
+                                    itemBuilder: (context, index) => UserBox(
+                                      margin:
+                                          EdgeInsets.only(right: 16, top: 16),
+                                      color: primary_color,
+                                      userId: users[index].userId,
+                                      userName: users[index].userName,
+                                      points: users[index].points.toString(),
+                                      photo: users[index].photo,
+                                      onTap: (userId) {
+                                        Modular.to.pushNamed('/home/profile',
+                                            arguments: {"userId": userId});
+                                      },
+                                    ),
+                                  ))
                       ],
                     )),
                 Column(

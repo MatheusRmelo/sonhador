@@ -21,15 +21,16 @@ class HomeTextRepository {
 
       String photoUrl =
           await storage.ref("profiles/${data['userId']}.jpg").getDownloadURL();
+
       List comments = data['comments'];
-      comments.forEach((element) async {
+      for (var element in comments) {
         DocumentSnapshot results =
             await db.collection('users').doc(element['user_id']).get();
         if (results.exists) {
           element['user_name'] = results.data()['user_name'];
         }
-      });
-      //print(comments);
+      }
+
       HomeTextModel text = HomeTextModel(
           id: element.id,
           alignment: data['alignment'],
