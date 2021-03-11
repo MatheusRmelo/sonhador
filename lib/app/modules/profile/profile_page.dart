@@ -39,6 +39,10 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (_) {
         double widthDevice = MediaQuery.of(context).size.width;
         double heightDevice = MediaQuery.of(context).size.height;
+        if (appController.user.value.userId == '' ||
+            appController.user.value == null) {
+          return Loading(status: 'Carregando...');
+        }
         if (profileController.loading) {
           return Loading(status: 'Carregando...');
         }
@@ -132,9 +136,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   borderRadius: BorderRadius.circular(0),
                                 ),
                                 color: primary_color,
-                                onPressed: () {},
+                                onPressed: () {
+                                  appController.signOut();
+                                },
                                 child: Icon(
-                                  Icons.language,
+                                  Icons.logout,
                                   size: 16,
                                   color: Colors.white,
                                 ),

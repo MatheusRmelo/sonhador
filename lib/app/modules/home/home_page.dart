@@ -16,10 +16,9 @@ class HomePage extends StatefulWidget {
   _HomePage createState() => _HomePage();
 }
 
-String userId = '';
-
 class _HomePage extends State<HomePage> {
   final homeController = Modular.get<HomeController>();
+  final appController = Modular.get<AppController>();
 
   List widgetOptins = [
     HomeContentPage(),
@@ -27,12 +26,9 @@ class _HomePage extends State<HomePage> {
     WriterModule(),
     NotificationModule(),
     ProfileModule(),
-    LoginModule(),
   ];
 
   void createNewText(BuildContext pageContext) {
-    final appController = Modular.get<AppController>();
-
     showDialog(
         context: pageContext,
         builder: (BuildContext context) {
@@ -54,7 +50,7 @@ class _HomePage extends State<HomePage> {
                             onPressed: () {
                               if (appController.user.value.userId == '') {
                                 Modular.to.pop();
-                                homeController.updateCurrentIndex(3);
+                                homeController.updateCurrentIndex(4);
                               } else {
                                 Modular.to.pushNamed('/writer',
                                     arguments: {"newText": true});
@@ -74,7 +70,7 @@ class _HomePage extends State<HomePage> {
                             onPressed: () {
                               if (appController.user.value.userId == '') {
                                 Modular.to.pop();
-                                homeController.updateCurrentIndex(3);
+                                homeController.updateCurrentIndex(4);
                               } else {
                                 Modular.to.pushNamed('/writer/search');
                               }
@@ -89,27 +85,29 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(
-        builder: (_) => widgetOptins.elementAt(homeController.currentIndex),
+        builder: (_) {
+          if (homeController.currentIndex == 0 ||
+              homeController.currentIndex == 1) {
+            return widgetOptins.elementAt(homeController.currentIndex);
+          }
+          if (appController.user.value.userId == '') {
+            return LoginModule();
+          }
+
+          return widgetOptins.elementAt(homeController.currentIndex);
+        },
       ),
       bottomNavigationBar: _bottomTabNavigator(),
     );
   }
 
   Widget _bottomTabNavigator() {
-    final appController = Modular.get<AppController>();
-
     return Observer(
         builder: (_) => BottomNavigationBar(
               onTap: (index) {
                 //print(index);
                 if (index == 2) {
                   createNewText(context);
-                } else if (index != 0 && index != 1) {
-                  if (appController.user.value.userId == '') {
-                    homeController.updateCurrentIndex(3);
-                  } else {
-                    homeController.updateCurrentIndex(index);
-                  }
                 } else {
                   homeController.updateCurrentIndex(index);
                 }
