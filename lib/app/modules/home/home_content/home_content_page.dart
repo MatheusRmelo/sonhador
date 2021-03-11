@@ -71,6 +71,7 @@ class _HomeContentPage extends State<HomeContentPage> {
       page++;
     });
     textShared += 'Autor: ' + author;
+    homeController.sharedText(appController.user.value.userId);
     Share.share(textShared);
   }
 

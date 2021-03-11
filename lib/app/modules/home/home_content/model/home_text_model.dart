@@ -5,6 +5,7 @@ class HomeTextModel {
   final String alignment;
   final List likes;
   final List comments;
+  final List shared;
   final List hashtags;
   final String userId;
   final String photoUrl;
@@ -16,6 +17,7 @@ class HomeTextModel {
       this.alignment,
       this.likes,
       this.comments,
+      this.shared,
       this.hashtags,
       this.userId,
       this.photoUrl});

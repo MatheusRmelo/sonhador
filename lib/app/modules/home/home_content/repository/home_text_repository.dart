@@ -34,6 +34,7 @@ class HomeTextRepository {
           id: element.id,
           alignment: data['alignment'],
           likes: data['likes'],
+          shared: data['shared'],
           pages: data['pages'],
           title: data['title'],
           comments: comments,
@@ -89,6 +90,10 @@ class HomeTextRepository {
 
   void likedText(HomeTextModel text) async {
     await db.collection('texts').doc(text.id).update({"likes": text.likes});
+  }
+
+  void sharedText(HomeTextModel text) async {
+    await db.collection('texts').doc(text.id).update({"shared": text.shared});
   }
 
   void saveComment(HomeTextModel text) async {

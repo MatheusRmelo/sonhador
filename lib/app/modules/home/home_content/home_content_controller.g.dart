@@ -172,6 +172,17 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
   }
 
   @override
+  void sharedText(String userId) {
+    final _$actionInfo = _$_HomeContentControllerBaseActionController
+        .startAction(name: '_HomeContentControllerBase.sharedText');
+    try {
+      return super.sharedText(userId);
+    } finally {
+      _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentPage: ${currentPage},

@@ -8,6 +8,7 @@ import 'package:sonhador/app/modules/discovery/widgets/search/discovery_search_c
 import 'package:sonhador/app/modules/discovery/widgets/search/discovery_search_page.dart';
 import 'package:sonhador/app/modules/discovery/widgets/text/discovery_text_controller.dart';
 import 'package:sonhador/app/modules/discovery/widgets/text/discovery_text_page.dart';
+import 'package:sonhador/app/modules/home/home_content/repository/points_repository.dart';
 import 'package:sonhador/app/modules/home/home_controller.dart';
 import 'package:sonhador/app/modules/home/widgets/comment_controller.dart';
 import 'package:sonhador/app/modules/profile/profile_controller.dart';
@@ -28,8 +29,9 @@ class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => HomeController()),
-        Bind((i) => HomeContentController(i.get())),
+        Bind((i) => HomeContentController(i.get(), i.get())),
         Bind((i) => HomeTextRepository()),
+        Bind((i) => PointsRepository()),
         Bind((i) => CommentController(i.get())),
         Bind((i) => SearchController(i.get(), i.get())),
         Bind((i) => WriterRepository()),

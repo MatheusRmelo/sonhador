@@ -8,6 +8,8 @@ import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 
+import 'package:sonhador/app/utils/points.dart';
+
 import 'package:sonhador/app/widgets/textbox.dart';
 import 'package:sonhador/app/widgets/userbox.dart';
 
@@ -157,19 +159,19 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Uma curtida = 3 pontos',
+                      'Uma curtida = ${points['like']} ${points['like'] > 1 ? 'pontos' : 'ponto'}',
                       style: smallStyleLight,
                     ),
                     Text(
-                      'Um compartilhamento = 2 pontos',
+                      'Um compartilhamento = ${points['share']} ${points['share'] > 1 ? 'pontos' : 'ponto'}',
                       style: smallStyleLight,
                     ),
+                    // Text(
+                    //   'Uma visualização = ${points['view']} ${points['view'] > 1 ? 'pontos' : 'ponto'}',
+                    //   style: smallStyleLight,
+                    // ),
                     Text(
-                      'Uma visualização = 1 ponto',
-                      style: smallStyleLight,
-                    ),
-                    Text(
-                      'Um comentário = 1 ponto',
+                      'Um comentário = ${points['comment']} ${points['comment'] > 1 ? 'ponto' : 'ponto'}',
                       style: smallStyleLight,
                     ),
                   ],

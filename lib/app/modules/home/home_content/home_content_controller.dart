@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:sonhador/app/modules/home/home_content/repository/home_text_repository.dart';
+import 'package:sonhador/app/modules/home/home_content/repository/points_repository.dart';
 
 import 'model/home_text_model.dart';
 part 'home_content_controller.g.dart';
@@ -10,6 +11,7 @@ class HomeContentController = _HomeContentControllerBase
 
 abstract class _HomeContentControllerBase with Store {
   final HomeTextRepository repository;
+  final PointsRepository pointsRepository;
 
   @observable
   int currentPage = 0;
@@ -24,7 +26,7 @@ abstract class _HomeContentControllerBase with Store {
   @observable
   ObservableFuture<List<HomeTextModel>> nextTexts;
 
-  _HomeContentControllerBase(this.repository) {
+  _HomeContentControllerBase(this.repository, this.pointsRepository) {
     fetchTexts();
   }
 
@@ -54,8 +56,12 @@ abstract class _HomeContentControllerBase with Store {
   void likedText(String userId) {
     if (texts.value[currentText].likes.contains(userId)) {
       texts.value[currentText].likes.remove(userId);
+      pointsRepository.score('like', texts.value[currentText].id,
+          texts.value[currentText].userId, false);
     } else {
       texts.value[currentText].likes.add(userId);
+      pointsRepository.score('like', texts.value[currentText].id,
+          texts.value[currentText].userId, true);
     }
     repository.likedText(texts.value[currentText]);
     currentText = currentText;
@@ -70,6 +76,8 @@ abstract class _HomeContentControllerBase with Store {
       "user_name": userName
     });
     repository.saveComment(texts.value[currentText]);
+    pointsRepository.score('comment', texts.value[currentText].id,
+        texts.value[currentText].userId, true);
   }
 
   @action
@@ -81,5 +89,16 @@ abstract class _HomeContentControllerBase with Store {
     }
     repository.likedComment(texts.value[currentText]);
     currentText = currentText;
+  }
+
+  @action
+  void sharedText(String userId) {
+    if (!texts.value[currentText].shared.contains(userId)) {
+      texts.value[currentText].shared.add(userId);
+      pointsRepository.score('share', texts.value[currentText].id,
+          texts.value[currentText].userId, true);
+      repository.sharedText(texts.value[currentText]);
+      currentText = currentText;
+    }
   }
 }
