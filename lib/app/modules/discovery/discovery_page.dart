@@ -110,7 +110,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                   margin: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'Nenhum texto ainda, começe a escrever!',
-                                    style: h1Green,
+                                    style: h1Primary,
                                   ),
                                 )
                               : ListView.builder(
@@ -151,7 +151,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                       children: [
                                         Text(
                                           'Ningúem',
-                                          style: h1Green,
+                                          style: h1Primary,
                                         ),
                                         Icon(
                                           Icons.sentiment_very_dissatisfied,
@@ -198,6 +198,10 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                     Text(
                       'Um comentário = ${points['comment']} ${points['comment'] > 1 ? 'ponto' : 'ponto'}',
                       style: smallStyleLight,
+                    ),
+                    Text(
+                      '10000 pontos em seu texto = R\$ 10,00 p/você',
+                      style: smallStyleSuccess,
                     ),
                   ],
                 )

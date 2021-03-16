@@ -10,12 +10,18 @@ class DiscoveryRepository {
 
   Future<List<DiscoveryTextModel>> getTopTexts() async {
     List<DiscoveryTextModel> list = [];
+    Timestamp now = Timestamp.fromDate(DateTime.now());
+    Timestamp week = Timestamp(now.seconds - 604800, 0);
+    Timestamp nextWeek = Timestamp(now.seconds, 0);
 
     QuerySnapshot result = await db
         .collection('texts')
-        .orderBy('points', descending: true)
+        .where('createat', isGreaterThan: week, isLessThan: nextWeek)
+        //.where('points', isLessThanOrEqualTo: 0)
+        //.orderBy('points', descending: true)
         .limit(10)
         .get();
+    print(result.docs);
 
     result.docs.forEach((element) {
       var data = element.data();

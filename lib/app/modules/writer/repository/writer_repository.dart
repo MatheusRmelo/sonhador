@@ -104,11 +104,11 @@ class WriterRepository {
           "adult": adult,
           "comments": [],
           "likes": [],
-          "shared": []
+          "shared": [],
+          "points": 0
         })
         .then((value) => true)
         .catchError((err) => false);
-
     return result;
   }
 
