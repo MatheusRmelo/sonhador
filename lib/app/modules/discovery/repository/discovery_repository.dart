@@ -17,14 +17,14 @@ class DiscoveryRepository {
     QuerySnapshot result = await db
         .collection('texts')
         .orderBy('points_week', descending: true)
-        .limit(10)
+        .limit(3)
         .get();
     print(result.docs);
 
     result.docs.forEach((element) {
       var data = element.data();
       DiscoveryTextModel text =
-          DiscoveryTextModel(data['title'], element.id, data['points']);
+          DiscoveryTextModel(data['title'], element.id, data['points_week']);
       if (data['published']) {
         list.add(text);
       }
@@ -39,7 +39,7 @@ class DiscoveryRepository {
     QuerySnapshot result = await db
         .collection('users')
         .orderBy('points_week', descending: true)
-        .limit(10)
+        .limit(3)
         .get();
 
     for (var element in result.docs) {
@@ -49,7 +49,7 @@ class DiscoveryRepository {
       DiscoveryUserModel user = DiscoveryUserModel(
           userId: element.id,
           userName: data['user_name'],
-          points: data['points'],
+          points: data['points_week'],
           photo: photoUrl);
       list.add(user);
     }

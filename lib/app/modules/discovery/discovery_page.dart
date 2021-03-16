@@ -8,10 +8,10 @@ import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 
-import 'package:sonhador/app/utils/points.dart';
-
 import 'package:sonhador/app/widgets/textbox.dart';
 import 'package:sonhador/app/widgets/userbox.dart';
+
+import 'package:sonhador/app/widgets/infopoints.dart';
 
 class DiscoveryPage extends StatefulWidget {
   @override
@@ -180,31 +180,17 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                   ))
                       ],
                     )),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Uma curtida = ${points['like']} ${points['like'] > 1 ? 'pontos' : 'ponto'}',
-                      style: smallStyleLight,
+                Text(
+                  'Clique no ícone para saber mais sobre o sistema de pontos',
+                  style: smallStyleLight,
+                ),
+                IconButton(
+                    icon: Icon(
+                      Icons.info,
+                      size: 48,
+                      color: primary_color,
                     ),
-                    Text(
-                      'Um compartilhamento = ${points['share']} ${points['share'] > 1 ? 'pontos' : 'ponto'}',
-                      style: smallStyleLight,
-                    ),
-                    // Text(
-                    //   'Uma visualização = ${points['view']} ${points['view'] > 1 ? 'pontos' : 'ponto'}',
-                    //   style: smallStyleLight,
-                    // ),
-                    Text(
-                      'Um comentário = ${points['comment']} ${points['comment'] > 1 ? 'ponto' : 'ponto'}',
-                      style: smallStyleLight,
-                    ),
-                    Text(
-                      '10000 pontos em seu texto = R\$ 10,00 p/você',
-                      style: smallStyleSuccess,
-                    ),
-                  ],
-                )
+                    onPressed: () => showInfo(context)),
               ],
             ));
       },
