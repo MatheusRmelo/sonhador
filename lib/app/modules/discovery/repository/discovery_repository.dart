@@ -16,9 +16,7 @@ class DiscoveryRepository {
 
     QuerySnapshot result = await db
         .collection('texts')
-        .where('createat', isGreaterThan: week, isLessThan: nextWeek)
-        //.where('points', isLessThanOrEqualTo: 0)
-        //.orderBy('points', descending: true)
+        .orderBy('points_week', descending: true)
         .limit(10)
         .get();
     print(result.docs);
@@ -40,7 +38,7 @@ class DiscoveryRepository {
 
     QuerySnapshot result = await db
         .collection('users')
-        .orderBy('points', descending: true)
+        .orderBy('points_week', descending: true)
         .limit(10)
         .get();
 

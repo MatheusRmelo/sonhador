@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sonhador/app/model/user_model.dart';
 import 'package:sonhador/app/services/user_services.dart';
+import 'package:sonhador/app/utils/utils.dart';
 
 class UserRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -96,7 +97,10 @@ class UserRepository {
         "user_name": userName,
         "display_name": displayName,
         "followers": [],
-        "following": []
+        "following": [],
+        "points": 0,
+        "points_week": 0,
+        "week_number": isoWeekNumber(DateTime.now())
       });
     } else {
       userName = verifyExist.data()['user_name'];

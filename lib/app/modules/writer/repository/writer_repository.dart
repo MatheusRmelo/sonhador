@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sonhador/app/modules/writer/model/text_model.dart';
+import 'package:sonhador/app/utils/utils.dart';
 import '../model/writer_model.dart';
 
 class WriterRepository {
@@ -105,7 +106,9 @@ class WriterRepository {
           "comments": [],
           "likes": [],
           "shared": [],
-          "points": 0
+          "points": 0,
+          "points_week": 0,
+          "week_number": isoWeekNumber(DateTime.now())
         })
         .then((value) => true)
         .catchError((err) => false);
