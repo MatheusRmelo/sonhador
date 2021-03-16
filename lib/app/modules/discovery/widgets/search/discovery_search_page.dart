@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/discovery/widgets/search/discovery_search_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/loading_container.dart';
@@ -15,6 +16,7 @@ class DiscoverySearchPage extends StatefulWidget {
 
 class _DiscoverySearchPage extends State<DiscoverySearchPage> {
   final searchController = Modular.get<DiscoverySearchController>();
+  final appController = Modular.get<AppController>();
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +139,15 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                                             userId: users[index].userId,
                                             userName: users[index].userName,
                                             onTap: (userId) {
-                                              Modular.to.pushNamed(
-                                                  '/home/profile',
-                                                  arguments: {
-                                                    "userId": userId
-                                                  });
+                                              if (appController
+                                                      .user.value.userId !=
+                                                  userId) {
+                                                Modular.to.pushNamed(
+                                                    '/home/profile',
+                                                    arguments: {
+                                                      "userId": userId
+                                                    });
+                                              }
                                             },
                                           )),
                                 ))

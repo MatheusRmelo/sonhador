@@ -38,8 +38,10 @@ class DiscoverySearchRepository {
       var data = element.data();
       if (data['display_name'].toLowerCase().contains(textSearch) ||
           data['user_name'].toLowerCase().contains(textSearch)) {
-        String photoUrl =
-            await storage.ref("profiles/${element.id}.jpg").getDownloadURL();
+        String photoUrl = await storage
+            .ref("profiles/${element.id}.jpg")
+            .getDownloadURL()
+            .catchError((err) => '');
         DiscoveryUserModel user = DiscoveryUserModel(
             userId: element.id,
             photo: photoUrl,

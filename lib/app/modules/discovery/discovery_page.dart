@@ -173,8 +173,11 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                       points: users[index].points.toString(),
                                       photo: users[index].photo,
                                       onTap: (userId) {
-                                        Modular.to.pushNamed('/home/profile',
-                                            arguments: {"userId": userId});
+                                        if (appController.user.value.userId !=
+                                            userId) {
+                                          Modular.to.pushNamed('/home/profile',
+                                              arguments: {"userId": userId});
+                                        }
                                       },
                                     ),
                                   ))

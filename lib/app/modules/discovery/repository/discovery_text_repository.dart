@@ -13,8 +13,10 @@ class DiscoveryTextRepository {
 
     DocumentSnapshot result = await db.collection('texts').doc(textId).get();
     var data = result.data();
-    String photoUrl =
-        await storage.ref("profiles/${data['userId']}.jpg").getDownloadURL();
+    String photoUrl = await storage
+        .ref("profiles/${data['userId']}.jpg")
+        .getDownloadURL()
+        .catchError((err) => '');
     text = HomeTextModel(
         id: result.id,
         alignment: data['alignment'],

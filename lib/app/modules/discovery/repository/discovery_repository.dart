@@ -10,9 +10,6 @@ class DiscoveryRepository {
 
   Future<List<DiscoveryTextModel>> getTopTexts() async {
     List<DiscoveryTextModel> list = [];
-    Timestamp now = Timestamp.fromDate(DateTime.now());
-    Timestamp week = Timestamp(now.seconds - 604800, 0);
-    Timestamp nextWeek = Timestamp(now.seconds, 0);
 
     QuerySnapshot result = await db
         .collection('texts')
@@ -44,8 +41,10 @@ class DiscoveryRepository {
 
     for (var element in result.docs) {
       var data = element.data();
-      String photoUrl =
-          await storage.ref("profiles/${element.id}.jpg").getDownloadURL();
+      String photoUrl = await storage
+          .ref("profiles/${element.id}.jpg")
+          .getDownloadURL()
+          .catchError((err) => '');
       DiscoveryUserModel user = DiscoveryUserModel(
           userId: element.id,
           userName: data['user_name'],

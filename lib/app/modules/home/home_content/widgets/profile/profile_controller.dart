@@ -18,6 +18,7 @@ abstract class _HomeProfileControllerBase with Store {
   ObservableFuture<ProfileModel> photoUrl;
   @observable
   bool loading;
+
   _HomeProfileControllerBase(this.userRepository, this.profileRepository);
 
   @action
