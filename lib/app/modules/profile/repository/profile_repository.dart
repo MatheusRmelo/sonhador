@@ -6,11 +6,13 @@ class ProfileRepository {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
-  void uploadFile(File file, String userId) async {
+  Future<bool> uploadFile(File file, String userId) async {
     try {
       await storage.ref('profiles/$userId.jpg').putFile(file);
+      return true;
     } catch (e) {
       // e.g, e.code == 'canceled'
+      return false;
     }
   }
 
@@ -18,7 +20,7 @@ class ProfileRepository {
     String downloadUrl = await storage
         .ref('profiles/$userId.jpg')
         .getDownloadURL()
-        .catchError((err) => '');
+        .catchError((err) => null);
 
     ProfileModel profile = ProfileModel(photoUrl: downloadUrl, userId: userId);
 

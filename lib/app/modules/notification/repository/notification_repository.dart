@@ -15,7 +15,7 @@ class NotificationRepository {
       String photoUrl = await storage
           .ref('profiles/${element['userId']}.jpg')
           .getDownloadURL()
-          .catchError((err) => '');
+          .catchError((err) => null);
       NotificationModel notification =
           NotificationModel(element['message'], element['userId'], photoUrl);
       list.add(notification);

@@ -19,9 +19,10 @@ class HomeTextRepository {
     for (var element in result.docs) {
       var data = element.data();
 
-      String photoUrl =
-          await storage.ref("profiles/${data['userId']}.jpg").getDownloadURL();
-
+      String photoUrl = await storage
+          .ref("profiles/${data['userId']}.jpg")
+          .getDownloadURL()
+          .catchError((err) => null);
       List comments = data['comments'];
       for (var element in comments) {
         DocumentSnapshot results =

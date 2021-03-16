@@ -100,7 +100,14 @@ class UserRepository {
         "following": [],
         "points": 0,
         "points_week": 0,
-        "week_number": isoWeekNumber(DateTime.now())
+        "week_number": isoWeekNumber(DateTime.now()),
+        "notifications": [
+          {
+            "message":
+                "Bem vindo! Ao sonhador. Se precisar de ajuda nos chame no SAC ou nas nossas redes sociais",
+            "userId": "sonhador"
+          }
+        ]
       });
     } else {
       userName = verifyExist.data()['user_name'];

@@ -193,6 +193,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                       ),
                       onPressed: prevPage,
                     ),
+
                     // IconButton(
                     //   padding: EdgeInsets.zero,
                     //   icon: Icon(Icons.format_align_left,

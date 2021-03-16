@@ -46,7 +46,7 @@ mixin _$EditController on _EditControllerBase, Store {
       ActionController(name: '_EditControllerBase');
 
   @override
-  void saveImage(File file, String userId) {
+  Future<bool> saveImage(File file, String userId) {
     final _$actionInfo = _$_EditControllerBaseActionController.startAction(
         name: '_EditControllerBase.saveImage');
     try {

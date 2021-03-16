@@ -18,7 +18,7 @@ abstract class _EditControllerBase with Store {
   TextEditingController userDisplayController = TextEditingController(text: '');
 
   @action
-  void saveImage(File file, String userId) {
-    repository.uploadFile(file, userId);
+  Future<bool> saveImage(File file, String userId) {
+    return repository.uploadFile(file, userId);
   }
 }

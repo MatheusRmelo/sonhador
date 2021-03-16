@@ -9,6 +9,8 @@ import 'package:sonhador/app/modules/profile/profile_controller.dart';
 import 'package:sonhador/app/modules/profile/widgets/edit/edit_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/utils/fonts.dart';
+import 'package:sonhador/app/widgets/loading.dart';
+import 'package:sonhador/app/widgets/loading_container.dart';
 import 'package:sonhador/app/widgets/profilebox.dart';
 import '../../../../widgets/customappbar.dart';
 
@@ -59,11 +61,12 @@ class _EditPageState extends State<EditPage> {
     final pickedFile = await picker.getImage(
         source: local == 'camera' ? ImageSource.camera : ImageSource.gallery);
 
-    setState(() {
+    setState(() async {
       if (pickedFile != null) {
         print(pickedFile.path);
         _image = File(pickedFile.path);
-        editController.saveImage(_image, appController.user.value.userId);
+        await editController.saveImage(_image, appController.user.value.userId);
+        profileController.getPhoto(appController.user.value.userId);
       } else {
         print('No image selected.');
       }
@@ -87,10 +90,18 @@ class _EditPageState extends State<EditPage> {
                     margin: EdgeInsets.only(bottom: 40),
                     child: Column(
                       children: [
-                        ProfileBox(
-                          photoURL: profileController.photoUrl.value.photoUrl,
-                          file: _image,
-                        ),
+                        profileController.photoUrl.value == null
+                            ? LoadingContainer(
+                                status: 'Carregando...',
+                                width: 80,
+                                height: 80,
+                                expanded: false,
+                              )
+                            : ProfileBox(
+                                photoURL:
+                                    profileController.photoUrl.value.photoUrl,
+                                //file: _image,
+                              ),
                         Container(
                           width: 150,
                           margin: EdgeInsets.only(top: 8),

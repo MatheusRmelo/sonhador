@@ -13,6 +13,8 @@ class NotificationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double widthDevice = MediaQuery.of(context).size.width;
+
     return Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.all(16),
@@ -27,6 +29,7 @@ class NotificationBox extends StatelessWidget {
             photoURL: photoUrl,
           ),
           Container(
+            width: widthDevice * 0.70,
             margin: EdgeInsets.only(left: 8, right: 8),
             child: Text(
               message,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/modules/writer/widgets/publish/publish_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
 import 'package:sonhador/app/utils/fonts.dart';
@@ -15,12 +16,12 @@ class PublishPage extends StatefulWidget {
 class _PublishPage extends State<PublishPage> {
   final writerController = Modular.get<WriterController>();
   final publishController = Modular.get<PublishController>();
+  final appController = Modular.get<AppController>();
 
   @override
   Widget build(BuildContext context) {
     double heightDevice = MediaQuery.of(context).size.height;
 
-    String userId = 'matheusRmelo';
     var text = writerController.text.value;
 
     return Observer(builder: (_) {
@@ -37,7 +38,7 @@ class _PublishPage extends State<PublishPage> {
                 height: 135,
                 width: 120,
                 credit: true,
-                social: userId,
+                social: appController.user.value.userName,
               ),
               Container(
                 height: heightDevice * 0.3,
