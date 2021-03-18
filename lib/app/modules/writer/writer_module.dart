@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/modules/writer/repository/writer_repository.dart';
 import 'package:sonhador/app/modules/writer/widgets/hashtags/hashtags_controller.dart';
+import 'package:sonhador/app/modules/writer/widgets/photo/photo_page.dart';
 import 'package:sonhador/app/modules/writer/widgets/publish/publish_controller.dart';
 import 'package:sonhador/app/modules/writer/widgets/publish/publish_page.dart';
 import 'package:sonhador/app/modules/writer/widgets/search/search_controller.dart';
@@ -25,6 +26,7 @@ class WriterModule extends WidgetModule {
         ModularRouter('/', child: (_, args) => WriterPage()),
         ModularRouter('/search', child: (_, args) => SearchPage()),
         ModularRouter('/hashtag', child: (_, args) => HashtagPage()),
+        ModularRouter('/photo', child: (_, args) => PhotoPage()),
         ModularRouter('/publish', child: (_, args) => PublishPage())
       ];
 

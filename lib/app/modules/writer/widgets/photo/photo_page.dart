@@ -5,13 +5,14 @@ import 'package:sonhador/app/modules/writer/widgets/hashtags/hashtags_controller
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
 import 'package:sonhador/app/widgets/loading_container.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
+import 'package:sonhador/app/widgets/textbox.dart';
 
-class HashtagPage extends StatefulWidget {
+class PhotoPage extends StatefulWidget {
   @override
-  _HashtagPage createState() => _HashtagPage();
+  _PhotoPage createState() => _PhotoPage();
 }
 
-class _HashtagPage extends State<HashtagPage> {
+class _PhotoPage extends State<PhotoPage> {
   final hashtagsController = Modular.get<HashTagsController>();
   final writerController = Modular.get<WriterController>();
 
@@ -35,7 +36,7 @@ class _HashtagPage extends State<HashtagPage> {
         return Scaffold(
           backgroundColor: Color(0xFF9B9987),
           appBar: CustomAppBar(
-              pageContext: context, title: 'Escolha as hashtags mais quentes!'),
+              pageContext: context, title: 'Escolha uma imagem de capa'),
           body: Center(
             child: Column(
               children: [
@@ -46,33 +47,7 @@ class _HashtagPage extends State<HashtagPage> {
                         width: widthDevice * 0.8,
                         height: heightDevice * 0.25,
                       )
-                    : Container(
-                        margin: EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8)),
-                        height: heightDevice * 0.25,
-                        width: widthDevice * 0.8,
-                        child: TextFormField(
-                          controller: hashtagsController.textController,
-                          style: TextStyle(fontFamily: 'EBGaramond'),
-                          //controller: _controller,
-                          textAlignVertical: TextAlignVertical.top,
-                          textAlign: TextAlign.start,
-                          expands: true,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          onChanged: (text) {
-                            hashtagsController.tags = text;
-                          },
-                          decoration: InputDecoration(
-                            hintText: '#poema #amor #sonhador',
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(8)),
-                          ),
-                        ),
-                      ),
+                    : TextBox(textId: 'textId', title: 'title'),
                 Container(
                     width: 200,
                     height: 40,
@@ -85,9 +60,9 @@ class _HashtagPage extends State<HashtagPage> {
                           FocusScope.of(context).unfocus();
                           hashtagsController
                               .saveHashtags(writerController.text.value.id);
-                          Modular.to.pushNamed('writer/photo');
+                          Modular.to.pushNamed('writer/publish');
                         },
-                        child: Text('AVANÇAR',
+                        child: Text('SALVAR',
                             style: TextStyle(
                                 fontFamily: 'Fredoka One',
                                 fontSize: 16,

@@ -184,7 +184,7 @@ class _HomePage extends State<HomePage> {
                       color: Colors.white,
                     ),
                     icon: Icon(Icons.notifications, color: Colors.black),
-                    label: 'Notificações'),
+                    label: 'Alertas'),
                 BottomNavigationBarItem(
                   activeIcon: Icon(
                     Icons.person,

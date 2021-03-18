@@ -48,9 +48,9 @@ class UserBox extends StatelessWidget {
                   color: color == null ? Color(0xFF483D3F) : color,
                   boxShadow: [
                     BoxShadow(
-                        blurRadius: 4,
+                        blurRadius: 1,
                         color: Colors.black.withOpacity(0.25),
-                        offset: Offset.fromDirection(1, 10),
+                        offset: Offset.fromDirection(1, 3),
                         spreadRadius: 0)
                   ]),
               child: ProfileBox(

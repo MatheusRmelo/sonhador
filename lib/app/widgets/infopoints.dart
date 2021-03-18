@@ -41,19 +41,19 @@ void showInfo(BuildContext pageContext) {
                     ),
                     Divider(),
                     Text(
-                      '10000 pontos em seu texto = R\$ 10,00 p/você',
+                      '10000 pontos em seu texto = R\$ 10,00',
                       style: smallStyleSuccess,
                     ),
                     Text(
-                      'Você no Top 1 da semana = R\$ 15,00 p/você',
+                      'Você no Top 1 da semana = R\$ 3,00',
                       style: smallStyleSuccess,
                     ),
                     Text(
-                      'Você no Top 2 da semana = R\$ 10,00 p/você',
+                      'Você no Top 2 da semana = R\$ 2,00',
                       style: smallStyleSuccess,
                     ),
                     Text(
-                      'Você no Top 3 da semana = R\$ 5,00 p/você',
+                      'Você no Top 3 da semana = R\$ 1,00',
                       style: smallStyleSuccess,
                     )
                   ],

@@ -184,14 +184,14 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                       ],
                     )),
                 Text(
-                  'Clique no ícone para saber mais sobre o sistema de pontos',
+                  'Clique no ícone para saber mais sobre os pontos',
                   style: smallStyleLight,
                 ),
                 IconButton(
                     icon: Icon(
                       Icons.info,
                       size: 48,
-                      color: primary_color,
+                      color: Colors.white,
                     ),
                     onPressed: () => showInfo(context)),
               ],

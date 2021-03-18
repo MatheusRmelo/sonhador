@@ -40,7 +40,6 @@ class _CommentPage extends State<CommentPage> {
     //var texts = homeContentController.texts.value;
     Map<String, dynamic> routeData = ModalRoute.of(context).settings.arguments;
     HomeTextModel text = routeData['text'];
-
     return Observer(builder: (_) {
       if (appController.user.value == null) {
         return Loading(

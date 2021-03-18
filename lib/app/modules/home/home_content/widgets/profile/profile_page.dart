@@ -122,10 +122,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                width: widthDevice * 0.35,
                                 height: 30,
                                 margin: EdgeInsets.only(top: 1),
                                 child: RaisedButton(
+                                  elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(0),
                                   ),
@@ -146,22 +146,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               Container(
-                                width: widthDevice * 0.1,
-                                height: 30,
-                                margin: EdgeInsets.only(top: 1),
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(0),
-                                  ),
+                                  alignment: Alignment.center,
+                                  height: 30,
+                                  margin: EdgeInsets.only(top: 1),
                                   color: primary_color,
-                                  onPressed: () {},
-                                  child: Icon(
-                                    Icons.language,
-                                    size: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.language,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {},
+                                  ))
                             ],
                           )
                         ],
