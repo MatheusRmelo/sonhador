@@ -147,7 +147,7 @@ class _EditPageState extends State<EditPage> {
                   ),
                   onTap: () {
                     Modular.to.pushNamed(
-                        '/home/input/Úsuario/${appController.user.value.userName}/user_name');
+                        '/home/input/Usuário/${appController.user.value.userName}/user_name');
                   },
                 ),
                 Text(
