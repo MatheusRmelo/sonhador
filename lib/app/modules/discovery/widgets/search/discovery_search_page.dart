@@ -89,6 +89,7 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                                   children: List.generate(
                                       texts.length,
                                       (index) => TextBox(
+                                            imgUrl: texts[index].photoURL,
                                             textId: texts[index].id,
                                             title: texts[index].title,
                                             onTap: (textId) {

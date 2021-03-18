@@ -58,143 +58,151 @@ class _DiscoveryPage extends State<DiscoveryPage> {
             appBar: CustomAppBar(
                 backButton: false,
                 pageContext: context,
-                title: 'Jovem, pesquise tudo aqui em baixo',
+                title: 'Jovem, pesquise tudo aqui',
                 color: secondary_color,
                 itemsColor: Colors.white),
             backgroundColor: secondary_color,
-            body: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Modular.to.pushNamed('/home/search');
-                  },
-                  child: Container(
-                    padding: EdgeInsets.only(left: 16, right: 16),
-                    width: widthDevice,
-                    height: 40,
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16)),
-                    margin: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Digite aqui...',
-                          style: smallStyleGray,
-                        ),
-                        Icon(
-                          Icons.search,
-                          color: Colors.grey[400],
-                        )
-                      ],
+            body: RefreshIndicator(
+              onRefresh: () async {
+                discoveryController.fetchTexts();
+              },
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Modular.to.pushNamed('/home/search');
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      width: widthDevice,
+                      height: 40,
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16)),
+                      margin: EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Digite aqui...',
+                            style: smallStyleGray,
+                          ),
+                          Icon(
+                            Icons.search,
+                            color: Colors.grey[400],
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Melhores textos da semana',
-                            style: smallTextLight,
+                  Container(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Melhores textos da semana',
+                              style: smallTextLight,
+                            ),
                           ),
-                        ),
-                        Container(
-                          height: 150,
-                          child: texts.length == 0
-                              ? Container(
-                                  margin: EdgeInsets.only(top: 16),
-                                  child: Text(
-                                    'Nenhum texto ainda, começe a escrever!',
-                                    style: h1Primary,
-                                  ),
-                                )
-                              : ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: texts.length,
-                                  itemBuilder: (context, index) => TextBox(
-                                    margin: EdgeInsets.only(right: 16, top: 16),
-                                    color: primary_color,
-                                    textId: texts[index].id,
-                                    title: texts[index].title,
-                                    points: texts[index].points.toString(),
-                                    onTap: (textId) {
-                                      Modular.to.pushNamed('/home/text',
-                                          arguments: {"textId": textId});
-                                    },
-                                  ),
-                                ),
-                        )
-                      ],
-                    )),
-                Container(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Melhores usuários da semana',
-                            style: smallTextLight,
-                          ),
-                        ),
-                        Container(
+                          Container(
                             height: 150,
-                            child: users.length == 0
+                            child: texts.length == 0
                                 ? Container(
                                     margin: EdgeInsets.only(top: 16),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'Ningúem',
-                                          style: h1Primary,
-                                        ),
-                                        Icon(
-                                          Icons.sentiment_very_dissatisfied,
-                                          size: 32,
-                                          color: primary_color,
-                                        )
-                                      ],
+                                    child: Text(
+                                      'Nenhum texto ainda, começe a escrever!',
+                                      style: h1Primary,
                                     ),
                                   )
                                 : ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: users.length,
-                                    itemBuilder: (context, index) => UserBox(
+                                    itemCount: texts.length,
+                                    itemBuilder: (context, index) => TextBox(
                                       margin:
                                           EdgeInsets.only(right: 16, top: 16),
+                                      imgUrl: texts[index].photoURL,
                                       color: primary_color,
-                                      userId: users[index].userId,
-                                      userName: users[index].userName,
-                                      points: users[index].points.toString(),
-                                      photo: users[index].photo,
-                                      onTap: (userId) {
-                                        if (appController.user.value.userId !=
-                                            userId) {
-                                          Modular.to.pushNamed('/home/profile',
-                                              arguments: {"userId": userId});
-                                        }
+                                      textId: texts[index].id,
+                                      title: texts[index].title,
+                                      points: texts[index].points.toString(),
+                                      onTap: (textId) {
+                                        Modular.to.pushNamed('/home/text',
+                                            arguments: {"textId": textId});
                                       },
                                     ),
-                                  ))
-                      ],
-                    )),
-                Text(
-                  'Clique no ícone para saber mais sobre os pontos',
-                  style: smallStyleLight,
-                ),
-                IconButton(
-                    icon: Icon(
-                      Icons.info,
-                      size: 48,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => showInfo(context)),
-              ],
+                                  ),
+                          )
+                        ],
+                      )),
+                  Container(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Melhores usuários da semana',
+                              style: smallTextLight,
+                            ),
+                          ),
+                          Container(
+                              height: 150,
+                              child: users.length == 0
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 16),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Ningúem',
+                                            style: h1Primary,
+                                          ),
+                                          Icon(
+                                            Icons.sentiment_very_dissatisfied,
+                                            size: 32,
+                                            color: primary_color,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: users.length,
+                                      itemBuilder: (context, index) => UserBox(
+                                        margin:
+                                            EdgeInsets.only(right: 16, top: 16),
+                                        color: primary_color,
+                                        userId: users[index].userId,
+                                        userName: users[index].userName,
+                                        points: users[index].points.toString(),
+                                        photo: users[index].photo,
+                                        onTap: (userId) {
+                                          if (appController.user.value.userId !=
+                                              userId) {
+                                            Modular.to.pushNamed(
+                                                '/home/profile',
+                                                arguments: {"userId": userId});
+                                          }
+                                        },
+                                      ),
+                                    ))
+                        ],
+                      )),
+                  Text(
+                    'Clique no ícone para saber mais sobre os pontos',
+                    style: smallStyleLight,
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.info,
+                        size: 48,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => showInfo(context)),
+                ],
+              ),
             ));
       },
     );

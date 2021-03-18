@@ -14,18 +14,21 @@ class DiscoveryRepository {
     QuerySnapshot result = await db
         .collection('texts')
         .orderBy('points_week', descending: true)
-        .limit(3)
+        .limit(5)
         .get();
-    print(result.docs);
 
-    result.docs.forEach((element) {
+    for (var element in result.docs) {
       var data = element.data();
-      DiscoveryTextModel text =
-          DiscoveryTextModel(data['title'], element.id, data['points_week']);
+      String photoUrl = await storage
+          .ref("texts/${element.id}.jpg")
+          .getDownloadURL()
+          .catchError((err) => '');
+      DiscoveryTextModel text = DiscoveryTextModel(
+          data['title'], element.id, data['points_week'], photoUrl);
       if (data['published']) {
         list.add(text);
       }
-    });
+    }
 
     return list;
   }
@@ -36,7 +39,7 @@ class DiscoveryRepository {
     QuerySnapshot result = await db
         .collection('users')
         .orderBy('points_week', descending: true)
-        .limit(3)
+        .limit(5)
         .get();
 
     for (var element in result.docs) {

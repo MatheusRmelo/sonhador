@@ -127,204 +127,215 @@ class _HomeContentPage extends State<HomeContentPage> {
         follow = true;
       }
       return Scaffold(
-        backgroundColor: Color(0xFF483D3F),
-        appBar: HomeAppBar(
-            pageContext: context,
-            title: text.title,
-            pagesLength: text.pages.length,
-            currentPage: homeController.currentPage + 1),
-        body: Stack(
-          children: [
-            Positioned(
-                left: 56,
-                right: 56,
-                child: Column(
-                  children: [
-                    Container(
-                        height: heightDevice * 0.70,
-                        child: Swiper(
-                          onIndexChanged: (int index) => nextText(index),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                                margin: EdgeInsets.only(bottom: 16),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8)),
-                                height: heightDevice * 0.65,
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  width: widthDevice * 1,
-                                  child: Text(
-                                    homeController.textController.text,
-                                    style: TextStyle(fontFamily: 'EBGaramond'),
-                                    textAlign: text.alignment == 'center'
-                                        ? TextAlign.center
-                                        : text.alignment == 'left'
-                                            ? TextAlign.start
-                                            : TextAlign.end,
-                                  ),
-                                ));
-                          },
-                          itemCount: homeController.texts.value.length,
-                        )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+          backgroundColor: Color(0xFF483D3F),
+          appBar: HomeAppBar(
+              pageContext: context,
+              title: text.title,
+              pagesLength: text.pages.length,
+              currentPage: homeController.currentPage + 1),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              homeController.fetchMoreTexts(homeController
+                  .texts.value[homeController.texts.value.length - 1].id);
+              homeController.getMoreTexts();
+            },
+            child: Stack(
+              children: [
+                Positioned(
+                    left: 56,
+                    right: 56,
+                    child: Column(
                       children: [
-                        Text(
-                          hashtags,
-                          style: smallStyleLight,
+                        Container(
+                            height: heightDevice * 0.70,
+                            child: Swiper(
+                              onIndexChanged: (int index) => nextText(index),
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                    margin: EdgeInsets.only(bottom: 16),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    height: heightDevice * 0.65,
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      width: widthDevice * 1,
+                                      child: Text(
+                                        homeController.textController.text,
+                                        style:
+                                            TextStyle(fontFamily: 'EBGaramond'),
+                                        textAlign: text.alignment == 'center'
+                                            ? TextAlign.center
+                                            : text.alignment == 'left'
+                                                ? TextAlign.start
+                                                : TextAlign.end,
+                                      ),
+                                    ));
+                              },
+                              itemCount: homeController.texts.value.length,
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              hashtags,
+                              style: smallStyleLight,
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                )),
-            Positioned(
-                left: 0,
-                top: 64,
-                child: Column(
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                        Icons.keyboard_arrow_left,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                      onPressed: prevPage,
-                    ),
-
-                    // IconButton(
-                    //   padding: EdgeInsets.zero,
-                    //   icon: Icon(Icons.format_align_left,
-                    //       size: 32,
-                    //       color: alignment == 'left'
-                    //           ? Colors.white
-                    //           : Colors.black),
-                    //   onPressed: () {
-                    //     changeAlignment('left');
-                    //   },
-                    // ),
-                    // IconButton(
-                    //   padding: EdgeInsets.zero,
-                    //   icon: Icon(Icons.format_align_center,
-                    //       size: 32,
-                    //       color: alignment == 'center'
-                    //           ? Colors.white
-                    //           : Colors.black),
-                    //   onPressed: () {
-                    //     changeAlignment('center');
-                    //   },
-                    // ),
-                    // IconButton(
-                    //   padding: EdgeInsets.zero,
-                    //   icon: Icon(Icons.format_align_right,
-                    //       size: 32,
-                    //       color: alignment == 'right'
-                    //           ? Colors.white
-                    //           : Colors.black),
-                    //   onPressed: () {
-                    //     changeAlignment('right');
-                    //   },
-                    // ),
-                  ],
-                )),
-            Positioned(
-                right: 0,
-                top: 64,
-                child: Column(
-                  children: [
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(
-                        Icons.keyboard_arrow_right,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                      onPressed: nextPage,
-                    ),
-                    Stack(
-                      children: [
-                        Positioned(
-                          child: GestureDetector(
-                            child: ProfileBox(
-                              size: 40,
-                              photoURL: text.photoUrl,
-                              color: primary_color,
-                            ),
-                            onTap: () {
-                              Modular.to.pushNamed('/home/profile',
-                                  arguments: {"userId": text.userId});
-                            },
-                          ),
-                        ),
-                        follow
-                            ? Container()
-                            : Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.green[400],
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    if (appController.user.value.userId == '') {
-                                      showbottomlogin(context);
-                                    } else {
-                                      appController.newFollow(text.userId);
-                                      homeController.currentPage =
-                                          homeController.currentPage;
-                                    }
-                                  },
-                                ))
-                      ],
-                    ),
-                    Column(
+                    )),
+                Positioned(
+                    left: 0,
+                    top: 64,
+                    child: Column(
                       children: [
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon: Icon(
-                            liked ? Icons.favorite : Icons.favorite_border,
-                            size: 32,
-                            color: liked ? Colors.red : Colors.white,
+                            Icons.keyboard_arrow_left,
+                            size: 40,
+                            color: Colors.white,
                           ),
-                          onPressed: likedText,
+                          onPressed: prevPage,
                         ),
-                        Text(text.likes.length.toString(),
-                            style: smallStyleLight)
+
+                        // IconButton(
+                        //   padding: EdgeInsets.zero,
+                        //   icon: Icon(Icons.format_align_left,
+                        //       size: 32,
+                        //       color: alignment == 'left'
+                        //           ? Colors.white
+                        //           : Colors.black),
+                        //   onPressed: () {
+                        //     changeAlignment('left');
+                        //   },
+                        // ),
+                        // IconButton(
+                        //   padding: EdgeInsets.zero,
+                        //   icon: Icon(Icons.format_align_center,
+                        //       size: 32,
+                        //       color: alignment == 'center'
+                        //           ? Colors.white
+                        //           : Colors.black),
+                        //   onPressed: () {
+                        //     changeAlignment('center');
+                        //   },
+                        // ),
+                        // IconButton(
+                        //   padding: EdgeInsets.zero,
+                        //   icon: Icon(Icons.format_align_right,
+                        //       size: 32,
+                        //       color: alignment == 'right'
+                        //           ? Colors.white
+                        //           : Colors.black),
+                        //   onPressed: () {
+                        //     changeAlignment('right');
+                        //   },
+                        // ),
                       ],
-                    ),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.comment, size: 32, color: Colors.white),
-                      onPressed: () {
-                        Modular.to.pushNamed('/home/comment', arguments: {
-                          "text": homeController
-                              .texts.value[homeController.currentText]
-                        });
-                      },
-                    ),
-                    Text(text.comments.length.toString(),
-                        style: smallStyleLight),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.share, size: 32, color: Colors.white),
-                      onPressed: () {
-                        sharedText(text);
-                      },
-                    ),
-                  ],
-                )),
-          ],
-        ),
-      );
+                    )),
+                Positioned(
+                    right: 0,
+                    top: 64,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          onPressed: nextPage,
+                        ),
+                        Stack(
+                          children: [
+                            Positioned(
+                              child: GestureDetector(
+                                child: ProfileBox(
+                                  size: 40,
+                                  photoURL: text.photoUrl,
+                                  color: primary_color,
+                                ),
+                                onTap: () {
+                                  Modular.to.pushNamed('/home/profile',
+                                      arguments: {"userId": text.userId});
+                                },
+                              ),
+                            ),
+                            follow
+                                ? Container()
+                                : Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: GestureDetector(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.green[400],
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        if (appController.user.value.userId ==
+                                            '') {
+                                          showbottomlogin(context);
+                                        } else {
+                                          appController.newFollow(text.userId);
+                                          homeController.currentPage =
+                                              homeController.currentPage;
+                                        }
+                                      },
+                                    ))
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              icon: Icon(
+                                liked ? Icons.favorite : Icons.favorite_border,
+                                size: 32,
+                                color: liked ? Colors.red : Colors.white,
+                              ),
+                              onPressed: likedText,
+                            ),
+                            Text(text.likes.length.toString(),
+                                style: smallStyleLight)
+                          ],
+                        ),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.comment,
+                              size: 32, color: Colors.white),
+                          onPressed: () {
+                            Modular.to.pushNamed('/home/comment', arguments: {
+                              "text": homeController
+                                  .texts.value[homeController.currentText]
+                            });
+                          },
+                        ),
+                        Text(text.comments.length.toString(),
+                            style: smallStyleLight),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          icon:
+                              Icon(Icons.share, size: 32, color: Colors.white),
+                          onPressed: () {
+                            sharedText(text);
+                          },
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          ));
     });
   }
 }

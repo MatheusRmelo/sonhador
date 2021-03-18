@@ -15,14 +15,18 @@ class DiscoverySearchRepository {
     if (textSearch == '') {
       return list;
     }
-    result.docs.forEach((element) {
+    for (var element in result.docs) {
       var data = element.data();
       if (data['title'].toLowerCase().contains(textSearch)) {
-        DiscoveryTextModel text =
-            DiscoveryTextModel(data['title'], element.id, data['points']);
+        String photoUrl = await storage
+            .ref("profiles/${element.id}.jpg")
+            .getDownloadURL()
+            .catchError((err) => '');
+        DiscoveryTextModel text = DiscoveryTextModel(
+            data['title'], element.id, data['points'], photoUrl);
         list.add(text);
       }
-    });
+    }
 
     return list;
   }

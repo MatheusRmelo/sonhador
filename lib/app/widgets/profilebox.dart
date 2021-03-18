@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 
 class ProfileBox extends StatelessWidget {
   ProfileBox(
-      {this.photoURL, this.file, this.color = Colors.white, this.size = 80});
+      {this.photoURL,
+      this.file,
+      this.color = Colors.white,
+      this.size = 80,
+      this.radius = true});
 
   final String photoURL;
   final File file;
   final Color color;
   final double size;
+  final bool radius;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +22,12 @@ class ProfileBox extends StatelessWidget {
         height: size,
         width: size,
         decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.circular(40)),
+            color: color,
+            borderRadius:
+                radius ? BorderRadius.circular(40) : BorderRadius.circular(0)),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(40),
+          borderRadius:
+              radius ? BorderRadius.circular(40) : BorderRadius.circular(0),
           child: (photoURL == null && file == null) || photoURL == ''
               ? Icon(
                   Icons.person,

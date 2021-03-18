@@ -39,6 +39,25 @@ class _ProfilePageState extends State<ProfilePage> {
     getPhoto();
   }
 
+  void _showActions(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.info),
+                      title: new Text('Reportar usuário'),
+                      onTap: () {}),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -152,11 +171,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                   color: primary_color,
                                   child: IconButton(
                                     icon: Icon(
-                                      Icons.language,
+                                      Icons.info,
                                       size: 16,
                                       color: Colors.white,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _showActions(context);
+                                    },
                                   ))
                             ],
                           )

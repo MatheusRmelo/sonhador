@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sonhador/app/app_controller.dart';
+import 'package:sonhador/app/modules/writer/widgets/photo/photo_controller.dart';
 import 'package:sonhador/app/modules/writer/widgets/publish/publish_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
 import 'package:sonhador/app/utils/fonts.dart';
@@ -16,6 +17,7 @@ class PublishPage extends StatefulWidget {
 class _PublishPage extends State<PublishPage> {
   final writerController = Modular.get<WriterController>();
   final publishController = Modular.get<PublishController>();
+  final photoController = Modular.get<PhotoController>();
   final appController = Modular.get<AppController>();
 
   @override
@@ -39,6 +41,7 @@ class _PublishPage extends State<PublishPage> {
                 width: 120,
                 credit: true,
                 social: appController.user.value.userName,
+                imgUrl: photoController.photo.value.photoUrl,
               ),
               Container(
                 height: heightDevice * 0.3,

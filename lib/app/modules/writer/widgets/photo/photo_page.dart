@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:sonhador/app/modules/writer/widgets/hashtags/hashtags_controller.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sonhador/app/app_controller.dart';
+import 'package:sonhador/app/modules/writer/widgets/photo/photo_controller.dart';
 import 'package:sonhador/app/modules/writer/writer_controller.dart';
+import 'package:sonhador/app/utils/colors.dart';
+import 'package:sonhador/app/widgets/loading.dart';
 import 'package:sonhador/app/widgets/loading_container.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
 import 'package:sonhador/app/widgets/textbox.dart';
@@ -13,17 +19,61 @@ class PhotoPage extends StatefulWidget {
 }
 
 class _PhotoPage extends State<PhotoPage> {
-  final hashtagsController = Modular.get<HashTagsController>();
+  final appController = Modular.get<AppController>();
   final writerController = Modular.get<WriterController>();
+  final photoController = Modular.get<PhotoController>();
 
-  void getHashtags() async {
-    await Future.delayed(Duration(seconds: 1));
-    hashtagsController.getHashtags(writerController.text.value.id);
+  final picker = ImagePicker();
+
+  File _image;
+
+  Future getImage(String local) async {
+    final pickedFile = await picker.getImage(
+        source: local == 'camera' ? ImageSource.camera : ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        print(pickedFile.path);
+        _image = File(pickedFile.path);
+        savePhoto();
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
-  void initState() {
-    super.initState();
-    getHashtags();
+  void savePhoto() {
+    photoController.savePhoto(_image, writerController.text.value.id);
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Galeria de fotos'),
+                      onTap: () {
+                        getImage('gallery');
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Tirar nova fota'),
+                    onTap: () {
+                      getImage('camera');
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -33,6 +83,9 @@ class _PhotoPage extends State<PhotoPage> {
 
     return Observer(
       builder: (_) {
+        if (photoController.photo == null) {
+          return Loading(status: 'Carregando...');
+        }
         return Scaffold(
           backgroundColor: Color(0xFF9B9987),
           appBar: CustomAppBar(
@@ -40,14 +93,47 @@ class _PhotoPage extends State<PhotoPage> {
           body: Center(
             child: Column(
               children: [
-                hashtagsController.loading
+                photoController.photo.value == null
                     ? LoadingContainer(
                         status: 'Carregando...',
                         expanded: false,
                         width: widthDevice * 0.8,
                         height: heightDevice * 0.25,
                       )
-                    : TextBox(textId: 'textId', title: 'title'),
+                    : TextBox(
+                        credit: true,
+                        social: appController.user.value.userName,
+                        textId: writerController.text.value.id,
+                        title: writerController.text.value.title,
+                        imgUrl: photoController.photo.value.photoUrl,
+                        file: _image,
+                      ),
+                Container(
+                    width: 200,
+                    height: 40,
+                    margin: EdgeInsets.only(bottom: 32),
+                    child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        color: secondary_color,
+                        onPressed: () {
+                          _showPicker(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              Icons.photo_camera,
+                              color: Colors.white,
+                            ),
+                            Text('Alterar foto',
+                                style: TextStyle(
+                                    fontFamily: 'Fredoka One',
+                                    fontSize: 16,
+                                    color: Colors.white))
+                          ],
+                        ))),
                 Container(
                     width: 200,
                     height: 40,
@@ -56,13 +142,19 @@ class _PhotoPage extends State<PhotoPage> {
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         color: Colors.white,
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          hashtagsController
-                              .saveHashtags(writerController.text.value.id);
-                          Modular.to.pushNamed('writer/publish');
+                        onPressed: () async {
+                          bool published = await photoController
+                              .published(writerController.text.value.id);
+                          if (published == null) {
+                            published = false;
+                          }
+                          if (published) {
+                            Modular.to.pushNamed('home');
+                          } else {
+                            Modular.to.pushNamed('writer/publish');
+                          }
                         },
-                        child: Text('SALVAR',
+                        child: Text('AVANÇAR',
                             style: TextStyle(
                                 fontFamily: 'Fredoka One',
                                 fontSize: 16,

@@ -57,122 +57,137 @@ class _ProfilePageState extends State<ProfilePage> {
         }
 
         var texts = searchController.texts.value;
-        return Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Container(
-                    padding: EdgeInsets.all(16),
-                    //color: Colors.red,
-                    height: heightDevice * 0.3,
-                    width: widthDevice,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ProfileBox(
-                          color: primary_color,
-                          photoURL: profileController.photoUrl.value.photoUrl,
-                        ),
-                        Text(
-                          appController.user.value.userName,
-                          style: smallStyle,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 24, right: 24),
-                              child: Column(
-                                children: [
-                                  Text(
-                                      appController.user.value.following.length
-                                          .toString(),
-                                      style: smallText),
-                                  Text('Seguindo', style: smallStyle)
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 24, right: 24),
-                              child: Column(
-                                children: [
-                                  Text(
-                                      appController.user.value.followers.length
-                                          .toString(),
-                                      style: smallText),
-                                  Text('Seguidores', style: smallStyle)
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: widthDevice * 0.35,
-                              height: 30,
-                              margin: EdgeInsets.only(top: 1),
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                                color: secondary_color,
-                                onPressed: () {
-                                  Modular.to.pushNamed('/home/edit');
-                                },
-                                child: Text(
-                                  'Editar',
-                                  style: smallStyleLight,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: widthDevice * 0.1,
-                              height: 30,
-                              margin: EdgeInsets.only(top: 1),
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                                color: primary_color,
-                                onPressed: () {
-                                  appController.signOut();
-                                },
-                                child: Icon(
-                                  Icons.logout,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    )),
-                Divider(
-                  color: Colors.black,
-                  height: 1,
-                ),
-                Expanded(
-                    child: GridView.count(
-                  crossAxisCount: 3,
-                  children: List.generate(
-                      texts.length,
-                      (index) => TextBox(
-                            textId: texts[index].id,
-                            title: texts[index].title,
-                            onTap: (textId) {
-                              Navigator.pushNamed(context, '/writer',
-                                  arguments: {
-                                    "newText": false,
-                                    "textId": textId
-                                  });
+        return RefreshIndicator(
+          onRefresh: () async {
+            searchController.fetchTexts(appController.user.value.userId);
+          },
+          child: Container(
+              margin: EdgeInsets.only(top: 16),
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(16),
+                      //color: Colors.red,
+                      height: heightDevice * 0.3,
+                      width: widthDevice,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Modular.to.pushNamed('/home/edit');
                             },
-                          )),
-                ))
-              ],
-            ));
+                            child: ProfileBox(
+                              color: primary_color,
+                              photoURL:
+                                  profileController.photoUrl.value.photoUrl,
+                            ),
+                          ),
+                          Text(
+                            appController.user.value.userName,
+                            style: smallStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 24, right: 24),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        appController
+                                            .user.value.following.length
+                                            .toString(),
+                                        style: smallText),
+                                    Text('Seguindo', style: smallStyle)
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 24, right: 24),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        appController
+                                            .user.value.followers.length
+                                            .toString(),
+                                        style: smallText),
+                                    Text('Seguidores', style: smallStyle)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: widthDevice * 0.35,
+                                height: 30,
+                                margin: EdgeInsets.only(top: 1),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  ),
+                                  color: secondary_color,
+                                  onPressed: () {
+                                    Modular.to.pushNamed('/home/edit');
+                                  },
+                                  child: Text(
+                                    'Editar',
+                                    style: smallStyleLight,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: widthDevice * 0.1,
+                                height: 30,
+                                margin: EdgeInsets.only(top: 1),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  ),
+                                  color: primary_color,
+                                  onPressed: () {
+                                    appController.signOut();
+                                  },
+                                  child: Icon(
+                                    Icons.logout,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      )),
+                  Divider(
+                    color: Colors.black,
+                    height: 1,
+                  ),
+                  Expanded(
+                      child: GridView.count(
+                    crossAxisCount: 3,
+                    children: List.generate(
+                        texts.length,
+                        (index) => TextBox(
+                              imgUrl: texts[index].photoUrl,
+                              textId: texts[index].id,
+                              title: texts[index].title,
+                              onTap: (textId) {
+                                Navigator.pushNamed(context, '/writer',
+                                    arguments: {
+                                      "newText": false,
+                                      "textId": textId
+                                    });
+                              },
+                            )),
+                  ))
+                ],
+              )),
+        );
       },
     );
   }

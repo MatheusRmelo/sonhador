@@ -29,7 +29,7 @@ class NotificationBox extends StatelessWidget {
             photoURL: photoUrl,
           ),
           Container(
-            width: widthDevice * 0.70,
+            width: widthDevice * 0.65,
             margin: EdgeInsets.only(left: 8, right: 8),
             child: Text(
               message,
