@@ -123,10 +123,11 @@ class _HomePage extends State<HomePage> {
                   homeController.updateCurrentIndex(index);
                 }
               },
+              elevation: 10,
               currentIndex: homeController.currentIndex,
               type: BottomNavigationBarType.fixed,
-              backgroundColor: Color(0xFF9B9987),
-              selectedItemColor: Colors.white,
+              backgroundColor: Colors.white,
+              selectedItemColor: primary_color,
               unselectedItemColor: Colors.black,
               selectedFontSize: 12,
               unselectedFontSize: 12,
@@ -137,7 +138,7 @@ class _HomePage extends State<HomePage> {
                 BottomNavigationBarItem(
                     activeIcon: Icon(
                       Icons.home,
-                      color: Colors.white,
+                      color: primary_color,
                     ),
                     icon: Icon(
                       Icons.home,
@@ -147,7 +148,7 @@ class _HomePage extends State<HomePage> {
                 BottomNavigationBarItem(
                     activeIcon: Icon(
                       Icons.search,
-                      color: Colors.white,
+                      color: primary_color,
                     ),
                     icon: Icon(
                       Icons.search,
@@ -155,40 +156,28 @@ class _HomePage extends State<HomePage> {
                     ),
                     label: 'Descobrir'),
                 BottomNavigationBarItem(
-                    activeIcon: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Color(0xFFe4e4e4)),
-                      width: 32,
-                      height: 32,
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
+                    activeIcon: Icon(
+                      Icons.post_add,
+                      color: primary_color,
+                      size: 32,
                     ),
-                    icon: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Color(0xFFe4e4e4)),
-                      width: 32,
-                      height: 32,
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
+                    icon: Icon(
+                      Icons.post_add,
+                      color: Colors.black,
+                      size: 32,
                     ),
                     label: ''),
                 BottomNavigationBarItem(
                     activeIcon: Icon(
                       Icons.notifications,
-                      color: Colors.white,
+                      color: primary_color,
                     ),
                     icon: Icon(Icons.notifications, color: Colors.black),
                     label: 'Alertas'),
                 BottomNavigationBarItem(
                   activeIcon: Icon(
                     Icons.person,
-                    color: Colors.white,
+                    color: primary_color,
                   ),
                   icon: Icon(Icons.person, color: Colors.black),
                   label: 'Perfil',

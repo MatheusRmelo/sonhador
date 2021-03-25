@@ -127,7 +127,7 @@ class _HomeContentPage extends State<HomeContentPage> {
         follow = true;
       }
       return Scaffold(
-          backgroundColor: Color(0xFF483D3F),
+          backgroundColor: Colors.white,
           appBar: HomeAppBar(
               pageContext: context,
               title: text.title,
@@ -153,13 +153,21 @@ class _HomeContentPage extends State<HomeContentPage> {
                               scrollDirection: Axis.vertical,
                               itemBuilder: (BuildContext context, int index) {
                                 return Container(
-                                    margin: EdgeInsets.only(bottom: 16),
+                                    margin: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black26,
+                                              blurRadius: 6,
+                                              offset:
+                                                  Offset.fromDirection(1, 1),
+                                              spreadRadius: 0),
+                                        ],
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(8)),
                                     height: heightDevice * 0.65,
                                     child: Container(
-                                      padding: EdgeInsets.all(8),
+                                      padding: EdgeInsets.all(16),
                                       width: widthDevice * 1,
                                       child: Text(
                                         homeController.textController.text,
@@ -196,7 +204,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                           icon: Icon(
                             Icons.keyboard_arrow_left,
                             size: 40,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           onPressed: prevPage,
                         ),
@@ -246,7 +254,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                           icon: Icon(
                             Icons.keyboard_arrow_right,
                             size: 40,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           onPressed: nextPage,
                         ),
@@ -273,7 +281,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                                     child: GestureDetector(
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: Colors.green[400],
+                                            color: primary_color,
                                             borderRadius:
                                                 BorderRadius.circular(8)),
                                         child: Icon(
@@ -302,18 +310,18 @@ class _HomeContentPage extends State<HomeContentPage> {
                               icon: Icon(
                                 liked ? Icons.favorite : Icons.favorite_border,
                                 size: 32,
-                                color: liked ? Colors.red : Colors.white,
+                                color: liked ? primary_color : Colors.black,
                               ),
                               onPressed: likedText,
                             ),
                             Text(text.likes.length.toString(),
-                                style: smallStyleLight)
+                                style: smallStyle)
                           ],
                         ),
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon: Icon(Icons.comment,
-                              size: 32, color: Colors.white),
+                              size: 32, color: Colors.black),
                           onPressed: () {
                             Modular.to.pushNamed('/home/comment', arguments: {
                               "text": homeController
@@ -322,11 +330,11 @@ class _HomeContentPage extends State<HomeContentPage> {
                           },
                         ),
                         Text(text.comments.length.toString(),
-                            style: smallStyleLight),
+                            style: smallStyle),
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon:
-                              Icon(Icons.share, size: 32, color: Colors.white),
+                              Icon(Icons.share, size: 32, color: Colors.black),
                           onPressed: () {
                             sharedText(text);
                           },
