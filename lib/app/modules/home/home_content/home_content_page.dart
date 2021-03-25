@@ -91,20 +91,17 @@ class _HomeContentPage extends State<HomeContentPage> {
       if (appController.user.value == null) {
         return Loading(
           status: 'Carregando...',
-          color: Color(0xFF483D3F),
         );
       }
       if (homeController.texts.value == null) {
         return Loading(
           status: 'Carregando...',
-          color: Color(0xFF483D3F),
         );
       }
       if (homeController.texts.value.length == 0) {
         //print(homeController.currentPage);
         return Loading(
           status: 'Carregando...',
-          color: Color(0xFF483D3F),
         );
       }
 

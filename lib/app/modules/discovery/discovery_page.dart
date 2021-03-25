@@ -128,6 +128,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                     scrollDirection: Axis.horizontal,
                                     itemCount: texts.length,
                                     itemBuilder: (context, index) => TextBox(
+                                      showTrophy: true,
                                       credit: true,
                                       social: 'matheus',
                                       index: index,
@@ -182,6 +183,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: users.length,
                                       itemBuilder: (context, index) => UserBox(
+                                        showTrophy: true,
                                         index: index,
                                         margin:
                                             EdgeInsets.only(right: 16, top: 16),

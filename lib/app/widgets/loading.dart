@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sonhador/app/utils/colors.dart';
 import 'loadingappbar.dart';
 
 class Loading extends StatelessWidget {
@@ -8,22 +9,23 @@ class Loading extends StatelessWidget {
   Color color;
 
   TextStyle smallText =
-      TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'Fredoka One');
+      TextStyle(color: primary_color, fontSize: 16, fontFamily: 'Fredoka One');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LoadingAppBar(
-          pageContext: context,
-          color: color != null ? color : Color(0xFF9B9987)),
-      backgroundColor: color != null ? color : Color(0xFF9B9987),
+        pageContext: context,
+        color: Colors.white,
+      ),
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircularProgressIndicator(
               strokeWidth: 3,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor: AlwaysStoppedAnimation<Color>(primary_color),
             ),
             Text(
               status,

@@ -3,18 +3,20 @@ import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/profilebox.dart';
 
 class UserBox extends StatelessWidget {
-  UserBox(
-      {@required this.userId,
-      @required this.userName,
-      @required this.index,
-      this.onTap,
-      this.width = 80,
-      this.height = 80,
-      this.color,
-      this.margin,
-      this.points,
-      this.photo,
-      this.showName = false});
+  UserBox({
+    @required this.userId,
+    @required this.userName,
+    this.index,
+    this.onTap,
+    this.width = 80,
+    this.height = 80,
+    this.color,
+    this.margin,
+    this.points,
+    this.photo,
+    this.showName = false,
+    this.showTrophy = false,
+  });
 
   final String userId;
   final String userName;
@@ -27,6 +29,7 @@ class UserBox extends StatelessWidget {
   final String points;
   final String photo;
   final bool showName;
+  final bool showTrophy;
 
   @override
   Widget build(BuildContext context) {
@@ -62,40 +65,40 @@ class UserBox extends StatelessWidget {
                     color: showName ? secondary_color : primary_color,
                   ),
                 ),
-                showName
-                    ? Positioned(
-                        left: 8,
-                        right: 8,
-                        bottom: 0,
-                        child: Text(userName, style: footerText),
-                      )
-                    : Container()
               ],
             ),
-            Container(
-                margin: EdgeInsets.all(8),
-                child: index < 3
-                    ? Row(
-                        children: [
-                          Icon(
-                            Icons.emoji_events,
-                            color: index == 0
-                                ? Colors.yellow[800]
-                                : index == 1
-                                    ? Colors.grey[400]
-                                    : Colors.brown[700],
-                            size: 16,
-                          ),
-                          Text(
+            showName
+                ? Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Text(userName, style: footerText),
+                  )
+                : Container(),
+            showTrophy
+                ? Container(
+                    margin: EdgeInsets.all(8),
+                    child: index < 3
+                        ? Row(
+                            children: [
+                              Icon(
+                                Icons.emoji_events,
+                                color: index == 0
+                                    ? Colors.yellow[800]
+                                    : index == 1
+                                        ? Colors.grey[400]
+                                        : Colors.brown[700],
+                                size: 16,
+                              ),
+                              Text(
+                                points == null ? '' : points + ' pontos',
+                                style: footerText,
+                              )
+                            ],
+                          )
+                        : Text(
                             points == null ? '' : points + ' pontos',
                             style: footerText,
-                          )
-                        ],
-                      )
-                    : Text(
-                        points == null ? '' : points + ' pontos',
-                        style: footerText,
-                      ))
+                          ))
+                : Container()
           ],
         ),
       ),

@@ -121,7 +121,7 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
         follow = true;
       }
       return Scaffold(
-        backgroundColor: Color(0xFF483D3F),
+        backgroundColor: Colors.white,
         appBar: HomeAppBar(
             showBack: true,
             pageContext: context,
@@ -138,13 +138,20 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                     Container(
                         height: heightDevice * 0.70,
                         child: Container(
-                            margin: EdgeInsets.only(bottom: 16),
+                            margin: EdgeInsets.all(8),
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset.fromDirection(1, 1),
+                                      spreadRadius: 0),
+                                ],
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(8)),
                             height: heightDevice * 0.65,
                             child: Container(
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(16),
                               width: widthDevice * 1,
                               child: Text(
                                 discoveryController.textController.text,
@@ -177,7 +184,7 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                       icon: Icon(
                         Icons.keyboard_arrow_left,
                         size: 40,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       onPressed: prevPage,
                     ),
@@ -226,7 +233,7 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                       icon: Icon(
                         Icons.keyboard_arrow_right,
                         size: 40,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       onPressed: nextPage,
                     ),
@@ -253,7 +260,7 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                                 child: GestureDetector(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color: Colors.green[400],
+                                        color: primary_color,
                                         borderRadius: BorderRadius.circular(8)),
                                     child: Icon(
                                       Icons.add,
@@ -280,28 +287,26 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
                           icon: Icon(
                             liked ? Icons.favorite : Icons.favorite_border,
                             size: 32,
-                            color: liked ? Colors.red : Colors.white,
+                            color: liked ? Colors.red : Colors.black,
                           ),
                           onPressed: likedText,
                         ),
-                        Text(text.likes.length.toString(),
-                            style: smallStyleLight)
+                        Text(text.likes.length.toString(), style: smallStyle)
                       ],
                     ),
                     IconButton(
                       padding: EdgeInsets.zero,
-                      icon: Icon(Icons.comment, size: 32, color: Colors.white),
+                      icon: Icon(Icons.comment, size: 32, color: Colors.black),
                       onPressed: () {
                         Modular.to.pushNamed('/home/comment', arguments: {
                           "text": discoveryController.text.value
                         });
                       },
                     ),
-                    Text(text.comments.length.toString(),
-                        style: smallStyleLight),
+                    Text(text.comments.length.toString(), style: smallStyle),
                     IconButton(
                       padding: EdgeInsets.zero,
-                      icon: Icon(Icons.share, size: 32, color: Colors.white),
+                      icon: Icon(Icons.share, size: 32, color: Colors.black),
                       onPressed: () {
                         sharedText(text);
                       },

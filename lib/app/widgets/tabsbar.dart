@@ -37,7 +37,7 @@ Widget TabsAppBar(
         : Container(),
     bottom: TabBar(
       tabs: tabs,
-      indicatorColor: Colors.white,
+      indicatorColor: secondary_color,
     ),
   );
 }

@@ -6,8 +6,8 @@ import 'package:sonhador/app/modules/discovery/widgets/search/discovery_search_c
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/loading_container.dart';
 import 'package:sonhador/app/widgets/tabsbar.dart';
-import 'package:sonhador/app/widgets/textbox.dart';
-import 'package:sonhador/app/widgets/userbox.dart';
+import 'package:sonhador/app/widgets/textboxnew.dart';
+import 'package:sonhador/app/widgets/userboxnew.dart';
 
 class DiscoverySearchPage extends StatefulWidget {
   @override
@@ -46,19 +46,26 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                   appBar: TabsAppBar(
                       pageContext: context,
                       title: 'Jovem, pesquise tudo aqui em baixo',
-                      color: secondary_color,
+                      color: primary_color,
                       itemsColor: Colors.white,
                       tabs: [
                         Tab(icon: Icon(Icons.menu_book)),
                         Tab(icon: Icon(Icons.person)),
                       ]),
-                  backgroundColor: Color(0xFF9B9987),
+                  backgroundColor: Colors.white,
                   body: TabBarView(
                     children: [
                       Column(
                         children: [
                           Container(
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset.fromDirection(1, 1),
+                                      spreadRadius: 0),
+                                ],
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(16)),
                             margin: EdgeInsets.all(16),
@@ -66,12 +73,16 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                               style: TextStyle(
                                   fontFamily: 'Fredoka One', fontSize: 12),
                               decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(16),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
                                   hintText: 'Pesquise aqui um texto...',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16)),
                                   suffixIcon: Icon(
                                     Icons.search,
                                     size: 32,
+                                    color: Colors.grey[300],
                                   )),
                               onChanged: (text) {
                                 searchController.searchText(text);
@@ -89,6 +100,7 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                                   children: List.generate(
                                       texts.length,
                                       (index) => TextBox(
+                                            margin: EdgeInsets.all(8),
                                             imgUrl: texts[index].photoURL,
                                             textId: texts[index].id,
                                             title: texts[index].title,
@@ -106,6 +118,13 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6,
+                                      offset: Offset.fromDirection(1, 1),
+                                      spreadRadius: 0),
+                                ],
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(16)),
                             margin: EdgeInsets.all(16),
@@ -113,6 +132,9 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                               style: TextStyle(
                                   fontFamily: 'Fredoka One', fontSize: 12),
                               decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(16),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
                                   hintText: 'Pesquise aqui um usuário...',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16)),
@@ -136,6 +158,7 @@ class _DiscoverySearchPage extends State<DiscoverySearchPage> {
                                   children: List.generate(
                                       users.length,
                                       (index) => UserBox(
+                                            margin: EdgeInsets.all(8),
                                             showName: true,
                                             userId: users[index].userId,
                                             userName: users[index].userName,

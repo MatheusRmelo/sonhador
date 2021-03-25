@@ -9,7 +9,7 @@ class TextBox extends StatelessWidget {
   TextBox(
       {@required this.textId,
       @required this.title,
-      @required this.index,
+      this.index,
       this.onTap,
       this.credit = false,
       this.social,
@@ -19,7 +19,8 @@ class TextBox extends StatelessWidget {
       this.margin,
       this.points,
       this.imgUrl,
-      this.file});
+      this.file,
+      this.showTrophy = false});
 
   final String textId;
   final String title;
@@ -34,6 +35,8 @@ class TextBox extends StatelessWidget {
   final String points;
   final String imgUrl;
   final File file;
+  final bool showTrophy;
+
   @override
   Widget build(BuildContext context) {
     TextStyle smallText =
@@ -106,30 +109,32 @@ class TextBox extends StatelessWidget {
                 )
               ],
             ),
-            Container(
-                margin: EdgeInsets.all(8),
-                child: index < 3
-                    ? Row(
-                        children: [
-                          Icon(
-                            Icons.emoji_events,
-                            color: index == 0
-                                ? Colors.yellow[800]
-                                : index == 1
-                                    ? Colors.grey[400]
-                                    : Colors.brown[700],
-                            size: 16,
-                          ),
-                          Text(
+            showTrophy
+                ? Container(
+                    margin: EdgeInsets.all(8),
+                    child: index < 3
+                        ? Row(
+                            children: [
+                              Icon(
+                                Icons.emoji_events,
+                                color: index == 0
+                                    ? Colors.yellow[800]
+                                    : index == 1
+                                        ? Colors.grey[400]
+                                        : Colors.brown[700],
+                                size: 16,
+                              ),
+                              Text(
+                                points == null ? '' : points + ' pontos',
+                                style: footerText,
+                              )
+                            ],
+                          )
+                        : Text(
                             points == null ? '' : points + ' pontos',
                             style: footerText,
-                          )
-                        ],
-                      )
-                    : Text(
-                        points == null ? '' : points + ' pontos',
-                        style: footerText,
-                      ))
+                          ))
+                : Container()
           ],
         ),
       ),
