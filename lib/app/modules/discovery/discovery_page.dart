@@ -8,8 +8,8 @@ import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 
-import 'package:sonhador/app/widgets/textbox.dart';
-import 'package:sonhador/app/widgets/userbox.dart';
+import 'package:sonhador/app/widgets/textboxnew.dart';
+import 'package:sonhador/app/widgets/userboxnew.dart';
 
 import 'package:sonhador/app/widgets/infopoints.dart';
 
@@ -59,9 +59,9 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                 backButton: false,
                 pageContext: context,
                 title: 'Jovem, pesquise tudo aqui',
-                color: secondary_color,
-                itemsColor: Colors.white),
-            backgroundColor: secondary_color,
+                color: Colors.white,
+                itemsColor: Colors.black),
+            backgroundColor: Colors.white,
             body: RefreshIndicator(
               onRefresh: () async {
                 discoveryController.fetchTexts();
@@ -75,9 +75,16 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                     child: Container(
                       padding: EdgeInsets.only(left: 16, right: 16),
                       width: widthDevice,
-                      height: 40,
+                      height: 48,
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                offset: Offset.fromDirection(1, 1),
+                                spreadRadius: 0),
+                          ],
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16)),
                       margin: EdgeInsets.all(16),
@@ -103,8 +110,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                         children: [
                           Container(
                             child: Text(
-                              'Melhores textos da semana',
-                              style: smallTextLight,
+                              'Textos populares da semana',
+                              style: smallText,
                             ),
                           ),
                           Container(
@@ -121,6 +128,9 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                     scrollDirection: Axis.horizontal,
                                     itemCount: texts.length,
                                     itemBuilder: (context, index) => TextBox(
+                                      credit: true,
+                                      social: 'matheus',
+                                      index: index,
                                       margin:
                                           EdgeInsets.only(right: 16, top: 16),
                                       imgUrl: texts[index].photoURL,
@@ -138,14 +148,15 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                         ],
                       )),
                   Container(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.only(
+                          left: 16, right: 16, top: 0, bottom: 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             child: Text(
                               'Melhores usuários da semana',
-                              style: smallTextLight,
+                              style: smallText,
                             ),
                           ),
                           Container(
@@ -171,6 +182,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: users.length,
                                       itemBuilder: (context, index) => UserBox(
+                                        index: index,
                                         margin:
                                             EdgeInsets.only(right: 16, top: 16),
                                         color: primary_color,
@@ -190,17 +202,76 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                     ))
                         ],
                       )),
-                  Text(
-                    'Clique no ícone para saber mais sobre os pontos',
-                    style: smallStyleLight,
+                  Container(
+                    width: widthDevice,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            'Como posso lucrar no Sonhador?',
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.score,
+                              size: 16,
+                            ),
+                            Text(
+                              '10000 pts - R\$ 10,00 (ACUMULATIVO)',
+                              style: TextStyle(fontSize: 10),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.emoji_events,
+                              color: Colors.yellow[800],
+                              size: 16,
+                            ),
+                            Text(
+                              'R\$ 3,00 (TEXTO E/OU USUÁRIO)',
+                              style: TextStyle(fontSize: 10),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.emoji_events,
+                              color: Colors.grey[400],
+                              size: 16,
+                            ),
+                            Text(
+                              'R\$ 2,00 (TEXTO E/OU USUÁRIO)',
+                              style: TextStyle(fontSize: 10),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.emoji_events,
+                              color: Colors.brown[700],
+                              size: 16,
+                            ),
+                            Text(
+                              'R\$ 1,00 (TEXTO E/OU USUÁRIO)',
+                              style: TextStyle(fontSize: 10),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.info,
-                        size: 48,
-                        color: Colors.white,
-                      ),
-                      onPressed: () => showInfo(context)),
                 ],
               ),
             ));

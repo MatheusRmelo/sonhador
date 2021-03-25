@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:sonhador/app/utils/colors.dart';
+import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/profilebox.dart';
 
 class TextBox extends StatelessWidget {
@@ -36,7 +37,7 @@ class TextBox extends StatelessWidget {
     TextStyle smallText = TextStyle(
         color: Color(0xFF969191), fontSize: 6, fontFamily: 'Fredoka One');
     TextStyle footerText =
-        TextStyle(color: Colors.white, fontSize: 12, fontFamily: 'Fredoka One');
+        TextStyle(color: Colors.black, fontSize: 12, fontFamily: 'Fredoka One');
     return Container(
       alignment: Alignment.center,
       margin: margin == null ? EdgeInsets.all(16) : margin,
@@ -50,16 +51,8 @@ class TextBox extends StatelessWidget {
                 width: width,
                 height: height,
                 decoration: BoxDecoration(
-                    border: Border.all(width: 0.01, color: secondary_color),
-                    borderRadius: BorderRadius.circular(8),
-                    color: color == null ? secondary_color : color,
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 1,
-                          color: Colors.black.withOpacity(0.25),
-                          offset: Offset.fromDirection(1, 3),
-                          spreadRadius: 0)
-                    ]),
+                  color: color == null ? secondary_color : color,
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: file != null
@@ -72,23 +65,17 @@ class TextBox extends StatelessWidget {
                               imgUrl,
                             ),
                 )),
-            Positioned(
-              left: 0,
-              right: width * 0.1,
-              top: height * 0.15,
+            Container(
               child: Text(
                 title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 10,
+                    fontSize: 8,
                     fontFamily: 'Fredoka One'),
               ),
             ),
-            Positioned(
-              left: 8,
-              right: 8,
-              bottom: 16,
+            Container(
               child: credit
                   ? Column(
                       children: [
@@ -121,8 +108,11 @@ class TextBox extends StatelessWidget {
                         )
                       ],
                     )
-                  : Text(points == null ? '' : points + ' pontos',
-                      style: footerText),
+                  : Container(),
+            ),
+            Container(
+              child: Text(points == null ? '' : points + ' pontos',
+                  style: footerText),
             )
           ],
         ),
