@@ -37,6 +37,7 @@ class UserRepository {
       UserModel userModel;
       DocumentSnapshot result =
           await db.collection('users').doc(user.uid).get();
+
       if (result.exists) {
         var data = result.data();
         userModel = UserModel(

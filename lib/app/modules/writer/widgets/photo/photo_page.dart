@@ -101,8 +101,7 @@ class _PhotoPage extends State<PhotoPage> {
                         height: heightDevice * 0.25,
                       )
                     : TextBox(
-                        credit: true,
-                        social: appController.user.value.userName,
+                        credit: false,
                         textId: writerController.text.value.id,
                         title: writerController.text.value.title,
                         imgUrl: photoController.photo.value.photoUrl,

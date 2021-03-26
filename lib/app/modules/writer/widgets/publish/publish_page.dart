@@ -35,6 +35,7 @@ class _PublishPage extends State<PublishPage> {
           child: Column(
             children: [
               TextBox(
+                margin: EdgeInsets.all(8),
                 textId: text.id,
                 title: text.title,
                 height: 135,

@@ -307,7 +307,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                               icon: Icon(
                                 liked ? Icons.favorite : Icons.favorite_border,
                                 size: 32,
-                                color: liked ? primary_color : Colors.black,
+                                color: liked ? Colors.red : Colors.black,
                               ),
                               onPressed: likedText,
                             ),

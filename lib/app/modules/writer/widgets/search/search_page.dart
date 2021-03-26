@@ -77,6 +77,7 @@ class _SearchPage extends State<SearchPage> {
                         children: List.generate(
                             texts.length,
                             (index) => TextBox(
+                                  margin: EdgeInsets.all(8),
                                   imgUrl: texts[index].photoUrl,
                                   textId: texts[index].id,
                                   title: texts[index].title,

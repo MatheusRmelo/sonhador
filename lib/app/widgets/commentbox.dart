@@ -28,14 +28,14 @@ class CommentBox extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(16)),
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
-      padding: EdgeInsets.only(left: 16, right: 16),
+      padding: EdgeInsets.all(8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               Container(
-                  width: widthDevice * 0.7,
+                  width: widthDevice * 0.5,
                   child: Text.rich(
                     TextSpan(
                         text: userId + ': ',

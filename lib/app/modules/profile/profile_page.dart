@@ -176,6 +176,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               imgUrl: texts[index].photoUrl,
                               textId: texts[index].id,
                               title: texts[index].title,
+                              margin: EdgeInsets.all(8),
+                              height: 90,
                               onTap: (textId) {
                                 Navigator.pushNamed(context, '/writer',
                                     arguments: {
