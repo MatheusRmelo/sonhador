@@ -6,8 +6,8 @@ import 'package:sonhador/app/modules/discovery/widgets/search/discovery_search_c
 import 'package:sonhador/app/utils/colors.dart';
 import 'package:sonhador/app/widgets/loading_container.dart';
 import 'package:sonhador/app/widgets/tabsbar.dart';
-import 'package:sonhador/app/widgets/textboxnew.dart';
-import 'package:sonhador/app/widgets/userboxnew.dart';
+import 'package:sonhador/app/widgets/textbox.dart';
+import 'package:sonhador/app/widgets/userbox.dart';
 
 class DiscoverySearchPage extends StatefulWidget {
   @override

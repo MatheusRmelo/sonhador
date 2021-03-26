@@ -120,6 +120,7 @@ class _DiscoveryTextPage extends State<DiscoveryTextPage> {
       if (text.userId == appController.user.value.userId) {
         follow = true;
       }
+
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: HomeAppBar(

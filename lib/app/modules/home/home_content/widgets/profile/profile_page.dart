@@ -193,6 +193,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: List.generate(
                         texts.length,
                         (index) => TextBox(
+                              margin: EdgeInsets.all(8),
+                              height: 90,
                               textId: texts[index].id,
                               title: texts[index].title,
                               onTap: (textId) {

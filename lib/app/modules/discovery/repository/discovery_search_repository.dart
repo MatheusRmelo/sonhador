@@ -11,7 +11,8 @@ class DiscoverySearchRepository {
   Future<List<DiscoveryTextModel>> searchTexts(String textSearch) async {
     List<DiscoveryTextModel> list = [];
 
-    QuerySnapshot result = await db.collection('texts').get();
+    QuerySnapshot result =
+        await db.collection('texts').where('published', isEqualTo: true).get();
     if (textSearch == '') {
       return list;
     }

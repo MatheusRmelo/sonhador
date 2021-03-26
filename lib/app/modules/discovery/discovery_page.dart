@@ -8,8 +8,8 @@ import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/customappbar.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 
-import 'package:sonhador/app/widgets/textboxnew.dart';
-import 'package:sonhador/app/widgets/userboxnew.dart';
+import 'package:sonhador/app/widgets/textbox.dart';
+import 'package:sonhador/app/widgets/userbox.dart';
 
 import 'package:sonhador/app/widgets/infopoints.dart';
 
