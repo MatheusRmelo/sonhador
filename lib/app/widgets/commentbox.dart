@@ -25,8 +25,13 @@ class CommentBox extends StatelessWidget {
     double widthDevice = MediaQuery.of(context).size.width;
     //String userName = repository.getUserName(userId);
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: Colors.black26,
+            blurRadius: 6,
+            offset: Offset.fromDirection(1, 1),
+            spreadRadius: 0),
+      ], color: Colors.white, borderRadius: BorderRadius.circular(16)),
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
       padding: EdgeInsets.all(8),
       child: Row(

@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
           //user.loginGmail();
           appController.loginGmail();
         },
-        child: Row(children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Container(
             margin: EdgeInsets.only(right: 16),
             child: Image(
@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 Text('Se aventure conosco', style: h1Light),
                 Container(
-                    width: widthDevice * 0.5, child: _signInButton(context)),
+                    width: widthDevice * 0.65, child: _signInButton(context)),
               ],
             ),
           ),
@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
               ),
               Text('Se aventure conosco', style: h1Light),
               Container(
-                  width: widthDevice * 0.5, child: _signOutButton(context)),
+                  width: widthDevice * 0.65, child: _signOutButton(context)),
             ],
           ),
         ),

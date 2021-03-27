@@ -22,11 +22,13 @@ class _CommentPage extends State<CommentPage> {
   final appController = Modular.get<AppController>();
 
   void saveComment() {
-    homeContentController.saveComment(appController.user.value.userId,
-        commentController.comment, appController.user.value.userName);
-    commentController.textController.clear();
-    commentController.comment = '';
-    FocusScope.of(context).unfocus();
+    if (commentController.comment != '') {
+      homeContentController.saveComment(appController.user.value.userId,
+          commentController.comment, appController.user.value.userName);
+      commentController.textController.clear();
+      commentController.comment = '';
+      FocusScope.of(context).unfocus();
+    }
   }
 
   void likedComment(int index) {
@@ -48,8 +50,12 @@ class _CommentPage extends State<CommentPage> {
         );
       }
       return Scaffold(
-        backgroundColor: Color(0xFF9B9987),
-        appBar: CustomAppBar(pageContext: context, title: 'Comentários'),
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar(
+            pageContext: context,
+            title: 'Comentários',
+            elevation: 1,
+            color: Colors.white),
         body: Stack(children: [
           Container(
             margin: EdgeInsets.only(bottom: 72),

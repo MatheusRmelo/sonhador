@@ -41,25 +41,35 @@ class _SearchPage extends State<SearchPage> {
         var texts = searchController.texts.value;
         return Scaffold(
             appBar: CustomAppBar(
+                color: Colors.white,
                 pageContext: context,
                 title: 'Jovem, pesquise seu texto abaixo'),
-            backgroundColor: Color(0xFF9B9987),
+            backgroundColor: Colors.white,
             body: Column(
               children: [
                 Container(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 6,
+                            offset: Offset.fromDirection(1, 1),
+                            spreadRadius: 0),
+                      ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16)),
                   margin: EdgeInsets.all(16),
                   child: TextFormField(
                     style: TextStyle(fontFamily: 'Fredoka One', fontSize: 12),
                     decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(16),
                         hintText: 'Digite o nome do seu texto',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16)),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
                         suffixIcon: Icon(
                           Icons.search,
                           size: 32,
+                          color: Colors.grey[400],
                         )),
                     onChanged: (text) {
                       searchController.searchText(text);

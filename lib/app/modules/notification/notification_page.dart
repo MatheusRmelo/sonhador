@@ -23,14 +23,15 @@ class _NotificationPageState extends State<NotificationPage> {
         }
 
         return Scaffold(
-          backgroundColor: secondary_color,
+          backgroundColor: Colors.white,
           appBar: CustomAppBar(
+              elevation: 1,
               pageContext: context,
               centerTitle: true,
               title: 'Suas últimas notificações',
               backButton: false,
-              color: secondary_color,
-              itemsColor: Colors.white),
+              color: Colors.white,
+              itemsColor: Colors.black),
           body: Container(
             padding: EdgeInsets.all(16),
             child: ListView.builder(

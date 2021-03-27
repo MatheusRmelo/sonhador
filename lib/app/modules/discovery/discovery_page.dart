@@ -29,7 +29,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
   @override
   Widget build(BuildContext context) {
     double widthDevice = MediaQuery.of(context).size.width;
-    //double heightDevice = MediaQuery.of(context).size.height;
+    double heightDevice = MediaQuery.of(context).size.height;
 
     return Observer(
       builder: (_) {
@@ -87,7 +87,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                           ],
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16)),
-                      margin: EdgeInsets.all(16),
+                      margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -104,7 +104,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                     ),
                   ),
                   Container(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.only(left: 16, right: 16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -115,10 +115,10 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             ),
                           ),
                           Container(
-                            height: 150,
+                            height: heightDevice * 0.25,
                             child: texts.length == 0
                                 ? Container(
-                                    margin: EdgeInsets.only(top: 16),
+                                    margin: EdgeInsets.only(top: 8),
                                     child: Text(
                                       'Nenhum texto ainda, começe a escrever!',
                                       style: h1Primary,
@@ -128,6 +128,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                     scrollDirection: Axis.horizontal,
                                     itemCount: texts.length,
                                     itemBuilder: (context, index) => TextBox(
+                                      height: heightDevice * 0.15,
+                                      width: widthDevice * 0.20,
                                       showTrophy: true,
                                       credit: true,
                                       social: 'matheus',
@@ -161,10 +163,10 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             ),
                           ),
                           Container(
-                              height: 150,
+                              height: heightDevice * 0.21,
                               child: users.length == 0
                                   ? Container(
-                                      margin: EdgeInsets.only(top: 16),
+                                      margin: EdgeInsets.only(top: 8),
                                       child: Row(
                                         children: [
                                           Text(
@@ -186,7 +188,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                                         showTrophy: true,
                                         index: index,
                                         margin:
-                                            EdgeInsets.only(right: 16, top: 16),
+                                            EdgeInsets.only(right: 16, top: 8),
                                         color: primary_color,
                                         userId: users[index].userId,
                                         userName: users[index].userName,
@@ -209,7 +211,6 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 8),
                           child: Text(
                             'Como posso lucrar no Sonhador?',
                             style: TextStyle(
@@ -225,7 +226,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             ),
                             Text(
                               '10000 pts - R\$ 10,00 (ACUMULATIVO)',
-                              style: TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -239,7 +241,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             ),
                             Text(
                               'R\$ 3,00 (TEXTO E/OU USUÁRIO)',
-                              style: TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -253,7 +256,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             ),
                             Text(
                               'R\$ 2,00 (TEXTO E/OU USUÁRIO)',
-                              style: TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -267,7 +271,8 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             ),
                             Text(
                               'R\$ 1,00 (TEXTO E/OU USUÁRIO)',
-                              style: TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),

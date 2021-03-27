@@ -92,12 +92,12 @@ class _ProfilePageState extends State<ProfilePage> {
               pageContext: context,
               color: Colors.white),
           body: Container(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 16, right: 16),
               color: Colors.white,
               child: Column(
                 children: [
                   Container(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.only(left: 16, right: 16),
                       //color: Colors.red,
                       height: heightDevice * 0.3,
                       width: widthDevice,
@@ -141,8 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: 30,
-                                margin: EdgeInsets.only(top: 1),
+                                height: heightDevice * 0.05,
                                 child: RaisedButton(
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -166,8 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               Container(
                                   alignment: Alignment.center,
-                                  height: 30,
-                                  margin: EdgeInsets.only(top: 1),
+                                  height: heightDevice * 0.05,
                                   color: primary_color,
                                   child: IconButton(
                                     icon: Icon(
@@ -183,9 +181,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         ],
                       )),
-                  Divider(
-                    color: Colors.black,
-                    height: 1,
+                  Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Divider(
+                      color: Colors.black,
+                      height: 1,
+                    ),
                   ),
                   Expanded(
                       child: GridView.count(

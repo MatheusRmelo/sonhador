@@ -63,11 +63,11 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           child: Container(
               margin: EdgeInsets.only(top: 16),
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 16, right: 16, top: 16),
               child: Column(
                 children: [
                   Container(
-                      padding: EdgeInsets.all(16),
+                      padding: EdgeInsets.only(left: 16, right: 16),
                       //color: Colors.red,
                       height: heightDevice * 0.3,
                       width: widthDevice,
@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               Container(
                                 width: widthDevice * 0.35,
-                                height: 30,
+                                height: heightDevice * 0.05,
                                 margin: EdgeInsets.only(top: 1),
                                 child: RaisedButton(
                                   shape: RoundedRectangleBorder(
@@ -142,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               Container(
                                 width: widthDevice * 0.1,
-                                height: 30,
+                                height: heightDevice * 0.05,
                                 margin: EdgeInsets.only(top: 1),
                                 child: RaisedButton(
                                   shape: RoundedRectangleBorder(
@@ -163,9 +163,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         ],
                       )),
-                  Divider(
-                    color: Colors.black,
-                    height: 1,
+                  Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Divider(
+                      color: Colors.black,
+                      height: 1,
+                    ),
                   ),
                   Expanded(
                       child: GridView.count(
