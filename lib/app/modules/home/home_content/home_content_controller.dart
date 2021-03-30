@@ -41,6 +41,11 @@ abstract class _HomeContentControllerBase with Store {
   }
 
   @action
+  void fetchFollowTexts(String lastId, String userId) {
+    texts = repository.getFollowTexts(lastId, userId).asObservable();
+  }
+
+  @action
   void getMoreTexts() {
     if (nextTexts != null && nextTexts.value != null) {
       for (HomeTextModel text in nextTexts.value) {

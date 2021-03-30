@@ -92,6 +92,58 @@ class HomeTextRepository {
     return texts;
   }
 
+  Future<List<HomeTextModel>> getFollowTexts(
+      String lastId, String userId) async {
+    List<HomeTextModel> texts = [];
+
+    DocumentSnapshot last = await db.collection('texts').doc(lastId).get();
+    QuerySnapshot result = await db
+        .collection('texts')
+        .where('published', isEqualTo: true)
+        //.startAfterDocument(last)
+        .limit(35)
+        .get();
+    //print(last.id);
+    for (var element in result.docs) {
+      var data = element.data();
+
+      String photoUrl = await storage
+          .ref("profiles/${data['userId']}.jpg")
+          .getDownloadURL()
+          .catchError((err) => '');
+      List comments = data['comments'];
+      comments.forEach((element) async {
+        DocumentSnapshot results =
+            await db.collection('users').doc(element['user_id']).get();
+        if (results.exists) {
+          element['user_name'] = results.data()['user_name'];
+        }
+      });
+      //print(comments);
+      HomeTextModel text = HomeTextModel(
+          id: element.id,
+          alignment: data['alignment'],
+          likes: data['likes'],
+          pages: data['pages'],
+          title: data['title'],
+          comments: comments,
+          hashtags: data['hashtags'],
+          userId: data['userId'],
+          photoUrl: photoUrl);
+      bool verifyFollow = await following(userId, data['userId']);
+      if (verifyFollow) {
+        texts.add(text);
+      }
+    }
+    return texts;
+  }
+
+  Future<bool> following(String userId, String userBook) async {
+    DocumentSnapshot result = await db.collection('users').doc(userId).get();
+    var data = result.data();
+    return data['following'].contains(userBook);
+  }
+
   void likedText(HomeTextModel text) async {
     await db.collection('texts').doc(text.id).update({"likes": text.likes});
   }

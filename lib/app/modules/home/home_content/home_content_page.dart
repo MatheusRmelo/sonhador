@@ -25,7 +25,7 @@ class _HomeContentPage extends State<HomeContentPage> {
   final homeController = Modular.get<HomeContentController>();
   final appController = Modular.get<AppController>();
 
-  int currentPage = 0;
+  String active = 'discovery';
 
   void prevPage() {
     if (homeController.currentPage != 0) {
@@ -88,6 +88,19 @@ class _HomeContentPage extends State<HomeContentPage> {
     Share.share(textShared);
   }
 
+  void changeActive(String newActive) {
+    setState(() {
+      active = newActive;
+    });
+    if (active == 'following') {
+      String lastId = homeController
+          .texts.value[homeController.texts.value.length - 1].userId;
+      homeController.fetchFollowTexts(lastId, appController.user.value.userId);
+    } else {
+      homeController.fetchTexts();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double heightDevice = MediaQuery.of(context).size.height;
@@ -110,14 +123,13 @@ class _HomeContentPage extends State<HomeContentPage> {
           status: 'Carregando...',
         );
       }
-
       return Scaffold(
           backgroundColor: Colors.white,
           appBar: HomeContentAppBar(
+              changeActive: changeActive,
+              active: active,
               pageContext: context,
-              title: 'text.title',
-              pagesLength: 2,
-              currentPage: 1),
+              showActive: appController.user.value.following.length > 0),
           body: RefreshIndicator(
             onRefresh: () async {
               homeController.fetchMoreTexts(homeController
