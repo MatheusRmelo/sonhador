@@ -72,6 +72,7 @@ class _CommentPage extends State<CommentPage> {
                     showbottomlogin(context);
                   } else {
                     likedComment(index);
+                    commentController.comment = commentController.comment;
                   }
                 },
                 commentsNumber: text.comments[index]['likes'].length.toString(),

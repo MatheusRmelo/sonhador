@@ -64,7 +64,7 @@ abstract class _HomeContentControllerBase with Store {
           texts.value[currentText].userId, true);
     }
     repository.likedText(texts.value[currentText]);
-    currentText = currentText;
+    currentPage = currentPage;
   }
 
   @action
@@ -88,7 +88,7 @@ abstract class _HomeContentControllerBase with Store {
       texts.value[currentText].comments[index]['likes'].add(userId);
     }
     repository.likedComment(texts.value[currentText]);
-    currentText = currentText;
+    currentPage = currentPage;
   }
 
   @action
@@ -98,7 +98,7 @@ abstract class _HomeContentControllerBase with Store {
       pointsRepository.score('share', texts.value[currentText].id,
           texts.value[currentText].userId, true);
       repository.sharedText(texts.value[currentText]);
-      currentText = currentText;
+      currentPage = currentPage;
     }
   }
 }
