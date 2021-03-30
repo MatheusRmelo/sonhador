@@ -9,6 +9,7 @@ import 'package:sonhador/app/utils/fonts.dart';
 import 'package:sonhador/app/widgets/homecontentappbar.dart';
 import 'package:sonhador/app/widgets/loading.dart';
 import 'package:sonhador/app/widgets/homeappbar.dart';
+import 'package:sonhador/app/widgets/loading_container.dart';
 import 'package:sonhador/app/widgets/loginbottom.dart';
 import 'package:sonhador/app/widgets/profilebox.dart';
 import 'package:tiktoklikescroller/tiktoklikescroller.dart';
@@ -123,6 +124,7 @@ class _HomeContentPage extends State<HomeContentPage> {
           status: 'Carregando...',
         );
       }
+
       return Scaffold(
           backgroundColor: Colors.white,
           appBar: HomeContentAppBar(

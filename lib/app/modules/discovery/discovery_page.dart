@@ -208,69 +208,70 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                       )),
                   Container(
                     width: widthDevice,
+                    padding: EdgeInsets.only(left: 16),
                     child: Column(
                       children: [
-                        Container(
-                          child: Text(
+                        Row(children: [
+                          Text(
                             'Como posso lucrar no Sonhador?',
                             style: TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.bold),
                           ),
-                        ),
+                        ]),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
                               Icons.score,
                               size: 16,
                             ),
                             Text(
-                              '10000 pts - R\$ 10,00 (ACUMULATIVO)',
+                              '10000 pts no texto - R\$ 10,00 (ACUMULATIVO)',
                               style: TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.emoji_events,
+                              Icons.score,
                               color: Colors.yellow[800],
                               size: 16,
                             ),
                             Text(
-                              'R\$ 3,00 (TEXTO E/OU USUÁRIO)',
+                              '3 pontos - uma curtida',
                               style: TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.emoji_events,
+                              Icons.score,
                               color: Colors.grey[400],
                               size: 16,
                             ),
                             Text(
-                              'R\$ 2,00 (TEXTO E/OU USUÁRIO)',
+                              '2 pontos - um compartilhamento',
                               style: TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              Icons.emoji_events,
+                              Icons.score,
                               color: Colors.brown[700],
                               size: 16,
                             ),
                             Text(
-                              'R\$ 1,00 (TEXTO E/OU USUÁRIO)',
+                              '1 ponto - uma comentário',
                               style: TextStyle(
                                   fontSize: 8, fontWeight: FontWeight.bold),
                             )
