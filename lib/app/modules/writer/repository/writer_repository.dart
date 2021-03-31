@@ -160,8 +160,9 @@ class WriterRepository {
           .ref("texts/${element.id}.jpg")
           .getDownloadURL()
           .catchError((err) => '');
+      //String points = data['points'] ? data['points'] : '1';
 
-      TextModel text = TextModel(data['title'], element.id, photoUrl);
+      TextModel text = TextModel(data['title'], element.id, photoUrl, '');
       list.add(text);
     }
 
@@ -181,8 +182,9 @@ class WriterRepository {
             .ref("texts/${element.id}.jpg")
             .getDownloadURL()
             .catchError((err) => '');
+        String points = data['points'] != null ? data['points'] : '';
 
-        TextModel text = TextModel(data['title'], element.id, photoUrl);
+        TextModel text = TextModel(data['title'], element.id, photoUrl, points);
         list.add(text);
       }
     }

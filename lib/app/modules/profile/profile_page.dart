@@ -176,6 +176,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: List.generate(
                         texts.length,
                         (index) => TextBox(
+                              showTrophy: false,
+                              showPoints: true,
+                              points: texts[index].points,
                               imgUrl: texts[index].photoUrl,
                               textId: texts[index].id,
                               title: texts[index].title,

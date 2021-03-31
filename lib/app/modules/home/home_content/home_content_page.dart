@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share/share.dart';
 import 'package:sonhador/app/app_controller.dart';
 import 'package:sonhador/app/utils/colors.dart';
@@ -25,7 +28,25 @@ class HomeContentPage extends StatefulWidget {
 class _HomeContentPage extends State<HomeContentPage> {
   final homeController = Modular.get<HomeContentController>();
   final appController = Modular.get<AppController>();
-
+  final InterstitialAd myInterstitial = InterstitialAd(
+    adUnitId: 'ca-app-pub-8444659371735623/5999438502',
+    request: AdRequest(),
+    listener: AdListener(),
+  );
+  final AdListener listener = AdListener(
+    // Called when an ad is successfully received.
+    onAdLoaded: (Ad ad) => print('Ad loaded.'),
+    // Called when an ad request failed.
+    onAdFailedToLoad: (Ad ad, LoadAdError error) {
+      print('Ad failed to load: $error');
+    },
+    // Called when an ad opens an overlay that covers the screen.
+    onAdOpened: (Ad ad) => print('Ad opened.'),
+    // Called when an ad removes an overlay that covers the screen.
+    onAdClosed: (Ad ad) => print('Ad closed.'),
+    // Called when an ad is in the process of leaving the application.
+    onApplicationExit: (Ad ad) => print('Left application.'),
+  );
   String active = 'discovery';
 
   void prevPage() {
@@ -131,7 +152,7 @@ class _HomeContentPage extends State<HomeContentPage> {
               changeActive: changeActive,
               active: active,
               pageContext: context,
-              showActive: appController.user.value.following.length > 0),
+              showActive: appController.user.value.following.length <= 0),
           body: RefreshIndicator(
             onRefresh: () async {
               homeController.fetchMoreTexts(homeController
@@ -152,6 +173,12 @@ class _HomeContentPage extends State<HomeContentPage> {
                         hashtags += '#$element ';
                       }
                     });
+                    var rng = new Random();
+                    var randomNumber = rng.nextInt(100);
+                    if (randomNumber >= 70) {
+                      myInterstitial.load();
+                      myInterstitial.show();
+                    }
                     bool liked = homeController.texts.value[index].likes
                         .contains(appController.user.value.userId);
 
@@ -226,7 +253,7 @@ class _HomeContentPage extends State<HomeContentPage> {
                                 children: [
                                   Text(
                                     hashtags,
-                                    style: smallStyleLight,
+                                    style: smallStyle,
                                   )
                                 ],
                               )

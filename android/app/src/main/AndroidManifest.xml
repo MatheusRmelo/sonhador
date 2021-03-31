@@ -11,9 +11,9 @@
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"
         >
-        <!-- <meta-data
+        <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8444659371735623~9968858709" /> -->
+            android:value="ca-app-pub-8444659371735623~9968858709" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

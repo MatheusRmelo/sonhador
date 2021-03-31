@@ -20,7 +20,8 @@ class TextBox extends StatelessWidget {
       this.points,
       this.imgUrl,
       this.file,
-      this.showTrophy = false});
+      this.showTrophy = false,
+      this.showPoints = false});
 
   final String textId;
   final String title;
@@ -36,6 +37,7 @@ class TextBox extends StatelessWidget {
   final String imgUrl;
   final File file;
   final bool showTrophy;
+  final bool showPoints;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +136,12 @@ class TextBox extends StatelessWidget {
                             points == null ? '' : points + ' pontos',
                             style: footerText,
                           ))
-                : Container()
+                : showPoints
+                    ? Text(
+                        points == null ? '' : points + ' pontos',
+                        style: footerText,
+                      )
+                    : Container()
           ],
         ),
       ),
