@@ -14,6 +14,51 @@
       },
       "oauth_client": [
         {
+          "client_id": "793601712243-f0a2d0s56g0bel9r87k3gok46lhup49u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sonhador",
+            "certificate_hash": "0921ea2010416fb7d5487267954c2f20ad646195"
+          }
+        },
+        {
+          "client_id": "793601712243-k36m9si4v9vq2p6pctuardjm2pjvsd08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sonhador",
+            "certificate_hash": "c7ccbbe1c415e24c963f0bd0ae6e57c6a42ecb1c"
+          }
+        },
+        {
+          "client_id": "793601712243-ughg5eivepl4o93n91mvp8vn8pgt0kir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD04oJ05eLtRn_27fyPnuq9rJQos_X2OXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793601712243-ughg5eivepl4o93n91mvp8vn8pgt0kir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793601712243:android:cc687a7eb6bd5e9288ca06",
+        "android_client_info": {
+          "package_name": "com.melotechnology.sonhador"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "793601712243-ughg5eivepl4o93n91mvp8vn8pgt0kir.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void getPhoto() async {
     await Future.delayed(Duration(seconds: 1));
-    //searchController.fetchTexts(appController.user.value.userId);
+    searchController.fetchTexts(appController.user.value.userId);
     profileController.getPhoto(appController.user.value.userId);
     profileController.loading = false;
   }
@@ -183,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               textId: texts[index].id,
                               title: texts[index].title,
                               margin: EdgeInsets.all(8),
-                              height: 90,
+                              height: heightDevice * 0.14,
                               onTap: (textId) {
                                 Navigator.pushNamed(context, '/writer',
                                     arguments: {

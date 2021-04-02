@@ -162,7 +162,8 @@ class WriterRepository {
           .catchError((err) => '');
       //String points = data['points'] ? data['points'] : '1';
 
-      TextModel text = TextModel(data['title'], element.id, photoUrl, '');
+      TextModel text =
+          TextModel(data['title'], element.id, photoUrl, data['points']);
       list.add(text);
     }
 

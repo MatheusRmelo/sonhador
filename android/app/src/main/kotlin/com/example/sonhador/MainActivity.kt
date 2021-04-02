@@ -1,4 +1,4 @@
-package com.example.sonhador
+package com.melotechnology.sonhador
 
 import io.flutter.embedding.android.FlutterActivity
 

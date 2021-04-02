@@ -17,6 +17,7 @@ class UserRepository {
 
   Future<UserModel> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
 
@@ -27,6 +28,7 @@ class UserRepository {
     final UserCredential authResult =
         await _auth.signInWithCredential(credential);
     final User user = authResult.user;
+    print('---------------------------------');
 
     if (user != null) {
       assert(!user.isAnonymous);
@@ -55,6 +57,10 @@ class UserRepository {
             followers: [],
             following: []);
       }
+      print('---------------------------------');
+      print(userModel.displayName);
+      print('---------------------------------');
+
       service.saveUser(userModel);
       return userModel;
     }
