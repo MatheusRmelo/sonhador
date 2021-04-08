@@ -62,6 +62,9 @@ class LoginPage extends StatelessWidget {
     double widthDevice = MediaQuery.of(context).size.width;
 
     return Observer(builder: (_) {
+      print('--------------------------');
+      print(appController.user.value);
+      print('--------------------------');
       if (appController.user.value == null) {
         return Loading(
           status: 'Carregando...',

@@ -22,7 +22,7 @@ class HomeTextRepository {
       String photoUrl = await storage
           .ref("profiles/${data['userId']}.jpg")
           .getDownloadURL()
-          .catchError((err) => null);
+          .catchError((err) => '');
       List comments = data['comments'];
       for (var element in comments) {
         DocumentSnapshot results =

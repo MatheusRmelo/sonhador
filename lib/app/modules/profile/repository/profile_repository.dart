@@ -20,7 +20,7 @@ class ProfileRepository {
     String downloadUrl = await storage
         .ref('profiles/$userId.jpg')
         .getDownloadURL()
-        .catchError((err) => null);
+        .catchError((err) => '');
 
     ProfileModel profile = ProfileModel(photoUrl: downloadUrl, userId: userId);
 

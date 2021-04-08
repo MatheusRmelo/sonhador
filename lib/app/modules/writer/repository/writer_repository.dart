@@ -108,7 +108,10 @@ class WriterRepository {
 
   Future<bool> savePhoto(String textId, File file) async {
     try {
-      await storage.ref('texts/$textId.jpg').putFile(file);
+      await storage
+          .ref('texts/$textId.jpg')
+          .putFile(file)
+          .catchError((err) => '');
       return true;
     } catch (e) {
       // e.g, e.code == 'canceled'
@@ -120,7 +123,7 @@ class WriterRepository {
     String photoUrl = await storage
         .ref('texts/$textId.jpg')
         .getDownloadURL()
-        .catchError((err) => null);
+        .catchError((err) => '');
     PhotoModel photoModel = PhotoModel(photoUrl, textId);
     return photoModel;
   }
@@ -160,10 +163,10 @@ class WriterRepository {
           .ref("texts/${element.id}.jpg")
           .getDownloadURL()
           .catchError((err) => '');
-      //String points = data['points'] ? data['points'] : '1';
+      // var pointsverify = data['points'];
+      // String points = !pointsverify ? '0' : pointsverify;
 
-      TextModel text =
-          TextModel(data['title'], element.id, photoUrl, data['points']);
+      TextModel text = TextModel(data['title'], element.id, photoUrl, '');
       list.add(text);
     }
 

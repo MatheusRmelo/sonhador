@@ -226,9 +226,9 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                               size: 16,
                             ),
                             Text(
-                              '10000 pts no texto - R\$ 10,00 (ACUMULATIVO)',
+                              '10000 pts no texto - R\$ 5,00 (ACUMULATIVO)',
                               style: TextStyle(
-                                  fontSize: 8, fontWeight: FontWeight.bold),
+                                  fontSize: 10, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -243,7 +243,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             Text(
                               '3 pontos - uma curtida',
                               style: TextStyle(
-                                  fontSize: 8, fontWeight: FontWeight.bold),
+                                  fontSize: 10, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -258,7 +258,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             Text(
                               '2 pontos - um compartilhamento',
                               style: TextStyle(
-                                  fontSize: 8, fontWeight: FontWeight.bold),
+                                  fontSize: 10, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),
@@ -273,7 +273,7 @@ class _DiscoveryPage extends State<DiscoveryPage> {
                             Text(
                               '1 ponto - uma comentário',
                               style: TextStyle(
-                                  fontSize: 8, fontWeight: FontWeight.bold),
+                                  fontSize: 10, fontWeight: FontWeight.bold),
                             )
                           ],
                         ),

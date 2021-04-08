@@ -45,104 +45,106 @@ class TextBox extends StatelessWidget {
         TextStyle(color: Colors.white, fontSize: 6, fontFamily: 'Fredoka One');
     TextStyle footerText =
         TextStyle(color: Colors.black, fontSize: 8, fontFamily: 'Fredoka One');
-    return Container(
-      alignment: Alignment.center,
-      margin: margin == null ? EdgeInsets.all(16) : margin,
-      child: GestureDetector(
-        onTap: () {
-          onTap(textId);
-        },
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                    width: width,
-                    height: height,
-                    decoration: BoxDecoration(
-                      color: color == null ? secondary_color : color,
-                    ),
-                    child: ClipRRect(
-                      child: file != null
-                          ? Image.file(
-                              file,
-                            )
-                          : (imgUrl == '' || imgUrl == null)
-                              ? Container()
-                              : Image.network(
-                                  imgUrl,
-                                ),
-                    )),
-                Positioned(
-                  left: 0,
-                  right: width * 0.1,
-                  top: height * 0.15,
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Fredoka One'),
-                  ),
-                ),
-                Positioned(
-                  left: 8,
-                  right: 8,
-                  bottom: 16,
-                  child: credit
-                      ? Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.face, size: 16),
-                                Container(
-                                  margin: EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    social,
-                                    style: smallText,
+    return SingleChildScrollView(
+      child: Container(
+        alignment: Alignment.center,
+        margin: margin == null ? EdgeInsets.all(16) : margin,
+        child: GestureDetector(
+          onTap: () {
+            onTap(textId);
+          },
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                      width: width,
+                      height: height,
+                      decoration: BoxDecoration(
+                        color: color == null ? secondary_color : color,
+                      ),
+                      child: ClipRRect(
+                        child: file != null
+                            ? Image.file(
+                                file,
+                              )
+                            : (imgUrl == '' || imgUrl == null)
+                                ? Container()
+                                : Image.network(
+                                    imgUrl,
                                   ),
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      : Container(),
-                )
-              ],
-            ),
-            showTrophy
-                ? Container(
-                    margin: EdgeInsets.all(8),
-                    child: index < 3
-                        ? Row(
+                      )),
+                  Positioned(
+                    left: 0,
+                    right: width * 0.1,
+                    top: height * 0.15,
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontFamily: 'Fredoka One'),
+                    ),
+                  ),
+                  Positioned(
+                    left: 8,
+                    right: 8,
+                    bottom: 16,
+                    child: credit
+                        ? Column(
                             children: [
-                              Icon(
-                                Icons.emoji_events,
-                                color: index == 0
-                                    ? Colors.yellow[800]
-                                    : index == 1
-                                        ? Colors.grey[400]
-                                        : Colors.brown[700],
-                                size: 16,
-                              ),
-                              Text(
-                                points == null ? '' : points + ' pontos',
-                                style: footerText,
+                              Row(
+                                children: [
+                                  Icon(Icons.face, size: 16),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      social,
+                                      style: smallText,
+                                    ),
+                                  )
+                                ],
                               )
                             ],
                           )
-                        : Text(
-                            points == null ? '' : points + ' pontos',
-                            style: footerText,
-                          ))
-                : showPoints
-                    ? Text(
-                        points == null ? '' : points + ' pontos',
-                        style: footerText,
-                      )
-                    : Container()
-          ],
+                        : Container(),
+                  )
+                ],
+              ),
+              showTrophy
+                  ? Container(
+                      margin: EdgeInsets.all(8),
+                      child: index < 3
+                          ? Row(
+                              children: [
+                                Icon(
+                                  Icons.emoji_events,
+                                  color: index == 0
+                                      ? Colors.yellow[800]
+                                      : index == 1
+                                          ? Colors.grey[400]
+                                          : Colors.brown[700],
+                                  size: 16,
+                                ),
+                                Text(
+                                  points == null ? '' : points + ' pontos',
+                                  style: footerText,
+                                )
+                              ],
+                            )
+                          : Text(
+                              points == null ? '' : points + ' pontos',
+                              style: footerText,
+                            ))
+                  : showPoints
+                      ? Text(
+                          points == null ? '' : points + ' pontos',
+                          style: footerText,
+                        )
+                      : Container()
+            ],
+          ),
         ),
       ),
     );

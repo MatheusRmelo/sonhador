@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (_) {
         double widthDevice = MediaQuery.of(context).size.width;
         double heightDevice = MediaQuery.of(context).size.height;
+
         if (appController.user.value.userId == '' ||
             appController.user.value == null) {
           return Loading(status: 'Carregando...');
@@ -177,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         texts.length,
                         (index) => TextBox(
                               showTrophy: false,
-                              showPoints: true,
+                              showPoints: false,
                               points: texts[index].points,
                               imgUrl: texts[index].photoUrl,
                               textId: texts[index].id,

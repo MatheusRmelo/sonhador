@@ -128,6 +128,17 @@ mixin _$HomeContentController on _HomeContentControllerBase, Store {
   }
 
   @override
+  void fetchFollowTexts(String lastId, String userId) {
+    final _$actionInfo = _$_HomeContentControllerBaseActionController
+        .startAction(name: '_HomeContentControllerBase.fetchFollowTexts');
+    try {
+      return super.fetchFollowTexts(lastId, userId);
+    } finally {
+      _$_HomeContentControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void getMoreTexts() {
     final _$actionInfo = _$_HomeContentControllerBaseActionController
         .startAction(name: '_HomeContentControllerBase.getMoreTexts');

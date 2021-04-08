@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share/share.dart';
 import 'package:sonhador/app/app_controller.dart';
@@ -50,11 +49,12 @@ class _HomeContentPage extends State<HomeContentPage> {
   String active = 'discovery';
 
   void prevPage() {
-    if (homeController.currentPage != 0) {
-      homeController.currentPage--;
-    }
-    homeController.textController.text = homeController.texts
-        .value[homeController.currentText].pages[homeController.currentPage];
+    appController.signOut();
+    // if (homeController.currentPage != 0) {
+    //   homeController.currentPage--;
+    // }
+    // homeController.textController.text = homeController.texts
+    //     .value[homeController.currentText].pages[homeController.currentPage];
   }
 
   void nextPage(int index) {
